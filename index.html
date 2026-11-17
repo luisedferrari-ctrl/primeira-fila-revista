@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11191b">
+  <meta name="description" content="Primeira Fila: uma revista de cultura, cinema, esporte e experiências em Indaiatuba, Campinas, São Paulo e região.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Primeira Fila — Cultura e experiências">
+  <meta property="og:description" content="O melhor da cena. E o que vem por aí.">
+  <title>Primeira Fila | Cultura e experiências</title>
+  <style>
+    :root {
+      --ink: #142124;
+      --night: #111a1d;
+      --paper: #f3f0e9;
+      --warm: #e9e3d8;
+      --cream: #fff9ee;
+      --line: rgba(21, 34, 36, .18);
+      --accent: #d84e3b;
+      --gold: #f2bf6b;
+      --font-display: Georgia, "Times New Roman", serif;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    .skip { position: absolute; left: -999px; z-index: 99; background: white; padding: .8rem; }
+    .skip:focus { left: 1rem; top: 1rem; }
+    .wrap { width: min(100% - 42px, 1270px); margin-inline: auto; }
+    .topline { background: var(--night); color: #eceae4; border-bottom: 1px solid rgba(255,255,255,.13); }
+    .topline-inner { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 0; font-size: 10px; font-weight: 650; letter-spacing: .17em; text-transform: uppercase; }
+    .masthead { background: var(--paper); border-bottom: 1px solid var(--line); }
+    .masthead-inner { min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+    .brand { font-family: var(--font-display); font-weight: 700; font-size: clamp(25px, 3vw, 37px); letter-spacing: -.075em; line-height: 1; white-space: nowrap; }
+    .brand span { color: var(--accent); }
+    .nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px 23px; font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+    .nav a { border-bottom: 2px solid transparent; padding: 6px 0; }
+    .nav a:hover, .nav a:focus-visible { border-bottom-color: var(--accent); }
+    .cover { background: var(--night); color: var(--cream); overflow: hidden; }
+    .cover-inner { display: grid; grid-template-columns: 1.15fr .85fr; min-height: min(740px, 78vw); }
+    .cover-text { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: clamp(28px, 5.2vw, 86px) clamp(20px, 4vw, 64px) clamp(34px, 5vw, 70px) 0; position: relative; z-index: 2; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .2em; font-weight: 730; font-size: 10px; line-height: 1.5; }
+    .eyebrow::before { content: ""; width: 27px; height: 2px; display: block; background: var(--accent); }
+    h1, h2, h3, p { margin-top: 0; }
+    .cover h1 { font-family: var(--font-display); font-size: clamp(84px, 11.7vw, 187px); line-height: .74; letter-spacing: -.095em; font-weight: 700; margin: auto 0 45px -10px; }
+    .cover h1 em { font-weight: 400; color: var(--gold); font-style: italic; }
+    .cover-sub { font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 33px); line-height: 1.21; max-width: 480px; letter-spacing: -.035em; margin-bottom: 24px; }
+    .cover-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: #c6ccca; }
+    .cover-art { position: relative; overflow: hidden; min-height: 450px; background: #bd4938; isolation: isolate; }
+    .cover-art:before { content: ""; position: absolute; inset: 0; background: linear-gradient(137deg, #e57954 0%, #b94031 40%, #652d2c 100%); }
+    .cover-art:after { content: ""; position: absolute; inset: -15%; background: repeating-linear-gradient(-18deg, transparent 0 11%, rgba(15,18,20,.055) 11.2% 11.5%, transparent 11.7% 22%); transform: rotate(-8deg); }
+    .art-halo { position: absolute; border: clamp(55px, 7vw, 120px) solid rgba(246, 200, 126, .78); width: 96%; aspect-ratio: 1; border-radius: 50%; right: -30%; top: -7%; box-shadow: 0 0 100px #5a26222e; }
+    .art-block { position: absolute; width: 54%; height: 67%; bottom: -12%; left: 7%; background: #152427; transform: rotate(14deg); }
+    .art-line { position: absolute; height: 2px; background: rgba(255,245,221,.85); width: 170%; transform: rotate(-28deg); left: -20%; top: 68%; }
+    .art-word { position: absolute; z-index: 2; top: 50%; right: 6%; transform: translateY(-45%) rotate(90deg); transform-origin: center; white-space: nowrap; font-family: var(--font-display); font-size: clamp(58px, 9vw, 145px); color: rgba(255,244,218,.86); letter-spacing: -.09em; font-weight: bold; }
+    .art-credit { position: absolute; z-index: 3; bottom: 24px; right: 24px; color: white; text-transform: uppercase; font-size: 9px; letter-spacing: .2em; }
+    .section { padding: clamp(65px, 8vw, 120px) 0; }
+    .intro-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(30px, 7vw, 115px); align-items: start; }
+    .section-number { color: var(--accent); font-size: 11px; letter-spacing: .19em; font-weight: 800; text-transform: uppercase; margin-bottom: 24px; }
+    .section h2 { font-family: var(--font-display); font-size: clamp(42px, 7.2vw, 96px); line-height: .93; letter-spacing: -.065em; margin-bottom: 30px; font-weight: 500; }
+    .intro-copy { padding-top: 10px; max-width: 650px; }
+    .intro-copy p { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.72; color: #405052; }
+    .pill { display: inline-flex; border: 1px solid var(--line); border-radius: 100px; padding: 8px 13px; font-size: 10px; text-transform: uppercase; letter-spacing: .13em; font-weight: 800; margin-top: 12px; }
+    .rule { height: 1px; background: var(--line); }
+    .section-header { display: flex; justify-content: space-between; align-items: end; gap: 2rem; border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 42px; }
+    .section-header h2 { margin: 0; }
+    .section-header .caption { color: #546261; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 700; }
+    .departments { display: grid; grid-template-columns: repeat(12,1fr); gap: 18px; }
+    .dept { position: relative; min-height: 270px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+    .dept .seq { font-size: 11px; letter-spacing: .16em; font-weight: 850; }
+    .dept h3 { font-size: clamp(29px, 3.4vw, 51px); line-height: .95; letter-spacing: -.055em; font-family: var(--font-display); font-weight: 500; margin-bottom: 14px; }
+    .dept p { font-size: 13px; line-height: 1.55; max-width: 310px; margin-bottom: 0; }
+    .dept-big { grid-column: span 7; min-height: 435px; background: #242f31; color: var(--cream); padding: clamp(30px, 4vw, 55px); }
+    .dept-big h3 { font-size: clamp(50px, 7vw, 103px); max-width: 510px; }
+    .dept-big .deco { position: absolute; right: -42px; bottom: -28%; width: 280px; height: 500px; border-radius: 50%; border: 62px solid #9c3e30; transform: rotate(45deg); opacity: .96; }
+    .dept-med { grid-column: span 5; min-height: 435px; background: var(--gold); }
+    .dept-half { grid-column: span 4; background: #dfd9cd; }
+    .dept-half:nth-of-type(5) { background: #e6af99; }
+    .dept-half:nth-of-type(6) { background: #d8e0dc; }
+    .dept a { text-decoration: underline; text-underline-offset: 3px; }
+    .future { background: #d9e1dd; }
+    .future-inner { display: grid; grid-template-columns: .95fr 1.05fr; gap: 70px; }
+    .future p { max-width: 490px; line-height: 1.75; color: #415153; }
+    .horizons { border-top: 1px solid rgba(21,34,36,.24); }
+    .horizon { display: grid; grid-template-columns: 45px 1fr; gap: 15px; padding: 22px 0; border-bottom: 1px solid rgba(21,34,36,.24); align-items: baseline; }
+    .horizon strong { font-family: var(--font-display); font-size: clamp(23px, 3.2vw, 39px); font-weight: 500; letter-spacing: -.05em; }
+    .horizon span { color: #465556; font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    .archive { background: var(--night); color: var(--cream); }
+    .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
+    .archive h2 { font-size: clamp(48px, 7vw, 92px); }
+    .archive p { color: #c0c8c6; line-height: 1.7; font-size: 16px; }
+    .archive-stamp { border: 1px solid rgba(255,255,255,.28); padding: 30px; }
+    .archive-stamp small { display: block; margin-bottom: 19px; color: var(--gold); text-transform: uppercase; letter-spacing: .17em; font-weight: 750; }
+    .archive-stamp strong { font-family: var(--font-display); font-size: 28px; font-weight: 500; line-height: 1.13; display: block; margin-bottom: 15px; }
+    .archive-stamp span { color: #c0c8c6; font-size: 13px; line-height: 1.5; }
+    .footer { background: #0b1113; color: #d9dedb; padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer .brand { font-size: 22px; }
+    .footer p { font-size: 10px; text-transform: uppercase; letter-spacing: .13em; color: #aab4b0; margin: 0; }
+    @media (max-width: 840px) {
+      .nav { gap: 7px 16px; font-size: 10px; }
+      .cover-inner, .intro-grid, .future-inner, .archive-grid { grid-template-columns: 1fr; }
+      .cover-inner { min-height: 0; }
+      .cover-text { min-height: 570px; padding-right: 0; }
+      .cover h1 { font-size: clamp(86px, 19vw, 147px); }
+      .cover-art { min-height: 300px; }
+      .art-word { transform: translateY(-50%) rotate(0deg); font-size: 88px; right: auto; left: 20px; }
+      .departments { grid-template-columns: 1fr 1fr; }
+      .dept-big, .dept-med { grid-column: span 2; min-height: 340px; }
+      .dept-half { grid-column: span 1; }
+      .future-inner { gap: 24px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 32px, 1270px); }
+      .topline-inner { font-size: 9px; letter-spacing: .095em; }
+      .topline-inner span:last-child { display: none; }
+      .masthead-inner { display: block; padding: 21px 0 18px; min-height: 0; }
+      .brand { font-size: 31px; }
+      .nav { justify-content: flex-start; margin-top: 17px; column-gap: 19px; row-gap: 5px; }
+      .cover-text { min-height: 500px; padding: 29px 0 39px; }
+      .cover h1 { font-size: clamp(78px, 20.5vw, 110px); margin-left: -4px; margin-bottom: 32px; }
+      .cover-sub { font-size: 24px; max-width: 350px; }
+      .cover-art { min-height: 265px; }
+      .art-word { font-size: 72px; }
+      .section { padding: 62px 0; }
+      .section h2 { font-size: clamp(45px, 12vw, 71px); }
+      .section-header { display: block; }
+      .section-header .caption { margin-top: 13px; display: block; }
+      .departments { gap: 12px; }
+      .dept { padding: 22px; min-height: 245px; }
+      .dept-big, .dept-med { grid-column: span 2; min-height: 305px; }
+      .dept-half { grid-column: span 2; min-height: 210px; }
+      .dept h3 { font-size: 38px; }
+      .dept-big h3 { font-size: 64px; }
+      .archive-stamp { padding: 23px; }
+      .footer-inner { display: block; }
+      .footer p { margin-top: 14px; line-height: 1.6; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a href="#conteudo" class="skip">Ir para o conteúdo</a>
+  <div class="topline">
+    <div class="wrap topline-inner"><span>Revista de cultura &amp; experiências</span><span>Indaiatuba &nbsp;·&nbsp; Campinas &nbsp;·&nbsp; São Paulo</span></div>
+  </div>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a href="#inicio" class="brand" aria-label="Primeira Fila — início">PRIMEIRA <span>FILA.</span></a>
+      <nav class="nav" aria-label="Seções">
+        <a href="#editorias">Editorias</a>
+        <a href="#horizonte">No horizonte</a>
+        <a href="#arquivo">Edições</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo">
+    <section class="cover" id="inicio" aria-labelledby="cover-title">
+      <div class="wrap cover-inner">
+        <div class="cover-text">
+          <div class="eyebrow">Uma publicação cultural independente</div>
+          <div>
+            <h1 id="cover-title">PRI<br>MEIRA<br><em>FILA.</em></h1>
+            <p class="cover-sub">O melhor da cena.<br>E o que vem por aí.</p>
+            <div class="cover-meta"><span>Revista digital</span><span>·</span><span>Edição inaugural em preparação</span></div>
+          </div>
+        </div>
+        <div class="cover-art" aria-label="Arte tipográfica original de lançamento da revista Primeira Fila">
+          <div class="art-halo"></div><div class="art-block"></div><div class="art-line"></div>
+          <div class="art-word" aria-hidden="true">CENA</div>
+          <span class="art-credit">Arte gráfica de lançamento · não representa um evento</span>
+        </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="manifesto-title">
+      <div class="wrap intro-grid">
+        <div>
+          <div class="section-number">01 / O olhar editorial</div>
+          <h2 id="manifesto-title">Uma cidade nunca é só uma cidade.</h2>
+        </div>
+        <div class="intro-copy">
+          <p>Algumas noites merecem ser planejadas com meses de antecedência. Outras estão acontecendo logo ali, a poucos quilômetros de casa. A Primeira Fila existe para encontrar as duas.</p>
+          <p>Shows, teatro, ópera, dança, arte, cinema, esporte e experiências para descobrir — com critérios, contexto, informação verificada e uma agenda que vai além do fim de semana.</p>
+          <span class="pill">Curadoria · Informação · Experiência</span>
+        </div>
+      </div>
+    </section>
+    <div class="wrap"><div class="rule"></div></div>
+    <section class="section" id="editorias" aria-labelledby="sections-title">
+      <div class="wrap">
+        <div class="section-number">02 / Nossas editorias</div>
+        <div class="section-header">
+          <h2 id="sections-title">A cena é<br><i>múltipla.</i></h2>
+          <span class="caption">O que a revista acompanha</span>
+        </div>
+        <div class="departments">
+          <article class="dept dept-big">
+            <div class="seq">01 — AO VIVO</div>
+            <div class="deco" aria-hidden="true"></div>
+            <div style="position:relative;z-index:1">
+              <h3>Música<br>que move.</h3>
+              <p>Rock, pop, jazz, blues, indie, eletrônica, clássica e festivais. Da apresentação intimista à grande turnê internacional.</p>
+            </div>
+          </article>
+          <article class="dept dept-med">
+            <div class="seq">02 — EM CENA</div>
+            <div>
+              <h3>Palcos &amp;<br>histórias.</h3>
+              <p>Teatro, musicais, ópera, balé e dança. Elenco, direção e o que faz cada montagem merecer atenção.</p>
+            </div>
+          </article>
+          <article class="dept dept-half">
+            <div class="seq">03 — NA TELA</div>
+            <div>
+              <h3>Cinema.</h3>
+              <p>Estreias, filmes em cartaz e sessões verificadas, especialmente em Indaiatuba e Campinas.</p>
+            </div>
+          </article>
+          <article class="dept dept-half">
+            <div class="seq">04 — AO VIVO, DE NOVO</div>
+            <div>
+              <h3>Esporte.</h3>
+              <p>Jogos de futebol de destaque, basquete, vôlei, tênis, automobilismo e grandes decisões.</p>
+            </div>
+          </article>
+          <article class="dept dept-half">
+            <div class="seq">05 — PARA EXPLORAR</div>
+            <div>
+              <h3>Descobertas.</h3>
+              <p>Arte, museus, ciência, história, tecnologia, encontros e experiências interativas para diferentes idades.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section future" id="horizonte" aria-labelledby="future-title">
+      <div class="wrap future-inner">
+        <div>
+          <div class="section-number">03 / Antecipe a experiência</div>
+          <h2 id="future-title">No<br><i>horizonte.</i></h2>
+          <p>Uma revista não serve apenas para escolher o próximo sábado. Serve para saber quando abrir a agenda, reservar a viagem e comprar o ingresso certo — sem alarmismo nem falsa escassez.</p>
+        </div>
+        <div class="horizons">
+          <div class="horizon"><span>01</span><strong>Próximos 14 dias</strong></div>
+          <div class="horizon"><span>02</span><strong>De 15 a 90 dias</strong></div>
+          <div class="horizon"><span>03</span><strong>De 3 a 12 meses</strong></div>
+          <div class="horizon"><span>↗</span><strong>Ingressos e pré-vendas</strong></div>
+        </div>
+      </div>
+    </section>
+    <section class="section archive" id="arquivo" aria-labelledby="archive-title">
+      <div class="wrap archive-grid">
+        <div>
+          <div class="section-number" style="color:#f2bf6b">04 / Biblioteca</div>
+          <h2 id="archive-title">Toda edição tem uma história.</h2>
+          <p>As edições completas terão leitura direta no navegador e uma versão em PDF para guardar ou compartilhar.</p>
+        </div>
+        <div class="archive-stamp">
+          <small>Estado da publicação</small>
+          <strong>A edição digital inaugural está em preparação.</strong>
+          <span>As matérias, fotografias oficiais e links de ingressos serão publicados aqui após a revisão editorial. Este endereço é a apresentação inicial da revista — não uma agenda de eventos já verificada.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="brand">PRIMEIRA <span>FILA.</span></div>
+      <p>Cultura · Cinema · Esporte · Experiências<br>Indaiatuba · Campinas · São Paulo e região</p>
+    </div>
+  </footer>
+</body>
+</html>
