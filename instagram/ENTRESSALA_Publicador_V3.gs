@@ -53,7 +53,7 @@ function eV3VerificarMidias_(post) {
   if (post.kind !== 'lancamento' && days > 2) throw new Error('Verificação dos eventos tem mais de 48 horas: ' + post.id);
   if (!Array.isArray(post.images) || post.images.length < 1 || post.images.length > 20) throw new Error('Quantidade de imagens inválida: ' + post.id);
   if (post.images.some(x=>!/^https:\/\/raw\.githubusercontent\.com\/luisedferrari-ctrl\/primeira-fila-revista\/entressala-piloto-2026-11\/instagram\/assets\//.test(x))) throw new Error('URL da imagem fora do diretório controlado.');
-  if (!post.caption || post.caption.length > 2100 || !post.first_comment) throw new Error('Legenda/créditos incompletos.');
+  if (!post.caption || post.caption.length > 2100) throw new Error('Legenda ausente ou longa demais; créditos devem constar na legenda.');
 }
 function eV3ConferirImagem_(url) {
   let r=UrlFetchApp.fetch(url, {method:'head',muteHttpExceptions:true,followRedirects:true});
@@ -109,7 +109,7 @@ function eV3CriarPost_(post, mode, dueAt) {
       'channelId: '+JSON.stringify(E_V3.CHANNEL)+','+
       'schedulingType: automatic, mode: '+validMode+due+','+
       'assets: '+assets+','+
-      'metadata: { instagram: { type: post, shouldShareToFeed: true, firstComment: '+JSON.stringify(post.first_comment)+' } }'+
+      'metadata: { instagram: { type: post, shouldShareToFeed: true } }'+
       '}) { ... on PostActionSuccess { post { id status dueAt } } ... on MutationError { message } } }';
     const result=eV3Buffer_(query);
     eV3Props_().setProperty(key,'ID '+result.id+' STATUS '+(result.status||'indefinido')+' DUE '+(result.dueAt||'sem-horario'));
