@@ -1,6 +1,10 @@
 name: ENTRESSALA - Imagens reais do Instagram
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/entressala-imagens.yml'
   schedule:
     - cron: '27 15 * * *' # diario 12:27 BRT, inclusive depois da primeira semana
 permissions:
