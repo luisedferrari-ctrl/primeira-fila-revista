@@ -1,0 +1,65 @@
+{
+  "brand": "ENTRESSALA",
+  "channel": "@entressala_",
+  "timezone": "America/Sao_Paulo",
+  "version": 3,
+  "editorial_policy": {
+    "posts_per_week": 5,
+    "days": ["MON", "TUE", "WED", "THU", "FRI"],
+    "indefinite": true,
+    "real_photographs_only": true,
+    "photo_credit_required": true,
+    "no_synthetic_event_images": true,
+    "source_fact_check_required": true
+  },
+  "posts": [
+    {
+      "id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17",
+      "valid_through_local_date": "2026-11-21",
+      "kind": "lancamento",
+      "verified_at": "2026-11-17",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "caption": "Entre Indaiatuba, Campinas e São Paulo, cabem concertos, exposições, peças e programas que muitas vezes passam despercebidos.\n\nA ENTRESSALA acompanha a vida cultural da região. Pesquisa a programação, conta o contexto por trás das atrações e reúne as informações necessárias para decidir o que fazer.\n\nMúsica, teatro, cinema, museus, esporte e descobertas. Às vezes, o melhor programa está perto. Em outras, vale pegar a estrada.\n\nEste perfil começa por aqui. A revista digital completa está em preparação.\n\nFotografias reais de arquivo, não registros da programação de novembro de 2026. Créditos e licenças: veja o primeiro comentário e o registro de fontes da ENTRESSALA.",
+      "factual_sources": [
+        "https://commons.wikimedia.org/wiki/File:Parque_Ecol%C3%B3gico_-_Indaiatuba_-_panoramio.jpg",
+        "https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_Cultura_Campinas.jpg",
+        "https://commons.wikimedia.org/wiki/File:Concerto_na_Sala_S%C3%A3o_Paulo.jpg",
+        "https://commons.wikimedia.org/wiki/File:Teatro_Municipal_Castro_Mendes.jpg",
+        "https://commons.wikimedia.org/wiki/File:Pinacoteca_de_S%C3%A3o_Paulo.jpg"
+      ],
+      "slides": [
+        {"title":"ENTRESSALA","eyebrow":"REVISTA CULTURAL","subtitle":"Indaiatuba, Campinas e São Paulo","file":"Parque Ecológico - Indaiatuba - panoramio.jpg","photographer":"Danilo Bertelli","license":"CC BY 3.0","license_url":"https://creativecommons.org/licenses/by/3.0/","year":"2012","context":"FOTO DO LOCAL · ARQUIVO","rights_checked_at":"2026-11-17"},
+        {"title":"A cultura também acontece perto de casa.","eyebrow":"CAMPINAS","subtitle":"Música, exposições e encontros na região","file":"Estação Cultura Campinas.jpg","photographer":"Edison Marcon","license":"CC BY-SA 4.0","license_url":"https://creativecommons.org/licenses/by-sa/4.0/","year":"2018","context":"FOTO DO LOCAL · ARQUIVO","rights_checked_at":"2026-11-17"},
+        {"title":"Algumas noites justificam a viagem.","eyebrow":"SÃO PAULO","subtitle":"Concertos, teatro e grandes palcos","file":"Concerto na Sala São Paulo.jpg","photographer":"Henrique Boney","license":"CC BY-SA 4.0","license_url":"https://creativecommons.org/licenses/by-sa/4.0/","year":"2014","context":"FOTO DE ARQUIVO","rights_checked_at":"2026-11-17"},
+        {"title":"Arte também é descobrir outros caminhos.","eyebrow":"CAMPINAS","subtitle":"Teatro, cinema, dança e novas ideias","file":"Teatro Municipal Castro Mendes.jpg","photographer":"Raphael Figueira","license":"CC BY-SA 3.0","license_url":"https://creativecommons.org/licenses/by-sa/3.0/","year":"2016","context":"FOTO DO LOCAL · ARQUIVO","rights_checked_at":"2026-11-17"},
+        {"title":"Boa programação. Boas histórias.","eyebrow":"A REVISTA","subtitle":"A edição digital completa está em preparação","file":"Pinacoteca de São Paulo.jpg","photographer":"Nani carneiro","license":"CC BY-SA 4.0","license_url":"https://creativecommons.org/licenses/by-sa/4.0/","year":"2016","context":"FOTO DO LOCAL · ARQUIVO","rights_checked_at":"2026-11-17"}
+      ]
+    },
+    {
+      "id": "ENTRESSALA-IG-20261118-FIMDESEMANA",
+      "publish_local_date": "2026-11-18",
+      "valid_through_local_date": "2026-11-20",
+      "kind": "selecao_semana",
+      "verified_at": "2026-11-17",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "caption": "Um fim de semana de música, cultura urbana e boas exposições entre Campinas e São Paulo.\n\nNo Best of Blues and Rock, Eddie Vedder sobe ao palco no Ibirapuera em 20 e 22/11; Roger Daltrey, Chris Isaak, Christone Kingfish Ingram e Artur Menezes estão na programação de sábado, 21. As datas de Eddie aparecem esgotadas; a bilheteria oficial indicava ingressos para sábado em 17/11.\n\nNo domingo, 22, o Campinas Hip Hop Festival ocupa a Estação Cultura, das 13h às 22h, com Edi Rock, KL Jay, Dexter, Tasha & Tracie e outros artistas. Entrada e estacionamento gratuitos.\n\nA Pina Estação recebe a exposição A fúria dos restos vivos, de Sara Ramo, até 18/04/2027. A fotografia da Pinacoteca neste carrossel mostra a Pina Luz (outro edifício), não a mostra nem a Pina Estação.\n\nAs fotografias dos artistas são de arquivo, de anos anteriores. Confirme horários e ingressos nos organizadores antes de sair. Fontes: bestofbluesandrock.com.br, ticketmaster.com.br, campinas.sp.gov.br e pinacoteca.org.br.\n\nCréditos e licenças das imagens no primeiro comentário.",
+      "factual_sources": [
+        "https://www.bestofbluesandrock.com.br/",
+        "https://www.ticketmaster.com.br/event/best-of-blues-and-rock",
+        "https://campinas.sp.gov.br/noticias/estacao-cultura-recebe-13-edicao-do-campinas-hip-hop-festival-no-dia-22-de-novembro-151750",
+        "https://pinacoteca.org.br/programacao/exposicoes/sara-ramo/"
+      ],
+      "slides": [
+        {"title":"Três dias para sair de casa.","eyebrow":"20—22 NOV · SP & CAMPINAS","subtitle":"Shows, hip-hop e exposição em cartaz","file":"Eddie Vedder 2018.jpg","photographer":"Raph_PH","license":"CC BY 2.0","license_url":"https://creativecommons.org/licenses/by/2.0/","year":"2018","context":"FOTO DE ARQUIVO · ARTISTA","rights_checked_at":"2026-11-17"},
+        {"title":"Eddie Vedder no Ibirapuera.","eyebrow":"20 E 22 NOV · SÃO PAULO","subtitle":"Datas esgotadas na consulta de 17/11","file":"Eddie Vedder 2018.jpg","photographer":"Raph_PH","license":"CC BY 2.0","license_url":"https://creativecommons.org/licenses/by/2.0/","year":"2018","context":"FOTO DE ARQUIVO · ARTISTA","rights_checked_at":"2026-11-17"},
+        {"title":"Roger Daltrey, Chris Isaak e blues.","eyebrow":"21 NOV · SÃO PAULO","subtitle":"Ingressos na bilheteria oficial: verificar lote","file":"Roger Daltrey (2008).jpg","photographer":"Mike Kubacheck","license":"CC BY 2.0","license_url":"https://creativecommons.org/licenses/by/2.0/","year":"2008","context":"FOTO DE ARQUIVO · ARTISTA","rights_checked_at":"2026-11-17"},
+        {"title":"Hip-hop gratuito em Campinas.","eyebrow":"22 NOV · 13H ÀS 22H","subtitle":"Edi Rock, KL Jay, Dexter e muitos outros","file":"Racionais MC's (12197895433).jpg","photographer":"Fernando Eduardo","license":"CC BY 2.0","license_url":"https://creativecommons.org/licenses/by/2.0/","year":"2013","context":"FOTO DE ARQUIVO · EDI ROCK","rights_checked_at":"2026-11-17"},
+        {"title":"Domingo na Estação Cultura.","eyebrow":"CAMPINAS · 22 NOV","subtitle":"Entrada gratuita · estacionamento gratuito","file":"Estação Cultura Campinas.jpg","photographer":"Edison Marcon","license":"CC BY-SA 4.0","license_url":"https://creativecommons.org/licenses/by-sa/4.0/","year":"2018","context":"FOTO DO LOCAL · ARQUIVO","rights_checked_at":"2026-11-17"},
+        {"title":"Arte para uma visita sem pressa.","eyebrow":"PINACOTECA · SÃO PAULO","subtitle":"Sara Ramo na Pina Estação · foto da Pina Luz","file":"Pinacoteca de São Paulo.jpg","photographer":"Nani carneiro","license":"CC BY-SA 4.0","license_url":"https://creativecommons.org/licenses/by-sa/4.0/","year":"2016","context":"FOTO DA PINA LUZ (NÃO DA EXPOSIÇÃO)","rights_checked_at":"2026-11-17"}
+      ]
+    }
+  ]
+}
