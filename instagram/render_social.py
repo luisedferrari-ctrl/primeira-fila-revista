@@ -12,6 +12,7 @@ import os
 import pathlib
 import re
 import textwrap
+import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from urllib.parse import quote
@@ -24,6 +25,8 @@ SOURCE = ROOT / 'fila-editorial.json'
 ASSET_DIR = ROOT / 'assets'
 PUBLISH_FILE = ROOT / 'fila-publicavel.json'
 USER_AGENT = 'ENTRESSALACulturalEditorialBot/0.1 (https://github.com/luisedferrari-ctrl/primeira-fila-revista; rights-cleared images)'
+PHOTO_CACHE = {}
+NEXT_FETCH_EARLIEST = 0.0
 OWNER = 'luisedferrari-ctrl/primeira-fila-revista'
 BRANCH = 'entressala-piloto-2026-11'
 W, H = 1080, 1350
@@ -67,6 +70,7 @@ def get_font(kind, size):
 
 
 def fetch_photo(slide, test_placeholders=False, slide_number=0):
+    global NEXT_FETCH_EARLIEST
     if test_placeholders:
         # Development-only reference texture, NEVER published.
         img = Image.new('RGB', (1080, 1350), (29 + slide_number * 17, 55 + slide_number * 8, 47))
@@ -74,9 +78,27 @@ def fetch_photo(slide, test_placeholders=False, slide_number=0):
         d.text((90, 400), 'TESTE DE LAYOUT - SEM FOTO REAL', fill=(255, 220, 200), font=get_font('sans_bold', 40))
         return img
     filename = slide['file']
+    if filename in PHOTO_CACHE:
+        return PHOTO_CACHE[filename].copy()
     source = commons_direct_url(filename)
-    response = requests.get(source, headers={'User-Agent': USER_AGENT}, timeout=60)
-    response.raise_for_status()
+    response = None
+    for attempt in range(1, 5):
+        # Wikimedia rate limits automated requests; do not download in a burst.
+        now = time.monotonic()
+        if now < NEXT_FETCH_EARLIEST:
+            time.sleep(NEXT_FETCH_EARLIEST - now)
+        response = requests.get(source, headers={'User-Agent': USER_AGENT}, timeout=60)
+        NEXT_FETCH_EARLIEST = time.monotonic() + 7.0
+        if response.status_code in (429, 502, 503):
+            suggested = response.headers.get('Retry-After', '')
+            delay = min(180, int(suggested)) if suggested.isdigit() else 30 * attempt
+            print('Rate limited by Wikimedia ({}), retry {} in {}s: {}'.format(response.status_code, attempt, delay, filename), flush=True)
+            time.sleep(delay)
+            continue
+        response.raise_for_status()
+        break
+    else:
+        raise RuntimeError('Wikimedia download blocked after pacing/retries: ' + filename + ' (nothing published)')
     if not response.headers.get('Content-Type', '').lower().startswith('image/'):
         raise ValueError('Commons did not return image: ' + source)
     if len(response.content) < 18000:
@@ -84,6 +106,7 @@ def fetch_photo(slide, test_placeholders=False, slide_number=0):
     img = Image.open(io.BytesIO(response.content)).convert('RGB')
     if min(img.size) < 700:
         raise ValueError('Image insufficiently resolved: {} {}'.format(filename, img.size))
+    PHOTO_CACHE[filename] = img.copy()
     return img
 
 
@@ -191,14 +214,24 @@ def render(manifest_path, test_placeholders=False):
         folder.mkdir(parents=True, exist_ok=True)
         urls = []
         firstcomment = ['Créditos das fotografias (todas de arquivo, com cortes e sobreposição editorial):']
+        signature = hashlib.sha256(json.dumps(post, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+        sigfile = folder / '_source_hash.txt'
+        expected_files = [folder / '{:02d}.jpg'.format(index) for index in range(1, len(post['slides']) + 1)]
+        cached = (not test_placeholders and sigfile.exists() and sigfile.read_text().strip() == signature
+                  and all(p.exists() and p.stat().st_size > 50000 for p in expected_files))
+        if cached:
+            print('Reusing already credited JPEGs (no Wikimedia download): ' + post['id'], flush=True)
         for index, slide in enumerate(post['slides'], start=1):
-            img = fetch_photo(slide, test_placeholders, index)
-            composed = draw_card(img, slide, index, len(post['slides']))
             filename = '{:02d}.jpg'.format(index)
-            composed.save(folder / filename, 'JPEG', quality=89, optimize=True, subsampling=0)
+            if not cached:
+                img = fetch_photo(slide, test_placeholders, index)
+                composed = draw_card(img, slide, index, len(post['slides']))
+                composed.save(folder / filename, 'JPEG', quality=89, optimize=True, subsampling=0)
             rawpath = 'instagram/assets/{}/{}'.format(post['id'], filename)
             urls.append('https://raw.githubusercontent.com/{}/{}/{}'.format(OWNER, BRANCH, rawpath))
             firstcomment.append('{}: {} ({}) · {}. Fonte: {} · licença {}'.format(index, slide['photographer'], slide['year'], slide['license'], commons_source_url(slide['file']), slide['license_url']))
+        if not test_placeholders:
+            sigfile.write_text(signature + '\n', encoding='utf-8')
         (folder / 'CREDITOS.md').write_text(create_credits(post), encoding='utf-8')
         item = {k:v for k,v in post.items() if k != 'slides'}
         item['images'] = urls
