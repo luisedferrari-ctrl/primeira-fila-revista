@@ -56,11 +56,23 @@ function eV3VerificarMidias_(post) {
   if (!post.caption || post.caption.length > 2100) throw new Error('Legenda ausente ou longa demais; créditos devem constar na legenda.');
 }
 function eV3ConferirImagem_(url) {
-  let r=UrlFetchApp.fetch(url, {method:'head',muteHttpExceptions:true,followRedirects:true});
-  if (r.getResponseCode()===405) r=UrlFetchApp.fetch(url, {muteHttpExceptions:true,followRedirects:true});
-  if (r.getResponseCode()<200 || r.getResponseCode()>299) throw new Error('Imagem pública indisponível: HTTP '+r.getResponseCode()+ ' '+url);
-  const t=String(r.getHeaders()['Content-Type']||r.getHeaders()['content-type']||'').toLowerCase();
-  if (t && !t.includes('image/')) throw new Error('A URL não é uma imagem: '+url);
+  // Apps Script UrlFetchApp aceita GET, POST, PUT, PATCH e DELETE, mas NÃO HEAD.
+  // Range minimiza o volume transferido quando o servidor aceita respostas parciais.
+  const r = UrlFetchApp.fetch(url, {
+    method: 'get',
+    headers: {'Range': 'bytes=0-1023'},
+    muteHttpExceptions: true,
+    followRedirects: true
+  });
+  const status = r.getResponseCode();
+  if (status !== 200 && status !== 206) {
+    throw new Error('Imagem pública indisponível: HTTP ' + status + ' ' + url);
+  }
+  const headers = r.getHeaders();
+  const contentType = String(headers['Content-Type'] || headers['content-type'] || '').toLowerCase();
+  if (!contentType.startsWith('image/')) {
+    throw new Error('A URL não retornou uma imagem (Content-Type: ' + contentType + '): ' + url);
+  }
 }
 function entressalaV3Diagnostico() {
   eV3Token_();
