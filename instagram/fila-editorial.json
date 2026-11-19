@@ -13,7 +13,7 @@
       "FRI"
     ],
     "indefinite": true,
-    "real_photographs_only": true,
+    "real_photographs_only": false,
     "photo_credit_required": true,
     "no_synthetic_event_images": true,
     "source_fact_check_required": true,
@@ -27,7 +27,10 @@
     "require_visible_city_and_date_on_every_new_slide": true,
     "secondary_at_end_of_mixed_carousels": true,
     "permit_different_photos_of_same_artist": true,
-    "permit_official_posters_only_with_verified_instagram_republication_rights": true
+    "permit_official_posters_only_with_verified_instagram_republication_rights": true,
+    "photographs_primary": true,
+    "target_real_photo_fraction": 0.8,
+    "verified_authorized_photo_allowed": true
   },
   "posts": [
     {
