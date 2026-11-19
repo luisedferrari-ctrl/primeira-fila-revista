@@ -403,7 +403,8 @@ def render(manifest_path, test_placeholders=False):
                 image_credit_source(slide), image_license_evidence(slide)))
         if not test_placeholders:
             sigfile.write_text(signature + '\n', encoding='utf-8')
-        (folder / 'CREDITOS.md').write_text(create_credits(post), encoding='utf-8')
+        if is_new_post(post) or not (folder / 'CREDITOS.md').exists():
+            (folder / 'CREDITOS.md').write_text(create_credits(post), encoding='utf-8')
         item = {k:v for k,v in post.items() if k != 'slides'}
         item['images'] = urls
         item['credits_document'] = 'https://github.com/{}/blob/{}/instagram/assets/{}/CREDITOS.md'.format(OWNER, BRANCH, post['id'])
