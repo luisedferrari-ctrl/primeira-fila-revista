@@ -117,7 +117,7 @@ class EditorialImagePolicyTest(unittest.TestCase):
         self.assertTrue(ed.validate(p))
         self.assertEqual(ed.image_key(s), 'authorized_photo:https://cdn.example.org/artist.jpg')
 
-    def test_different_url_query_not_duplicate_photo(self):
+    def test_url_query_variation_cannot_bypass_duplicate_detection(self):
         p = post('NOVO', slides=[slide('A.jpg'), slide('B.jpg')])
         a = p['slides'][0]
         b = p['slides'][1]
