@@ -69,7 +69,7 @@ def safe_https_image_url(url):
 
 
 def image_source_url(slide):
-    if slide.get('asset_type') == 'official_poster':
+    if slide.get('asset_type') in ('official_poster', 'authorized_photo'):
         return slide['image_url']
     return commons_direct_url(slide['file'])
 
@@ -85,10 +85,10 @@ def image_license_evidence(slide):
 
 
 def image_key(slide):
-    if slide.get('asset_type') == 'official_poster':
+    if slide.get('asset_type') in ('official_poster', 'authorized_photo'):
         safe_https_image_url(slide.get('image_url', ''))
         u = urlsplit(slide['image_url'])
-        return 'poster:' + urlunsplit(('https', u.netloc.casefold(), u.path, '', ''))
+        return slide['asset_type'] + ':' + urlunsplit(('https', u.netloc.casefold(), u.path, '', ''))
     filename = unicodedata.normalize('NFKC', str(slide.get('file', '')))
     return 'commons:' + filename.replace('_', ' ').strip().casefold()
 
@@ -196,7 +196,7 @@ def fetch_photo(slide, test_placeholders=False, slide_number=0):
     if key in PHOTO_CACHE:
         return PHOTO_CACHE[key].copy()
     source = image_source_url(slide)
-    if slide.get('asset_type') == 'official_poster':
+    if slide.get('asset_type') in ('official_poster', 'authorized_photo'):
         safe_https_image_url(source)
     response = None
     for attempt in range(1, 5):
@@ -216,7 +216,7 @@ def fetch_photo(slide, test_placeholders=False, slide_number=0):
         break
     else:
         raise RuntimeError('Wikimedia download blocked after pacing/retries: ' + filename + ' (nothing published)')
-    if slide.get('asset_type') == 'official_poster':
+    if slide.get('asset_type') in ('official_poster', 'authorized_photo'):
         safe_https_image_url(response.url)
     if not response.headers.get('Content-Type', '').lower().startswith('image/'):
         raise ValueError('Commons did not return image: ' + source)
@@ -313,11 +313,11 @@ def validate(post):
         if not slide.get('photographer') or not slide.get('rights_checked_at'):
             raise ValueError('Incomplete attribution/rights: ' + post['id'])
         asset_type = slide.get('asset_type', 'photo')
-        if asset_type == 'official_poster':
+        if asset_type in ('official_poster', 'authorized_photo'):
             if not (fresh and slide.get('image_url') and slide.get('source_page_url')
                     and slide.get('permission_evidence_url') and slide.get('instagram_use_allowed') is True
                     and slide.get('license') == 'PERMISSAO EDITORIAL'):
-                raise ValueError('Official poster lacks documented permission: ' + post['id'])
+                raise ValueError('Official image/poster lacks documented republication rights: ' + post['id'])
             safe_https_image_url(slide['image_url'])
             safe_https_image_url(slide['source_page_url'])
             safe_https_image_url(slide['permission_evidence_url'])
@@ -351,7 +351,9 @@ def create_credits(post):
            'Imagens de arquivo não são necessariamente registros da edição anunciada.',
            'As mídias podem ter cortes, vinheta e texto editorial sobreposto.', '']
     for idx, slide in enumerate(post['slides'], start=1):
-        asset_name = 'Cartaz oficial' if slide.get('asset_type') == 'official_poster' else 'Fotografia'
+        asset_name = ('Cartaz oficial' if slide.get('asset_type') == 'official_poster'
+                      else 'Fotografia autorizada' if slide.get('asset_type') == 'authorized_photo'
+                      else 'Fotografia')
         out.append('{}. **{}** — {}: {}, {}. Fonte: {}. Direitos: {} ({}). Contexto: {}. Adaptação: corte, vinheta e diagramação.'.format(
             idx, slide['title'], asset_name, slide['photographer'],
             slide.get('year', 's.d.'), image_credit_source(slide),
