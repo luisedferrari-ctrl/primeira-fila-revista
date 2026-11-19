@@ -1,0 +1,87 @@
+name: ENTRESSALA - Validar revista no site publico
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'edicoes/**'
+      - '.github/workflows/entressala-site-smoke.yml'
+permissions:
+  contents: read
+concurrency:
+  group: entressala-site-smoke
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testar HTTP e conteudo do site de producao apos deploy
+        env:
+          BASE_URL: https://primeira-fila-revista.pages.dev
+        run: |
+          python - <<'PY'
+          import os, re, time
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError, URLError
+
+          editions = sorted(
+              d.name for d in Path('edicoes').iterdir()
+              if d.is_dir() and re.fullmatch(r'20\d{2}-\d{2}-\d{2}', d.name)
+              and (d / 'index.html').is_file()
+          )
+          assert editions, 'Nenhuma edicao digital encontrada'
+          latest = editions[-1]
+          root = Path('edicoes') / latest
+          article_paths = sorted(root.glob('materias/*/index.html'))
+          assert len(article_paths) >= 3, 'Edicao sem tres reportagens'
+          base = os.environ['BASE_URL'].rstrip('/')
+          targets = [
+              ('/', 'ENTRESSALA'),
+              (f'/edicoes/{latest}/', 'ENTRESSALA'),
+              (f'/edicoes/{latest}/estilo.css', 'cover'),
+              (f'/edicoes/{latest}/agenda.js', 'agenda'),
+          ] + [
+              ('/' + str(path.parent).replace(os.sep, '/') + '/', 'ENTRESSALA')
+              for path in article_paths
+          ]
+          failures = []
+          for attempt in range(1, 11):
+              failures = []
+              for route, expected in targets:
+                  url = base + route
+                  request = Request(url, headers={'User-Agent': 'ENTRESSALA-public-smoke/1.0', 'Cache-Control': 'no-cache'})
+                  try:
+                      with urlopen(request, timeout=18) as response:
+                          status = response.status
+                          data = response.read(140000).decode('utf-8', 'replace')
+                      if status != 200:
+                          failures.append(f'{route}: HTTP {status}')
+                      elif expected.lower() not in data.lower():
+                          failures.append(f'{route}: texto esperado ausente ({expected})')
+                      elif route.endswith('/') and 'noindex' in data.lower():
+                          failures.append(f'{route}: NOINDEX incorreto para publicacao')
+                  except (HTTPError, URLError, TimeoutError, OSError) as e:
+                      failures.append(f'{route}: {type(e).__name__}: {str(e)[:170]}')
+              if not failures:
+                  break
+              print(f'Tentativa {attempt}/10: {len(failures)} paginas ainda sem confirmacao:', *failures, sep='\n', flush=True)
+              if attempt < 10:
+                  time.sleep(20)
+          summary = os.environ.get('GITHUB_STEP_SUMMARY')
+          if summary:
+              with open(summary,'a',encoding='utf8') as f:
+                  f.write('## ENTRESSALA — Site publico\n')
+                  f.write(f'Edicao: **{latest}** — {len(targets)} URLs conferidas.\n\n')
+                  f.write(('**SUCESSO**' if not failures else '**FALHA**') + '\n\n')
+                  for route,_ in targets:
+                      f.write(f'- {base + route}\n')
+                  if failures:
+                      f.write('\n' + '\n'.join(failures) + '\n')
+          if failures:
+              raise SystemExit('Site nao passou no teste publico: ' + '; '.join(failures))
+          print('CONFIRMADO: HTTP 200 + marca correta + sem noindex em', len(targets), 'rotas para', latest)
+          PY
