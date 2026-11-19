@@ -1,0 +1,9 @@
+{
+  "id": "EC-2099-12-31",
+  "modo": "SIMULACAO_C02",
+  "fase": "pesquisa",
+  "concluida": true,
+  "fatos_reais": false,
+  "conteudo": "Dado ficticio neutro para testar retomada; nao gerar revista, email ou publicacao.",
+  "verificacao": "sem fonte externa necessaria por ser fixture de teste"
+}
