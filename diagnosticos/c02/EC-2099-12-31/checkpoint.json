@@ -2,9 +2,9 @@
   "id": "EC-2099-12-31",
   "modo": "SIMULACAO_C02",
   "branch": "entressala-diagnostico-c02-20261119",
-  "estado": "INTERROMPIDO_APOS_PESQUISA",
-  "ultima_etapa_concluida": "pesquisa",
-  "proxima_etapa": "dados_editoriais",
+  "estado": "RETOMADA_COM_DADOS_CONCLUIDOS",
+  "ultima_etapa_concluida": "dados_editoriais",
+  "proxima_etapa": "html_css_js",
   "etapas": {
     "pesquisa": {
       "status": "concluida",
@@ -12,7 +12,9 @@
       "blob_sha": "1f1cce32d68d72ff8ad2b1f3fad33b7d0dc8424b"
     },
     "dados_editoriais": {
-      "status": "pendente"
+      "status": "concluida",
+      "arquivo": "diagnosticos/c02/EC-2099-12-31/dados-editoriais.json",
+      "blob_sha": "86222ff83f3b1fba3323f3fc38ad10a7a301edb5"
     },
     "html_css_js": {
       "status": "pendente"
