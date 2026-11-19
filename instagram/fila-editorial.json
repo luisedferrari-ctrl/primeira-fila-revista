@@ -16,7 +16,18 @@
     "real_photographs_only": true,
     "photo_credit_required": true,
     "no_synthetic_event_images": true,
-    "source_fact_check_required": true
+    "source_fact_check_required": true,
+    "visual_policy_version": "2026-11-18",
+    "applies_to_new_posts_from": "2026-11-23",
+    "priority": "mass_appeal_first",
+    "growth_and_discovery": true,
+    "no_generic_images": true,
+    "no_reused_image_within_or_across_posts": true,
+    "use_image_history": "instagram/image-history.json",
+    "require_visible_city_and_date_on_every_new_slide": true,
+    "secondary_at_end_of_mixed_carousels": true,
+    "permit_different_photos_of_same_artist": true,
+    "permit_official_posters_only_with_verified_instagram_republication_rights": true
   },
   "posts": [
     {
