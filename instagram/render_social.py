@@ -81,7 +81,9 @@ def image_credit_source(slide):
 
 
 def image_license_evidence(slide):
-    return slide.get('license_url') or slide.get('permission_evidence_url', '')
+    if slide.get('asset_type') in ('official_poster', 'authorized_photo'):
+        return slide.get('permission_evidence_url', '')
+    return slide.get('license_url', '')
 
 
 def image_key(slide):
