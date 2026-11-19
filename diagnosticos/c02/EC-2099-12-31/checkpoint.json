@@ -1,0 +1,38 @@
+{
+  "id": "EC-2099-12-31",
+  "modo": "SIMULACAO_C02",
+  "branch": "entressala-diagnostico-c02-20261119",
+  "estado": "INTERROMPIDO_APOS_PESQUISA",
+  "ultima_etapa_concluida": "pesquisa",
+  "proxima_etapa": "dados_editoriais",
+  "etapas": {
+    "pesquisa": {
+      "status": "concluida",
+      "arquivo": "diagnosticos/c02/EC-2099-12-31/pesquisa.json",
+      "blob_sha": "1f1cce32d68d72ff8ad2b1f3fad33b7d0dc8424b"
+    },
+    "dados_editoriais": {
+      "status": "pendente"
+    },
+    "html_css_js": {
+      "status": "pendente"
+    },
+    "main": {
+      "status": "pendente"
+    },
+    "http": {
+      "status": "pendente"
+    },
+    "manifesto": {
+      "status": "nao_criado"
+    },
+    "enviadas": {
+      "status": "nao_enviado"
+    },
+    "gmail": {
+      "status": "nao_enviado"
+    }
+  },
+  "nenhum_envio": true,
+  "nenhuma_publicacao": true
+}
