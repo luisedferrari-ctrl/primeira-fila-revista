@@ -1,21 +1,32 @@
 # ENTRESSALA — Diretriz de fotografia para Instagram
-**Versão:** 2026-11-17  
-**Status:** diretriz editorial para a branch piloto; não autoriza publicação de nenhum post.
+**Versão:** 2026-11-18  
+**Status:** diretriz editorial aprovada para novas criações automáticas a partir de 23/11/2026; não autoriza reenviar/editar posts históricos ou dispensar verificações de direitos.
 
 ## Princípio
 O Instagram da ENTRESSALA é a extensão visual de uma revista cultural, não um catálogo de pôsteres tipográficos. Fotografias autênticas e relevantes devem ser predominantes. Como padrão, **ao menos 80% dos slides de cada carrossel devem conter imagens fotográficas reais**, idealmente um registro do próprio evento, artista, obra, cena ou espaço noticiado. A fotografia deve dominar a composição; design e tipografia organizam a informação.
 
-## Ordem de preferência das imagens
-1. Fotografia específica do evento/obra/exposição/produção em pauta, licenciada ou autorizada para o uso em Instagram.
-2. Fotografia oficial de divulgação, desde que seu titular tenha concedido o uso editorial nas redes sociais.
-3. Retrato ou fotografia real de arquivo do artista/companhia, com indicação visível de **FOTO DE ARQUIVO** e ano/local quando conhecido.
-4. Fotografia real do equipamento cultural/venue, claramente descrita como **FOTO DO LOCAL** (não como imagem da edição ou da obra).
-5. Arte tipográfica original apenas como exceção justificada (sem retratar ficticiamente eventos reais).
+## Ordem de preferência das imagens (novas publicações a partir de 23/11)
+1. Fotografia específica e impactante do evento/obra/espetáculo/artista, com licença ou autorização válida para Instagram.
+2. Fotografia oficial de divulgação visualmente forte, desde que o titular autorize explicitamente a republicação.
+3. Outra fotografia AUTÊNTICA do mesmo artista/companhia, inédita na ENTRESSALA; se de arquivo, indicar **FOTO DE ARQUIVO** e contexto correto.
+4. **Cartaz oficial da atração**, somente como alternativa quando não houver foto adequada, com permissão/licença verificável para republicação no Instagram e visual de alta qualidade.
+5. Fotografia de equipamento cultural apenas quando o equipamento/local for realmente a atração ou assunto do slide; nunca como substituta genérica de uma apresentação.
 
-Não produzir imagens sintéticas de artistas, apresentações, plateias ou instalações e apresentá-las como documentais. Não copiar cartazes de produtores como padrão visual. Não usar foto genérica de banco de imagens para fingir que representa um evento.
+**Proibidas em novos posts:** fotografias ou cartazes genéricos, imagens criadas artificialmente para simular fatos, arte tipográfica de preenchimento, fotografias de evento/obra errada e qualquer ativo visual já usado em outro slide ou post. A mesma fotografia com novo corte, resolução, tratamento, título, nome de arquivo ou sobreposição continua sendo imagem REPETIDA. Cartaz oficialmente divulgado na internet não equivale a autorização de uso.
 
 ## Seleção de pautas
 Relevância e verificação factual continuam prioritárias, mas a existência de boas imagens autênticas e utilizáveis é um critério editorial relevante. Priorizar eventos com imagens reais boas e direitos esclarecidos. Quando a foto ideal estiver indisponível, solicitar material/autorização ao assessor/organizador; se isso não for resolvido, considerar alternativa de pauta com mérito equivalente. Não escolher evento medíocre apenas porque tem fotos.
+
+## Prioridade de alcance e composição do carrossel (aprovada em 18/11/2026)
+O Instagram deve atrair novos seguidores e funcionar como marketing cultural premium. **Priorizar atrações de massa, grandes shows nacionais e internacionais, festivais, grandes musicais, espetáculos teatrais, grandes concertos e eventos com apelo amplo**, desde que presentes na última edição publicada da revista e confirmados em fontes oficiais. Um grande evento de São Paulo pode ter prioridade sobre evento local menor; relevância real, informação de serviço e direitos permanecem obrigatórios. A proposta editorial da revista continua independente.
+
+**Meta de cinco posts semanais:** se não houver cinco pautas de grande alcance com imagens inéditas válidas, completar com atrações menores da mesma revista, nunca com pautas inventadas ou imagens genéricas. Em CARROSSEL MISTO, eventos de grande apelo vão na capa/início e atrações menores no final. Não preencher slides com a mesma fotografia do artista apenas para atingir quantidade. Imagens distintas do mesmo artista/produção são permitidas, mas só quando realmente diferentes e com direito de uso validado.
+
+**Regra absoluta de unicidade:** uma imagem-fonte só pode ser usada UMA VEZ na história editorial do Instagram da ENTRESSALA. Consultar registros de posts antigos, a fila completa e `instagram/image-history.json`. Bloquear reutilização por identidade de arquivo/URL e, quando disponível, assinatura visual; não contornar renomeando ou recortando imagens. O acervo de 17–18/11 contém repetições históricas e não deve ser editado/republicado; as fontes ali utilizadas também ficam indisponíveis para novos posts.
+
+**Data e cidade visíveis em TODOS os slides novos**, inclusive capa. Usar campos estruturados `date_label` (por exemplo, `20–22 NOV 2026`) e `city` (por exemplo, `SÃO PAULO`) para o renderizador exibir uma tarja legível, além dos campos já existentes. Usar `appeal_tier` com valores `cover`, `mass`, `secondary`; `mass` nunca vem depois de `secondary` na sequência. Quando houver datas ou cidades diversas na capa, indicar intervalo e cidades reais, sem sugerir falsamente que todos os eventos ocorrem em ambas as localidades.
+
+**Originais para cartaz autorizado:** `asset_type:'official_poster'`, `image_url` HTTPS direta do cartaz, `source_page_url` oficial, `permission_evidence_url` com comprovação legítima de licença/autorização, `instagram_use_allowed:true`, `license:'PERMISSAO EDITORIAL'` e titular identificado no campo de crédito. Para fotografias Commons manter `file` e dados CC já existentes; não sinalizar como apto se licença, autoria, resolução ou autorização estiverem insuficientes. O renderizador deve recusar posts novos que violem as regras verificáveis.
 
 ## Direitos e créditos
 **Crédito não equivale a permissão.** A disponibilidade de uma foto em site, press release, Instagram do artista, prefeitura ou revista não implica licença de republicação. Reutilizar quando houver licença aberta aplicável (verificar CC BY/CC BY-SA e todas as condições), licença de banco ou autorização verificável do titular que cubra o formato e o canal de publicação. Em imagens de obra de arte, verificar direitos sobre a obra representada, além da fotografia. Para CC BY-SA, cumprir também as condições de compartilhamento da adaptação; não usar licenças NC/ND sem avaliação específica.
@@ -29,7 +40,7 @@ Relevância e verificação factual continuam prioritárias, mas a existência d
 ## Direção de arte
 - Exportação 1080 × 1350 px, proporção 4:5, boas margens para os cortes do Instagram.
 - Foto ocupar cerca de 70–90% da superfície; tarja de leitura apenas onde necessário.
-- Marca ENTRESSALA discreta e consistente, títulos curtos, data, local e preço/ingressos quando verificados.
+- Marca ENTRESSALA discreta e consistente, títulos curtos e **DATA + CIDADE sempre legíveis em cada slide novo**, inclusive capa. Local e preço/ingressos quando verificados.
 - Creditar no próprio slide e no registro de fonte; não ocultar o autor sob UI, crops ou legendas minúsculas.
 - Não aplicar filtros que deturpem a obra ou imagem. Crop apenas quando os termos permitirem, com registro da adaptação.
 - Não apresentar fotos de edição anterior como edição de 2026; escrever `Foto de arquivo: artista em [ano]`.
@@ -45,7 +56,7 @@ Por padrão `approved:false` e `eligibleForScheduling:false`. Só virar `true` a
 **Post 2 — Seleção cultural, 6 slides:** capa fotográfica + fotografias pertinentes a cada pauta + serviço, com preferência por eventos de 20–22/11/2026. Candidatos documentados: Best of Blues and Rock (foto real de Eddie Vedder, identificada como arquivo e sob CC BY 2.0), Campinas Hip Hop Festival (foto real de Edi Rock, identificada como arquivo e sob CC BY 2.0), exposições da Pina Estação (foto do local, não da mostra), dança no Castro Mendes (foto real do local ou material autorizado da produção), resumo de serviço. Para cada candidatura revalidar datas, ingresso, direitos e adequação do ativo. Não apresentar imagens ilustrativas como registros específicos do evento.
 
 ## Operação
-Não criar posts publicados, agendamentos nem alterar os registros de `approved` ou `eligibleForScheduling` por causa desta diretriz. Preservar Buffer Free, automação de 5 posts/semana e publicação somente após aprovações, fact-check e homologação de mídia.
+Não criar posts retroativos, agendamentos nem alterar os registros históricos de `approved` ou `eligibleForScheduling` por causa desta diretriz. Aplicar a novas criações automáticas, que seguem verificações de direitos e fatos. Preservar Buffer Free, automação de 5 posts/semana e publicação somente após aprovações, fact-check e homologação de mídia.
 
 **Fontes de referência jurídica e visual**  
 Lei 9.610/1998, arts. 29 e 79: https://www2.camara.leg.br/legin/fed/lei/1998/lei-9610-19-fevereiro-1998-365399-normaatualizada-pl.html  
