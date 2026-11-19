@@ -27,6 +27,8 @@
     if (status) status.textContent = count + ' programa' + (count === 1 ? '' : 's') + ' encontrado' + (count === 1 ? '' : 's') + '.';
     if (empty) empty.hidden = count > 0;
   }
+  var picker = document.getElementById('agenda-city');
+  if (picker) picker.addEventListener('change', function () { city = picker.value; apply(); });
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
       city = button.getAttribute('data-filter-city');
