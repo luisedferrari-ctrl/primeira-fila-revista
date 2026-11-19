@@ -1,293 +1,34 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#11191b">
-  <meta name="description" content="Primeira Fila: uma revista de cultura, cinema, esporte e experiências em Indaiatuba, Campinas, São Paulo e região.">
-  <meta name="robots" content="index, follow">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Primeira Fila — Cultura e experiências">
-  <meta property="og:description" content="O melhor da cena. E o que vem por aí.">
-  <title>Primeira Fila | Cultura e experiências</title>
-  <style>
-    :root {
-      --ink: #142124;
-      --night: #111a1d;
-      --paper: #f3f0e9;
-      --warm: #e9e3d8;
-      --cream: #fff9ee;
-      --line: rgba(21, 34, 36, .18);
-      --accent: #d84e3b;
-      --gold: #f2bf6b;
-      --font-display: Georgia, "Times New Roman", serif;
-      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-    .skip { position: absolute; left: -999px; z-index: 99; background: white; padding: .8rem; }
-    .skip:focus { left: 1rem; top: 1rem; }
-    .wrap { width: min(100% - 42px, 1270px); margin-inline: auto; }
-    .topline { background: var(--night); color: #eceae4; border-bottom: 1px solid rgba(255,255,255,.13); }
-    .topline-inner { display: flex; justify-content: space-between; gap: 1rem; padding: 10px 0; font-size: 10px; font-weight: 650; letter-spacing: .17em; text-transform: uppercase; }
-    .masthead { background: var(--paper); border-bottom: 1px solid var(--line); }
-    .masthead-inner { min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
-    .brand { font-family: var(--font-display); font-weight: 700; font-size: clamp(25px, 3vw, 37px); letter-spacing: -.075em; line-height: 1; white-space: nowrap; }
-    .brand span { color: var(--accent); }
-    .nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px 23px; font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
-    .nav a { border-bottom: 2px solid transparent; padding: 6px 0; }
-    .nav a:hover, .nav a:focus-visible { border-bottom-color: var(--accent); }
-    .cover { background: var(--night); color: var(--cream); overflow: hidden; }
-    .cover-inner { display: grid; grid-template-columns: 1.15fr .85fr; min-height: min(740px, 78vw); }
-    .cover-text { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: clamp(28px, 5.2vw, 86px) clamp(20px, 4vw, 64px) clamp(34px, 5vw, 70px) 0; position: relative; z-index: 2; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .2em; font-weight: 730; font-size: 10px; line-height: 1.5; }
-    .eyebrow::before { content: ""; width: 27px; height: 2px; display: block; background: var(--accent); }
-    h1, h2, h3, p { margin-top: 0; }
-    .cover h1 { font-family: var(--font-display); font-size: clamp(84px, 11.7vw, 187px); line-height: .74; letter-spacing: -.095em; font-weight: 700; margin: auto 0 45px -10px; }
-    .cover h1 em { font-weight: 400; color: var(--gold); font-style: italic; }
-    .cover-sub { font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 33px); line-height: 1.21; max-width: 480px; letter-spacing: -.035em; margin-bottom: 24px; }
-    .cover-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: #c6ccca; }
-    .cover-art { position: relative; overflow: hidden; min-height: 450px; background: #bd4938; isolation: isolate; }
-    .cover-art:before { content: ""; position: absolute; inset: 0; background: linear-gradient(137deg, #e57954 0%, #b94031 40%, #652d2c 100%); }
-    .cover-art:after { content: ""; position: absolute; inset: -15%; background: repeating-linear-gradient(-18deg, transparent 0 11%, rgba(15,18,20,.055) 11.2% 11.5%, transparent 11.7% 22%); transform: rotate(-8deg); }
-    .art-halo { position: absolute; border: clamp(55px, 7vw, 120px) solid rgba(246, 200, 126, .78); width: 96%; aspect-ratio: 1; border-radius: 50%; right: -30%; top: -7%; box-shadow: 0 0 100px #5a26222e; }
-    .art-block { position: absolute; width: 54%; height: 67%; bottom: -12%; left: 7%; background: #152427; transform: rotate(14deg); }
-    .art-line { position: absolute; height: 2px; background: rgba(255,245,221,.85); width: 170%; transform: rotate(-28deg); left: -20%; top: 68%; }
-    .art-word { position: absolute; z-index: 2; top: 50%; right: 6%; transform: translateY(-45%) rotate(90deg); transform-origin: center; white-space: nowrap; font-family: var(--font-display); font-size: clamp(58px, 9vw, 145px); color: rgba(255,244,218,.86); letter-spacing: -.09em; font-weight: bold; }
-    .art-credit { position: absolute; z-index: 3; bottom: 24px; right: 24px; color: white; text-transform: uppercase; font-size: 9px; letter-spacing: .2em; }
-    .section { padding: clamp(65px, 8vw, 120px) 0; }
-    .intro-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(30px, 7vw, 115px); align-items: start; }
-    .section-number { color: var(--accent); font-size: 11px; letter-spacing: .19em; font-weight: 800; text-transform: uppercase; margin-bottom: 24px; }
-    .section h2 { font-family: var(--font-display); font-size: clamp(42px, 7.2vw, 96px); line-height: .93; letter-spacing: -.065em; margin-bottom: 30px; font-weight: 500; }
-    .intro-copy { padding-top: 10px; max-width: 650px; }
-    .intro-copy p { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.72; color: #405052; }
-    .pill { display: inline-flex; border: 1px solid var(--line); border-radius: 100px; padding: 8px 13px; font-size: 10px; text-transform: uppercase; letter-spacing: .13em; font-weight: 800; margin-top: 12px; }
-    .rule { height: 1px; background: var(--line); }
-    .section-header { display: flex; justify-content: space-between; align-items: end; gap: 2rem; border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 42px; }
-    .section-header h2 { margin: 0; }
-    .section-header .caption { color: #546261; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 700; }
-    .departments { display: grid; grid-template-columns: repeat(12,1fr); gap: 18px; }
-    .dept { position: relative; min-height: 270px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-    .dept .seq { font-size: 11px; letter-spacing: .16em; font-weight: 850; }
-    .dept h3 { font-size: clamp(29px, 3.4vw, 51px); line-height: .95; letter-spacing: -.055em; font-family: var(--font-display); font-weight: 500; margin-bottom: 14px; }
-    .dept p { font-size: 13px; line-height: 1.55; max-width: 310px; margin-bottom: 0; }
-    .dept-big { grid-column: span 7; min-height: 435px; background: #242f31; color: var(--cream); padding: clamp(30px, 4vw, 55px); }
-    .dept-big h3 { font-size: clamp(50px, 7vw, 103px); max-width: 510px; }
-    .dept-big .deco { position: absolute; right: -42px; bottom: -28%; width: 280px; height: 500px; border-radius: 50%; border: 62px solid #9c3e30; transform: rotate(45deg); opacity: .96; }
-    .dept-med { grid-column: span 5; min-height: 435px; background: var(--gold); }
-    .dept-half { grid-column: span 4; background: #dfd9cd; }
-    .dept-half:nth-of-type(5) { background: #e6af99; }
-    .dept-half:nth-of-type(6) { background: #d8e0dc; }
-    .dept a { text-decoration: underline; text-underline-offset: 3px; }
-    .future { background: #d9e1dd; }
-    .future-inner { display: grid; grid-template-columns: .95fr 1.05fr; gap: 70px; }
-    .future p { max-width: 490px; line-height: 1.75; color: #415153; }
-    .horizons { border-top: 1px solid rgba(21,34,36,.24); }
-    .horizon { display: grid; grid-template-columns: 45px 1fr; gap: 15px; padding: 22px 0; border-bottom: 1px solid rgba(21,34,36,.24); align-items: baseline; }
-    .horizon strong { font-family: var(--font-display); font-size: clamp(23px, 3.2vw, 39px); font-weight: 500; letter-spacing: -.05em; }
-    .horizon span { color: #465556; font-size: 11px; font-weight: 750; letter-spacing: .12em; }
-    .archive { background: var(--night); color: var(--cream); }
-    .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
-    .archive h2 { font-size: clamp(48px, 7vw, 92px); }
-    .archive p { color: #c0c8c6; line-height: 1.7; font-size: 16px; }
-    .archive-stamp { border: 1px solid rgba(255,255,255,.28); padding: 30px; }
-    .archive-stamp small { display: block; margin-bottom: 19px; color: var(--gold); text-transform: uppercase; letter-spacing: .17em; font-weight: 750; }
-    .archive-stamp strong { font-family: var(--font-display); font-size: 28px; font-weight: 500; line-height: 1.13; display: block; margin-bottom: 15px; }
-    .archive-stamp span { color: #c0c8c6; font-size: 13px; line-height: 1.5; }
-    .footer { background: #0b1113; color: #d9dedb; padding: 28px 0; }
-    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
-    .footer .brand { font-size: 22px; }
-    .footer p { font-size: 10px; text-transform: uppercase; letter-spacing: .13em; color: #aab4b0; margin: 0; }
-    @media (max-width: 840px) {
-      .nav { gap: 7px 16px; font-size: 10px; }
-      .cover-inner, .intro-grid, .future-inner, .archive-grid { grid-template-columns: 1fr; }
-      .cover-inner { min-height: 0; }
-      .cover-text { min-height: 570px; padding-right: 0; }
-      .cover h1 { font-size: clamp(86px, 19vw, 147px); }
-      .cover-art { min-height: 300px; }
-      .art-word { transform: translateY(-50%) rotate(0deg); font-size: 88px; right: auto; left: 20px; }
-      .departments { grid-template-columns: 1fr 1fr; }
-      .dept-big, .dept-med { grid-column: span 2; min-height: 340px; }
-      .dept-half { grid-column: span 1; }
-      .future-inner { gap: 24px; }
-    }
-    @media (max-width: 560px) {
-      .wrap { width: min(100% - 32px, 1270px); }
-      .topline-inner { font-size: 9px; letter-spacing: .095em; }
-      .topline-inner span:last-child { display: none; }
-      .masthead-inner { display: block; padding: 21px 0 18px; min-height: 0; }
-      .brand { font-size: 31px; }
-      .nav { justify-content: flex-start; margin-top: 17px; column-gap: 19px; row-gap: 5px; }
-      .cover-text { min-height: 500px; padding: 29px 0 39px; }
-      .cover h1 { font-size: clamp(78px, 20.5vw, 110px); margin-left: -4px; margin-bottom: 32px; }
-      .cover-sub { font-size: 24px; max-width: 350px; }
-      .cover-art { min-height: 265px; }
-      .art-word { font-size: 72px; }
-      .section { padding: 62px 0; }
-      .section h2 { font-size: clamp(45px, 12vw, 71px); }
-      .section-header { display: block; }
-      .section-header .caption { margin-top: 13px; display: block; }
-      .departments { gap: 12px; }
-      .dept { padding: 22px; min-height: 245px; }
-      .dept-big, .dept-med { grid-column: span 2; min-height: 305px; }
-      .dept-half { grid-column: span 2; min-height: 210px; }
-      .dept h3 { font-size: 38px; }
-      .dept-big h3 { font-size: 64px; }
-      .archive-stamp { padding: 23px; }
-      .footer-inner { display: block; }
-      .footer p { margin-top: 14px; line-height: 1.6; }
-    }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  
-    .edition-feature{background:#e0b49c;color:#172629;padding:clamp(38px,6vw,82px) 0;}.edition-feature .edition-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(30px,6vw,100px);align-items:center;}.edition-feature .edition-kicker{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;color:#73352f;margin-bottom:20px;}.edition-feature h2{font-family:Georgia,serif;font-size:clamp(51px,7vw,94px);font-weight:400;line-height:.91;letter-spacing:-.06em;margin:0 0 22px;}.edition-feature .edition-copy{font-size:17px;line-height:1.7;max-width:540px;margin-bottom:30px;}.edition-feature .edition-link{display:inline-flex;background:#152326;color:white;padding:18px 22px;font-weight:800;letter-spacing:.05em;font-size:13px;}.edition-feature .edition-page{background:linear-gradient(150deg,#1b2b2c 0%,#8e3130 55%,#df9273 100%);min-height:385px;position:relative;overflow:hidden;padding:26px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:18px 18px 0 rgba(22,35,37,.13);}.edition-feature .edition-page:after{content:'';position:absolute;border:65px solid #e4bb72;border-radius:50%;height:350px;width:350px;right:-160px;top:-75px}.edition-feature .edition-page b{font-family:Georgia,serif;font-size:27px;letter-spacing:-.065em;color:white;z-index:1}.edition-feature .edition-page strong{font-family:Georgia,serif;font-size:65px;letter-spacing:-.08em;line-height:.8;color:#fff4e6;z-index:1}.edition-feature .edition-page small{color:#ffe8d1;letter-spacing:.13em;text-transform:uppercase;font-size:10px;z-index:1}@media(max-width:730px){.edition-feature .edition-grid{grid-template-columns:1fr}.edition-feature .edition-page{min-height:330px}.edition-feature .edition-page strong{font-size:49px}}
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow"><meta name="theme-color" content="#18302b">
+<title>ENTRESSALA — Revista de cultura e experiências</title>
+<meta name="description" content="ENTRESSALA: revista semanal de cultura e experiências em Indaiatuba, Campinas e São Paulo. Edição de 19 de novembro de 2026 disponível para leitura integral.">
+<meta property="og:type" content="website"><meta property="og:title" content="ENTRESSALA — O palco é agora"><meta property="og:description" content="A edição de 19.11.2026: grandes shows, teatro, ópera, cinema, esportes e agenda regional.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+:root{--ink:#203a35;--paper:#f5f1e7;--light:#fffaf1;--muted:#65716a;--rust:#b65b41;--gold:#debc81;--night:#18302b;--line:#d6d0c5;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:4px}a:focus-visible{outline:3px solid var(--rust);outline-offset:4px}img{max-width:100%;display:block}.wrap{width:min(100% - 68px,1190px);margin:auto}.utility{background:var(--night);color:#e2d9c9}.utility .wrap{display:flex;justify-content:space-between;padding:10px 0;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}.mast{padding:22px 0 18px}.mast .wrap{display:flex;justify-content:space-between;align-items:end;gap:18px}.logo{font:500 clamp(50px,9.3vw,116px)/.96 var(--serif);letter-spacing:-.084em;white-space:nowrap}.logo em{color:var(--rust);font-weight:400;font-style:normal}.edition{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;text-align:right;line-height:1.7}.nav{border-block:1px solid var(--ink);display:flex;justify-content:space-between;gap:20px;padding:14px 0;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.nav a{white-space:nowrap}.eyebrow{font-size:10px;line-height:1.5;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.intro{padding:34px 0 20px;display:flex;justify-content:space-between;align-items:center;color:var(--muted)}.hero{display:grid;grid-template-columns:47% 53%;min-height:610px;background:var(--night);color:#f8f0e2;overflow:hidden}.hero-copy{padding:55px 52px;display:flex;flex-direction:column;justify-content:space-between}.hero-copy .eyebrow{color:var(--gold)}.hero h1{font:400 clamp(55px,6.5vw,94px)/1.02 var(--serif);letter-spacing:-.057em;margin:36px 0 24px}.hero h1 em{font-weight:400;color:var(--gold)}.hero p{font:400 clamp(17px,1.55vw,22px)/1.6 var(--serif);max-width:440px}.hero-action{display:inline-block;border-top:1px solid #77837d;width:100%;padding-top:23px;margin-top:25px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.hero-action span{float:right}.hero-media{position:relative;min-height:610px;background:#584337}.hero-media img{width:100%;height:100%;object-fit:cover;object-position:38% 25%}.hero-media figcaption{position:absolute;bottom:0;left:0;right:0;color:white;background:linear-gradient(transparent,rgba(9,21,18,.94));padding:36px 22px 15px;font-size:10px;line-height:1.6}.hero-media figcaption a{text-decoration:underline}.lead{padding:104px 0 100px;display:grid;grid-template-columns:1fr 1.1fr;gap:9%}.lead h2{font:400 clamp(48px,5.7vw,79px)/1.04 var(--serif);letter-spacing:-.055em;margin:12px 0}.lead h2 em{color:var(--rust)}.lead p{font:400 20px/1.78 var(--serif);margin:10px 0}.lead small{display:block;margin-top:23px;font:700 10px/1.8 var(--sans);color:var(--muted);letter-spacing:.07em}.stories{background:#e9e5dc;padding:85px 0 90px}.section-head{border-top:2px solid var(--ink);padding-top:19px;display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:35px}.section-head h2{font:400 clamp(41px,5vw,68px)/1.09 var(--serif);letter-spacing:-.05em;margin:16px 0 0}.section-head h2 em{color:var(--rust)}.section-head p{max-width:280px;font:400 15px/1.65 var(--serif);margin:0}.story-list{display:grid;grid-template-columns:1fr 1fr;column-gap:70px}.story{border-top:1px solid #c8c7bc;padding:24px 0 28px;display:grid;grid-template-columns:50px 1fr;gap:15px;align-items:start}.story .num{font:400 32px var(--serif);color:#a29181}.story h3{font:400 clamp(26px,2.7vw,37px)/1.2 var(--serif);margin:6px 0 11px}.story p{font:400 13px/1.7 var(--sans);margin:0 0 16px;color:#5c6860}.story .tag{font:800 10px/1.45 var(--sans);color:var(--rust);letter-spacing:.08em;text-transform:uppercase}.more{padding:90px 0}.more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:35px}.more article{border-top:2px solid var(--rust);padding-top:20px}.more article h3{font:400 33px/1.17 var(--serif);margin:14px 0}.more article p{font:400 14px/1.7 var(--sans);color:var(--muted)}.more article a{font-size:11px;letter-spacing:.08em;font-weight:800;text-transform:uppercase;color:var(--rust)}.archive{background:var(--night);color:#f4ecdf;padding:68px 0}.archive-inner{display:flex;justify-content:space-between;align-items:center;gap:35px}.archive h2{font:400 46px/1.12 var(--serif);margin:12px 0}.archive p{max-width:520px;font:400 14px/1.75 var(--sans);color:#d7d4c9}.archive a{padding:16px 20px;border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.footer{padding:38px 0}.footer .wrap{display:flex;justify-content:space-between;gap:45px}.footer strong{font:400 34px var(--serif);letter-spacing:-.06em}.footer p{font:400 12px/1.7 var(--sans);color:var(--muted);max-width:475px}.skip{position:absolute;left:-9999px;top:0;background:white;padding:10px;z-index:30}.skip:focus{left:0}
+@media(max-width:900px){.hero-copy{padding:43px 32px}.hero h1{font-size:clamp(55px,7vw,73px)}.hero-media,.hero{min-height:500px}.story-list{column-gap:28px}.more-grid{gap:19px}}@media(max-width:700px){.wrap{width:min(100% - 32px,1190px)}.utility .wrap span:last-child{display:none}.mast .wrap{align-items:start}.logo{font-size:clamp(42px,11vw,72px)}.edition{font-size:8px;max-width:92px}.nav{overflow:auto;gap:21px;white-space:nowrap}.intro span:last-child{display:none}.hero{display:flex;flex-direction:column-reverse}.hero-copy{padding:27px 25px 33px;min-height:390px}.hero h1{font-size:clamp(51px,13vw,74px);margin:19px 0}.hero p{font-size:17px}.hero-media{height:330px;min-height:330px}.lead{padding:58px 0;display:block}.lead h2{font-size:52px}.lead p{font-size:17px}.stories{padding:59px 0}.section-head{display:block}.section-head h2{font-size:47px}.section-head p{margin-top:18px}.story-list{display:block}.story{grid-template-columns:42px 1fr}.more{padding:58px 0}.more-grid{display:block}.more article{margin-top:35px}.archive-inner{display:block}.archive a{display:inline-block;margin-top:14px}.footer .wrap{display:block}.footer p{margin-top:15px}}@media(max-width:390px){.logo{font-size:39px}.hero h1{font-size:53px}.hero-media{height:290px;min-height:290px}}
 </style>
 </head>
 <body>
-  <a href="#conteudo" class="skip">Ir para o conteúdo</a>
-  <div class="topline">
-    <div class="wrap topline-inner"><span>Revista de cultura &amp; experiências</span><span>Indaiatuba &nbsp;·&nbsp; Campinas &nbsp;·&nbsp; São Paulo</span></div>
-  </div>
-  <header class="masthead">
-    <div class="wrap masthead-inner">
-      <a href="#inicio" class="brand" aria-label="Primeira Fila — início">PRIMEIRA <span>FILA.</span></a>
-      <nav class="nav" aria-label="Seções">
-        <a href="#editorias">Editorias</a>
-        <a href="#horizonte">No horizonte</a>
-        <a href="#arquivo">Edições</a>
-      </nav>
-    </div>
-  </header>
-  <main id="conteudo">
-    <section class="cover" id="inicio" aria-labelledby="cover-title">
-      <div class="wrap cover-inner">
-        <div class="cover-text">
-          <div class="eyebrow">Uma publicação cultural independente</div>
-          <div>
-            <h1 id="cover-title">PRI<br>MEIRA<br><em>FILA.</em></h1>
-            <p class="cover-sub">O melhor da cena.<br>E o que vem por aí.</p>
-            <div class="cover-meta"><span>Revista digital</span><span>·</span><span>Edição inaugural em preparação</span></div>
-          </div>
-        </div>
-        <div class="cover-art" aria-label="Arte tipográfica original de lançamento da revista Primeira Fila">
-          <div class="art-halo"></div><div class="art-block"></div><div class="art-line"></div>
-          <div class="art-word" aria-hidden="true">CENA</div>
-          <span class="art-credit">Arte gráfica de lançamento · não representa um evento</span>
-        </div>
-      </div>
-    </section>
-    
-    <section class="edition-feature" aria-labelledby="edition-launch-title">
-      <div class="wrap edition-grid">
-        <div>
-          <div class="edition-kicker">EDIÇÃO 00 · EXTRAORDINÁRIA · 17 NOVEMBRO 2026</div>
-          <h2 id="edition-launch-title">A primeira edição está no ar.</h2>
-          <p class="edition-copy">Eddie Vedder, Roger Daltrey e Primavera Sound; hip-hop em Campinas, arte em São Paulo e um caderno de cinema com sessões locais verificadas. Uma leitura completa, da capa ao radar de 2027.</p>
-          <a href="/edicoes/2026-11-17/" class="edition-link">LER A EDIÇÃO COMPLETA &rarr;</a>
-        </div>
-        <a href="/edicoes/2026-11-17/" class="edition-page" aria-label="Abrir a edição extraordinária de 17 de novembro">
-          <b>PRIMEIRA FILA.</b><strong>ESTE É<br>O PALCO.</strong><small>17.11.2026 · Nº 00</small>
-        </a>
-      </div>
-    </section>
-<section class="section" aria-labelledby="manifesto-title">
-      <div class="wrap intro-grid">
-        <div>
-          <div class="section-number">01 / O olhar editorial</div>
-          <h2 id="manifesto-title">Uma cidade nunca é só uma cidade.</h2>
-        </div>
-        <div class="intro-copy">
-          <p>Algumas noites merecem ser planejadas com meses de antecedência. Outras estão acontecendo logo ali, a poucos quilômetros de casa. A Primeira Fila existe para encontrar as duas.</p>
-          <p>Shows, teatro, ópera, dança, arte, cinema, esporte e experiências para descobrir — com critérios, contexto, informação verificada e uma agenda que vai além do fim de semana.</p>
-          <span class="pill">Curadoria · Informação · Experiência</span>
-        </div>
-      </div>
-    </section>
-    <div class="wrap"><div class="rule"></div></div>
-    <section class="section" id="editorias" aria-labelledby="sections-title">
-      <div class="wrap">
-        <div class="section-number">02 / Nossas editorias</div>
-        <div class="section-header">
-          <h2 id="sections-title">A cena é<br><i>múltipla.</i></h2>
-          <span class="caption">O que a revista acompanha</span>
-        </div>
-        <div class="departments">
-          <article class="dept dept-big">
-            <div class="seq">01 — AO VIVO</div>
-            <div class="deco" aria-hidden="true"></div>
-            <div style="position:relative;z-index:1">
-              <h3>Música<br>que move.</h3>
-              <p>Rock, pop, jazz, blues, indie, eletrônica, clássica e festivais. Da apresentação intimista à grande turnê internacional.</p>
-            </div>
-          </article>
-          <article class="dept dept-med">
-            <div class="seq">02 — EM CENA</div>
-            <div>
-              <h3>Palcos &amp;<br>histórias.</h3>
-              <p>Teatro, musicais, ópera, balé e dança. Elenco, direção e o que faz cada montagem merecer atenção.</p>
-            </div>
-          </article>
-          <article class="dept dept-half">
-            <div class="seq">03 — NA TELA</div>
-            <div>
-              <h3>Cinema.</h3>
-              <p>Estreias, filmes em cartaz e sessões verificadas, especialmente em Indaiatuba e Campinas.</p>
-            </div>
-          </article>
-          <article class="dept dept-half">
-            <div class="seq">04 — AO VIVO, DE NOVO</div>
-            <div>
-              <h3>Esporte.</h3>
-              <p>Jogos de futebol de destaque, basquete, vôlei, tênis, automobilismo e grandes decisões.</p>
-            </div>
-          </article>
-          <article class="dept dept-half">
-            <div class="seq">05 — PARA EXPLORAR</div>
-            <div>
-              <h3>Descobertas.</h3>
-              <p>Arte, museus, ciência, história, tecnologia, encontros e experiências interativas para diferentes idades.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section class="section future" id="horizonte" aria-labelledby="future-title">
-      <div class="wrap future-inner">
-        <div>
-          <div class="section-number">03 / Antecipe a experiência</div>
-          <h2 id="future-title">No<br><i>horizonte.</i></h2>
-          <p>Uma revista não serve apenas para escolher o próximo sábado. Serve para saber quando abrir a agenda, reservar a viagem e comprar o ingresso certo — sem alarmismo nem falsa escassez.</p>
-        </div>
-        <div class="horizons">
-          <div class="horizon"><span>01</span><strong>Próximos 14 dias</strong></div>
-          <div class="horizon"><span>02</span><strong>De 15 a 90 dias</strong></div>
-          <div class="horizon"><span>03</span><strong>De 3 a 12 meses</strong></div>
-          <div class="horizon"><span>↗</span><strong>Ingressos e pré-vendas</strong></div>
-        </div>
-      </div>
-    </section>
-    <section class="section archive" id="arquivo" aria-labelledby="archive-title">
-      <div class="wrap archive-grid">
-        <div>
-          <div class="section-number" style="color:#f2bf6b">04 / Biblioteca</div>
-          <h2 id="archive-title">Toda edição tem uma história.</h2>
-          <p>As edições completas terão leitura direta no navegador e uma versão em PDF para guardar ou compartilhar.</p>
-        </div>
-        <div class="archive-stamp">
-          <small>Estado da publicação</small>
-          <strong>A edição digital inaugural está em preparação.</strong>
-          <span>As matérias, fotografias oficiais e links de ingressos serão publicados aqui após a revisão editorial. Este endereço é a apresentação inicial da revista — não uma agenda de eventos já verificada.</span>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div class="brand">PRIMEIRA <span>FILA.</span></div>
-      <p>Cultura · Cinema · Esporte · Experiências<br>Indaiatuba · Campinas · São Paulo e região</p>
-    </div>
-  </footer>
-</body>
-</html>
+<a class="skip" href="#principal">Ir para o conteúdo</a>
+<div class="utility"><div class="wrap"><span>ENTRESSALA / CULTURA QUE MERECE PRESENÇA</span><span>INDAIATUBA · CAMPINAS · SÃO PAULO</span></div></div>
+<header class="mast"><div class="wrap"><a class="logo" href="/" aria-label="ENTRESSALA, página inicial">ENTRE<span>SALA</span><em>.</em></a><div class="edition">EDIÇÃO 01<br>19 NOVEMBRO 2026<br>REVISTA SEMANAL</div></div></header>
+<nav class="nav wrap" aria-label="Navegação"><a href="#principal">Edição atual</a><a href="#reportagens">Reportagens</a><a href="/edicoes/2026-11-19/#agenda">Agenda</a><a href="/edicoes/2026-11-19/#cinema">Cinema</a><a href="/edicoes/2026-11-19/#esportes">Esportes</a><a href="#arquivo">Arquivo</a></nav>
+<main id="principal"><div class="intro wrap"><span class="eyebrow">EDIÇÃO DE QUINTA · 19 NOV 2026</span><span class="eyebrow">O QUE FAZER, DESCOBRIR E SENTIR</span></div>
+<section class="hero wrap" aria-label="A revista desta semana"><div class="hero-copy"><div><span class="eyebrow">NOVA EDIÇÃO / MÚSICA E EXPERIÊNCIAS</span><h1>O palco<br><em>é agora.</em></h1><p>Eddie Vedder, Roger Daltrey e Chris Isaak no Ibirapuera. Teatro, ópera, arte contemporânea e as melhores descobertas culturais na região.</p></div><a class="hero-action" href="/edicoes/2026-11-19/">LER A REVISTA COMPLETA <span aria-hidden="true">↗</span></a></div><figure class="hero-media"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Eddie_Vedder_2018.jpg" alt="Eddie Vedder em fotografia de arquivo de 2018, não do festival de 2026"><figcaption>Eddie Vedder em 2018. Foto: Raph_PH / Wikimedia Commons, licença CC BY 2.0. Imagem de arquivo, não do evento anunciado. <a href="https://commons.wikimedia.org/wiki/File:Eddie_Vedder_2018.jpg" rel="noopener noreferrer" target="_blank">Fonte e licença</a>.</figcaption></figure></section>
+<section class="lead wrap"><div><span class="eyebrow">CARTA EDITORIAL</span><h2>Uma semana para <em>estar presente.</em></h2></div><div><p>Entre grandes atrações que justificam a viagem e experiências a poucos quilômetros de casa, a ENTRESSALA reúne histórias que ampliam o olhar e informações que ajudam a escolher o próximo programa.</p><small>5 REPORTAGENS · 9 DESTAQUES · 39 ENTRADAS DE AGENDA · CINEMA · ESPORTES · RADAR</small></div></section>
+<section class="stories" id="reportagens"><div class="wrap"><div class="section-head"><div><span class="eyebrow">01 / HISTÓRIAS DA EDIÇÃO</span><h2>Para além <em>do cartaz.</em></h2></div><p>Reportagens com contexto, descobertas e informações de serviço.</p></div><div class="story-list">
+<article class="story"><span class="num">01</span><div><span class="tag">MÚSICA / SÃO PAULO</span><h3><a href="/edicoes/2026-11-19/materias/blues/">Três dias, várias histórias do rock</a></h3><p>O Best of Blues and Rock coloca diferentes gerações em um mesmo parque.</p><a class="tag" href="/edicoes/2026-11-19/materias/blues/">Ler reportagem ↗</a></div></article>
+<article class="story"><span class="num">02</span><div><span class="tag">TEATRO / SÃO PAULO</span><h3><a href="/edicoes/2026-11-19/materias/folego/">A persistência de Nathália Timberg</a></h3><p>Uma atriz em cena e um encontro com a permanência da arte.</p><a class="tag" href="/edicoes/2026-11-19/materias/folego/">Ler reportagem ↗</a></div></article>
+<article class="story"><span class="num">03</span><div><span class="tag">ÓPERA / SÃO PAULO</span><h3><a href="/edicoes/2026-11-19/materias/opera/">A ópera reencontra o mar</a></h3><p>Bizet e a imaginação musical em Os Pescadores de Pérolas.</p><a class="tag" href="/edicoes/2026-11-19/materias/opera/">Ler reportagem ↗</a></div></article>
+<article class="story"><span class="num">04</span><div><span class="tag">CULTURA / CAMPINAS</span><h3><a href="/edicoes/2026-11-19/materias/hiphop/">O centro de Campinas vira palco</a></h3><p>O hip-hop toma a Estação Cultura com nomes importantes e programação gratuita.</p><a class="tag" href="/edicoes/2026-11-19/materias/hiphop/">Ler reportagem ↗</a></div></article>
+<article class="story"><span class="num">05</span><div><span class="tag">ARTES / SÃO PAULO</span><h3><a href="/edicoes/2026-11-19/materias/pina/">O que resta também cria</a></h3><p>Na Pinacoteca, arte, matéria e tecnologia sugerem maneiras diferentes de olhar.</p><a class="tag" href="/edicoes/2026-11-19/materias/pina/">Ler reportagem ↗</a></div></article>
+</div></div></section>
+<section class="more wrap"><div class="section-head"><div><span class="eyebrow">02 / PLANEJAMENTO</span><h2>Onde encontrar <em>o próximo programa.</em></h2></div><p>Da programação da região ao que já vale anotar para os próximos meses.</p></div><div class="more-grid"><article><span class="eyebrow">AGENDA REGIONAL</span><h3>Programas para escolher e combinar.</h3><p>Shows, teatro, exposições e experiências em Indaiatuba, Campinas e São Paulo, com filtros por cidade.</p><a href="/edicoes/2026-11-19/#agenda">Explorar agenda ↗</a></article><article><span class="eyebrow">CINEMA E ESPORTE</span><h3>Mais do que o próximo fim de semana.</h3><p>Estreias e sessões especiais, grandes competições e informações para organizar a ida.</p><a href="/edicoes/2026-11-19/#cinema">Ver cinema ↗</a></article><article><span class="eyebrow">RADAR 0–12 MESES</span><h3>O que não vale perder de vista.</h3><p>Eventos anunciados, novas datas e perspectivas para planejar antes de comprar.</p><a href="/edicoes/2026-11-19/#radar">Abrir radar ↗</a></article></div></section>
+<section id="arquivo" class="archive"><div class="wrap archive-inner"><div><span class="eyebrow">ACERVO</span><h2>Uma edição é também memória.</h2><p>O conteúdo histórico permanece disponível enquanto a ENTRESSALA começa seu ciclo semanal. A edição de 17/11 foi um piloto editorial e não substitui a publicação de hoje.</p></div><a href="/edicoes/2026-11-17/">Edição histórica · 17/11 ↗</a></div></section></main>
+<footer class="footer"><div class="wrap"><strong>ENTRESSALA.</strong><p>Cultura que merece presença. Confirme datas, horários e ingressos nos sites oficiais indicados em cada matéria; fotografias de arquivo não retratam a edição atual de eventos.</p></div></footer>
+</body></html>
