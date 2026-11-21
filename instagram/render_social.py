@@ -27,7 +27,7 @@ SOURCE = ROOT / 'fila-editorial.json'
 ASSET_DIR = ROOT / 'assets'
 PUBLISH_FILE = ROOT / 'fila-publicavel.json'
 IMAGE_HISTORY_FILE = ROOT / 'image-history.json'
-POLICY_EFFECTIVE_DATE = '2026-11-23'
+POLICY_EFFECTIVE_DATE = '2026-11-19'
 USER_AGENT = 'ENTRESSALACulturalEditorialBot/0.1 (https://github.com/luisedferrari-ctrl/primeira-fila-revista; rights-cleared images)'
 PHOTO_CACHE = {}
 NEXT_FETCH_EARLIEST = 0.0
@@ -310,6 +310,16 @@ def validate(post):
     if len(post.get('caption', '')) > 2100:
         raise ValueError('Instagram caption too long: ' + post['id'])
     fresh = is_new_post(post)
+    if fresh:
+        edition = str(post.get('source_edition_id') or '')
+        article = str(post.get('source_article_url') or '')
+        if not re.fullmatch(r'EC-\d{4}-\d{2}-\d{2}', edition):
+            raise ValueError('Source edition ID missing or invalid: ' + post['id'])
+        origin = 'https://primeira-fila-revista.pages.dev/edicoes/{}/'.format(edition[3:])
+        if not article.startswith(origin) or article == origin:
+            raise ValueError('Source edition article URL missing or mismatched: ' + post['id'])
+        if not post.get('verified_at') or not post.get('valid_through_local_date') or not post.get('factual_sources'):
+            raise ValueError('Verified source, expiry and fact-check are required: ' + post['id'])
     secondary_seen = False
     for idx, slide in enumerate(slides, start=1):
         if not slide.get('photographer') or not slide.get('rights_checked_at'):
@@ -347,6 +357,27 @@ def validate(post):
                 secondary_seen = True
     return True
 
+def validate_manifest(manifest):
+    if manifest.get('brand') != 'ENTRESSALA' or manifest.get('channel') != '@entressala_' or not isinstance(manifest.get('posts'), list):
+        raise ValueError('Invalid ENTRESSALA editorial manifest')
+    seen_ids = set()
+    scheduled_dates = {}
+    for post in manifest['posts']:
+        pid = post.get('id')
+        if not pid or pid in seen_ids:
+            raise ValueError('Duplicate or missing post ID: {}'.format(pid))
+        seen_ids.add(pid)
+        if not (is_new_post(post) and post.get('approved') is True and post.get('eligibleForScheduling') is True):
+            continue
+        intended = datetime.strptime(post['publish_local_date'], '%Y-%m-%d').date()
+        if intended.weekday() >= 5:
+            raise ValueError('Regular Instagram posts must be Monday-Friday, including holidays: {}'.format(pid))
+        if intended in scheduled_dates:
+            raise ValueError('More than one approved automatic post for local date {}: {} and {}'.format(
+                intended, scheduled_dates[intended], pid))
+        scheduled_dates[intended] = pid
+
+
 def create_credits(post):
     out = ['# ENTRESSALA — créditos de imagens: ' + post['id'], '',
            'Fotografias reais ou cartazes oficiais com direitos documentados.',
@@ -369,6 +400,7 @@ def create_credits(post):
 
 def render(manifest_path, test_placeholders=False):
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    validate_manifest(manifest)
     history = load_image_history()
     known_sources = check_image_uniqueness(manifest, history)
     processed = []

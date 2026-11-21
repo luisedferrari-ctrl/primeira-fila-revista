@@ -1,4 +1,4 @@
-"""Offline regression checks for ENTRESSALA's post-November 23 Instagram image policy."""
+"""Offline regression checks for ENTRESSALA's Instagram image policy effective November 19."""
 import copy
 import unittest
 
@@ -30,12 +30,17 @@ def post(identifier, date='2026-11-24', slides=None):
         'valid_through_local_date': '2026-11-30',
         'approved': True, 'eligibleForScheduling': True,
         'caption': 'Veja a programação verificada.',
+        'kind': 'selecao_semana',
+        'verified_at': '2026-11-22',
+        'factual_sources': ['https://example.org/official'],
+        'source_edition_id': 'EC-2026-11-19',
+        'source_article_url': 'https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/blues/',
         'slides': slides if slides is not None else [slide('Fotografia A.jpg')],
     }
 
 
 def history():
-    return {'version': 1, 'effective_from': '2026-11-23',
+    return {'version': 1, 'effective_from': '2026-11-19',
             'used_sources': {}, 'visual_hashes': {}}
 
 
@@ -146,6 +151,32 @@ class EditorialImagePolicyTest(unittest.TestCase):
         hist['used_sources'][key] = {'post_id': 'NOVO', 'publish_local_date': '2026-11-24'}
         seen = ed.check_image_uniqueness({'posts': [p]}, hist)
         self.assertEqual(seen[key]['post_id'], 'NOVO')
+
+    def test_new_post_without_source_article_is_blocked(self):
+        p = post('NOVO')
+        p.pop('source_article_url')
+        with self.assertRaisesRegex(ValueError, 'Source edition article'):
+            ed.validate(p)
+        p = post('NOVO')
+        p['source_edition_id'] = 'EC-2026-11-18'
+        with self.assertRaisesRegex(ValueError, 'Source edition article'):
+            ed.validate(p)
+
+    def test_historical_posts_do_not_require_new_source_fields(self):
+        p = post('HISTORICO', date='2026-11-18')
+        p.pop('source_edition_id')
+        p.pop('source_article_url')
+        self.assertTrue(ed.validate(p))
+
+    def test_two_approved_posts_for_same_local_date_are_blocked(self):
+        a, b = post('A'), post('B')
+        with self.assertRaisesRegex(ValueError, 'More than one approved automatic post'):
+            ed.validate_manifest({'brand': 'ENTRESSALA', 'channel': '@entressala_', 'posts': [a, b]})
+
+    def test_weekend_regular_post_is_blocked(self):
+        p = post('NOVO-FDS', date='2026-11-21')
+        with self.assertRaisesRegex(ValueError, 'Monday-Friday'):
+            ed.validate_manifest({'brand': 'ENTRESSALA', 'channel': '@entressala_', 'posts': [p]})
 
 
 if __name__ == '__main__':

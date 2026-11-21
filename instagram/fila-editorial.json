@@ -18,7 +18,7 @@
     "no_synthetic_event_images": true,
     "source_fact_check_required": true,
     "visual_policy_version": "2026-11-18",
-    "applies_to_new_posts_from": "2026-11-23",
+    "applies_to_new_posts_from": "2026-11-19",
     "priority": "mass_appeal_first",
     "growth_and_discovery": true,
     "no_generic_images": true,

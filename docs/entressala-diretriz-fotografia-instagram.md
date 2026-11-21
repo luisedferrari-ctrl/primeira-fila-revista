@@ -1,11 +1,11 @@
 # ENTRESSALA — Diretriz de fotografia para Instagram
 **Versão:** 2026-11-18  
-**Status:** diretriz editorial aprovada para novas criações automáticas a partir de 23/11/2026; não autoriza reenviar/editar posts históricos ou dispensar verificações de direitos.
+**Status:** diretriz editorial aprovada para novas criações automáticas a partir de 19/11/2026; não autoriza reenviar/editar posts históricos ou dispensar verificações de direitos.
 
 ## Princípio
 O Instagram da ENTRESSALA é a extensão visual de uma revista cultural, não um catálogo de pôsteres tipográficos. Fotografias autênticas e relevantes devem ser predominantes. Como padrão, **ao menos 80% dos slides de cada carrossel devem conter imagens fotográficas reais**, idealmente um registro do próprio evento, artista, obra, cena ou espaço noticiado. A fotografia deve dominar a composição; design e tipografia organizam a informação.
 
-## Ordem de preferência das imagens (novas publicações a partir de 23/11)
+## Ordem de preferência das imagens (novas publicações a partir de 19/11)
 1. Fotografia específica e impactante do evento/obra/espetáculo/artista, com licença ou autorização válida para Instagram.
 2. Fotografia oficial de divulgação visualmente forte, desde que o titular autorize explicitamente a republicação.
 3. Outra fotografia AUTÊNTICA do mesmo artista/companhia, inédita na ENTRESSALA; se de arquivo, indicar **FOTO DE ARQUIVO** e contexto correto.

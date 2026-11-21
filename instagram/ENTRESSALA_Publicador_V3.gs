@@ -45,6 +45,14 @@ function eV3Encontrar_(id) {
 function eV3VerificarMidias_(post) {
   if (!post.approved || !post.eligibleForScheduling || post.assetsReady!==true) throw new Error('Post não autorizado ou imagens não renderizadas: ' + post.id);
   if (!post.verified_at || !post.publish_local_date || !post.valid_through_local_date || !post.factual_sources?.length) throw new Error('Sem fontes, prazo ou revisão: ' + post.id);
+  if (post.publish_local_date >= '2026-11-19') {
+    const edition=String(post.source_edition_id || '');
+    const article=String(post.source_article_url || '');
+    const prefix='https://primeira-fila-revista.pages.dev/edicoes/'+edition.slice(3)+'/';
+    if (!/^EC-\d{4}-\d{2}-\d{2}$/.test(edition) || !article.startsWith(prefix) || article===prefix) {
+      throw new Error('Post sem vínculo verificável com a matéria da edição regular: ' + post.id);
+    }
+  }
   const nowLocal = eV3Hoje_();
   if (nowLocal > post.valid_through_local_date) throw new Error('Prazo factual vencido: ' + post.id);
   if (post.verified_at > nowLocal) throw new Error('Data de verificação futura: ' + post.id);
@@ -100,19 +108,28 @@ function eV3Buffer_(q) {
   if (!action?.post?.id) throw new Error('Buffer recusou post: '+(action?.message||raw.slice(0,380)));
   return action.post;
 }
-function eV3CriarPost_(post, mode, dueAt) {
+function eV3CriarPost_(post, mode, dueAt, automaticLocalDate) {
   eV3VerificarMidias_(post);
   post.images.forEach(eV3ConferirImagem_);
   const lock=LockService.getScriptLock();
   lock.waitLock(30000);
   try {
     const key=E_V3.KEY_PREFIX+post.id;
-    if (eV3Props_().getProperty(key)) {
-      Logger.log('BLOQUEADO: já houve tentativa de envio deste post, verifique Buffer. '+eV3Props_().getProperty(key));
-      return {skipped:true, previous:eV3Props_().getProperty(key)};
+    const dayKey=automaticLocalDate ? 'ENTRESSALA_V3_DIA_'+automaticLocalDate : '';
+    const props=eV3Props_();
+    if (dayKey && props.getProperty(dayKey)) {
+      Logger.log('BLOQUEADO: a oportunidade automática desta data já foi utilizada. '+props.getProperty(dayKey));
+      return {skipped:true, previous:props.getProperty(dayKey)};
     }
-    // Marcar tentativa ANTES da chamada: erro incerto jamais causa envio duplicado.
-    eV3Props_().setProperty(key,'TENTATIVA '+new Date().toISOString());
+    if (props.getProperty(key)) {
+      if (dayKey) props.setProperty(dayKey,'POST JA TENTADO '+post.id);
+      Logger.log('BLOQUEADO: já houve tentativa de envio deste post, verifique Buffer. '+props.getProperty(key));
+      return {skipped:true, previous:props.getProperty(key)};
+    }
+    // Marcar tentativas por ID e DATA ANTES da chamada: resposta incerta jamais causa envio duplicado.
+    const attempt='TENTATIVA '+new Date().toISOString();
+    props.setProperty(key,attempt);
+    if (dayKey) props.setProperty(dayKey,attempt+' POST '+post.id);
     const assets='['+post.images.map(url=>'{ image: { url: '+JSON.stringify(url)+' } }').join(',')+']';
     const validMode=(mode==='shareNow'||mode==='customScheduled') ? mode : 'addToQueue';
     const due=dueAt ? ', dueAt: '+JSON.stringify(dueAt) : '';
@@ -149,7 +166,8 @@ function entressalaV3RotinaDiaria() {
   try {
     const p=eV3Feed_().posts.filter(x=>x.publish_local_date===date && x.kind!=='lancamento' && x.id!==E_V3.SECOND && x.approved && x.eligibleForScheduling);
     if (!p.length) { eV3Aviso_(date,'Sem pauta fotográfica verificada para hoje. Nenhum post inventado.'); return; }
-    eV3CriarPost_(p[0],'shareNow',null);
+    if (p.length > 1) { eV3Aviso_(date,'Mais de um candidato aprovado para a mesma data. Envio bloqueado.'); return; }
+    eV3CriarPost_(p[0],'shareNow',null,date);
   } catch(e) { eV3Aviso_(date,e.message); throw e; }
 }
 function entressalaV3InstalarRotina() {
