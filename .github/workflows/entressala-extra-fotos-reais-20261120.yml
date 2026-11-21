@@ -1,0 +1,68 @@
+name: ENTRESSALA extraordinary real images (one-off)
+on:
+  push:
+    branches: [entressala-piloto-2026-11]
+    paths:
+      - instagram/extra-real-images-trigger-20261120.txt
+permissions:
+  contents: write
+jobs:
+  prepare-license-verified-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: entressala-piloto-2026-11
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet Pillow requests
+      - name: Fetch authentic archival photograph and artwork and design editorial cards
+        run: |
+          python - <<'PY'
+          import io, os, pathlib, requests
+          from PIL import Image, ImageOps, ImageDraw, ImageFont
+          targets = [
+             ("https://upload.wikimedia.org/wikipedia/commons/8/8e/Anfi_Teatro%2C_Parque_do_Taquaral._-_panoramio.jpg", "instagram/assets/ENTRESSALA-EXTRA-20261121-ASTRONICAMP/01.jpg", "ASTRONICAMP", "21 NOV | SABADO | 9H-12H", "CONCHA ACUSTICA DO TAQUARAL", "Foto de arquivo da Concha Acustica (2012)"),
+             ("https://upload.wikimedia.org/wikipedia/commons/a/ab/Van_Gogh_-_A_Arlesiana.jpg", "instagram/assets/ENTRESSALA-EXTRA-20261122-VANGOGH/01.jpg", "VAN GOGH NO MASP", "EM 2027 | SAO PAULO", "EXPOSICAO ANUNCIADA", "Obra real: A Arlesiana (1890) | MASP")
+          ]
+          f_regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+          f_bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+          header=ImageFont.truetype(f_regular, 27)
+          title=ImageFont.truetype(f_bold, 61)
+          info=ImageFont.truetype(f_bold, 29)
+          small=ImageFont.truetype(f_regular, 24)
+          s=requests.Session()
+          s.headers.update({"User-Agent":"ENTRESSALA-Editorial/1.0 (https://github.com/luisedferrari-ctrl/primeira-fila-revista; Wikimedia Commons credit)"})
+          for url,path,ttl,date,sub,credit in targets:
+              r=s.get(url,timeout=50)
+              r.raise_for_status()
+              if not r.headers.get("Content-Type","").startswith("image/"): raise ValueError(f"Non-image response: {url} {r.headers.get('Content-Type')}")
+              original=Image.open(io.BytesIO(r.content)).convert("RGB")
+              out=Image.new("RGB",(1080,1350),(18,29,49))
+              # Keep photograph/painting uncropped; only scale down and letterbox.
+              photo=ImageOps.contain(original,(1080,990),Image.Resampling.LANCZOS)
+              out.paste(photo,((1080-photo.width)//2,(990-photo.height)//2))
+              d=ImageDraw.Draw(out)
+              d.rectangle((0,990,1080,1350),fill=(19,34,54))
+              d.rectangle((58,1006,1022,1010), fill=(197,153,83))
+              d.text((58,1026),"E N T R E S S A L A",font=header,fill=(240,221,190))
+              d.text((58,1078),ttl,font=title,fill=(250,247,239))
+              d.text((58,1166),date,font=info,fill=(230,190,116))
+              d.text((58,1207),sub,font=info,fill=(250,247,239))
+              d.text((58,1280),credit,font=small,fill=(194,204,218))
+              pathlib.Path(path).parent.mkdir(parents=True,exist_ok=True)
+              out.save(path,"JPEG",quality=92,optimize=True)
+              assert os.path.getsize(path)>40000
+              print(path,original.size,os.path.getsize(path))
+          PY
+      - name: Commit images only to editorial branch
+        run: |
+          git config user.name "entressala-bot"
+          git config user.email "entressala-bot@users.noreply.github.com"
+          git add instagram/assets/ENTRESSALA-EXTRA-20261121-ASTRONICAMP/01.jpg instagram/assets/ENTRESSALA-EXTRA-20261122-VANGOGH/01.jpg
+          if ! git diff --staged --quiet; then
+            git commit -m "assets: authentic licensed imagery for 21-22 Nov extraordinary posts"
+            git push origin HEAD:entressala-piloto-2026-11
+          fi
