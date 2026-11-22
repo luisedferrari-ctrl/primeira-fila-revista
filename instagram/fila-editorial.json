@@ -30,7 +30,30 @@
     "permit_official_posters_only_with_verified_instagram_republication_rights": true,
     "photographs_primary": true,
     "target_real_photo_fraction": 0.8,
-    "verified_authorized_photo_allowed": true
+    "verified_authorized_photo_allowed": true,
+    "editorial_mode": "invoga_conceitual_option_b_newsfirst",
+    "newsfirst_effective_from": "2026-11-23",
+    "priority_geography": [
+      "Sao Paulo",
+      "Campinas",
+      "Indaiatuba",
+      "regiao"
+    ],
+    "coverage_scope": [
+      "regional",
+      "brasil",
+      "internacional"
+    ],
+    "allowed_service_kinds": [
+      "event",
+      "radar",
+      "news"
+    ],
+    "regular_posts_source": "ultima_edicao_regular_publicada",
+    "extraordinary_publisher": "Metricool",
+    "regular_publisher": "GitHub -> Apps Script -> Buffer",
+    "verified_news_sources_required": true,
+    "no_fabricated_event_service_for_news": true
   },
   "posts": [
     {
