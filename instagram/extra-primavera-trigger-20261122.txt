@@ -3,3 +3,5 @@ Publicar pelo Metricool uma vez APENAS apos QA visual e licenciamento.
 Fotos reais verificadas: Commons StrokesLolympia180220-60.jpg (Raph_PH, CC BY 2.0); Gorillaz.jpg (wonker, CC BY 2.0).
 Programacao 5/12 22h15 The Strokes, 6/12 22h Gorillaz, Autodromo Interlagos, portoes 12h30.
 Proibido editar posts automaticos regulares ou reprocessar o workflow diario.
+
+Retry 2: official 1600px thumbnail and verified CDN fallback, after HTTP 429; preserve no-publish-on-error.
