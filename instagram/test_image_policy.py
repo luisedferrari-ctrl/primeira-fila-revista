@@ -9,7 +9,7 @@ import render_social as ed
 
 def slide(filename, tier='mass'):
     return {
-        'title': 'Evento real', 'eyebrow': 'AGENDA', 'subtitle': 'Bilheteria oficial',
+        'title': 'Show confirmado para a nova temporada', 'eyebrow': 'AGENDA', 'subtitle': 'Bilheteria oficial',
         'file': filename, 'asset_type': 'photo',
         'photographer': 'Autor verificado', 'year': '2025',
         'license': 'CC BY 4.0',
@@ -46,6 +46,8 @@ def post(identifier, date='2026-11-24', slides=None):
             'official_url': 'https://example.org/official',
         }],
         'kind': 'selecao_semana',
+        'editorial_scope': 'regional',
+        'editorial_angle': 'Grande atração cultural confirmada na região de São Paulo',
         'verified_at': '2026-11-22',
         'factual_sources': ['https://example.org/official'],
         'source_edition_id': 'EC-2026-11-19',
@@ -277,6 +279,111 @@ class EditorialImagePolicyTest(unittest.TestCase):
         p['slides'][0].pop('venue_label')
         p['slides'][0].pop('cta_label')
         self.assertTrue(ed.validate(p))
+
+
+    @staticmethod
+    def news_post():
+        p = post('NOTICIA-CULTURAL')
+        p['editorial_scope'] = 'brasil'
+        p['editorial_angle'] = 'Artista confirma lançamento de álbum com impacto cultural nacional'
+        p['kind'] = 'noticia'
+        p['factual_sources'] = ['https://example.org/noticia-oficial']
+        p['service_items'] = [{
+            'kind': 'news', 'when': '24 NOV 2026',
+            'topic': 'Novo álbum com lançamento confirmado',
+            'source_name': 'Veículo verificado',
+            'source_url': 'https://example.org/noticia-oficial',
+            'verified': True,
+        }]
+        p['caption'] = ('Artista anuncia um novo trabalho musical.\n\n'
+                        'QUANDO: 24 NOV 2026\n'
+                        'ASSUNTO: Novo álbum com lançamento confirmado\n'
+                        'FONTE: Veículo verificado · https://example.org/noticia-oficial\n\n'
+                        'Siga @entressala_ para descobrir notícias de música e experiências culturais.')
+        s = p['slides'][0]
+        s['title'] = 'Artista confirma novo álbum para 2027'
+        s['eyebrow'] = 'MÚSICA · NOTÍCIAS'
+        s['subtitle'] = 'Novo trabalho anunciado oficialmente'
+        s['date_label'] = '24 NOV 2026 · NOTÍCIA'
+        s['city'] = 'BRASIL'
+        s['subject_label'] = 'LANÇAMENTO MUSICAL'
+        s['news_deck'] = 'NOVO ÁLBUM CONFIRMADO'
+        s['link_label'] = 'example.org/noticia-oficial'
+        del s['venue_label']
+        del s['ticket_label']
+        return p
+
+    def test_option_b_national_news_without_fake_tickets_is_valid(self):
+        self.assertTrue(ed.validate(self.news_post()))
+
+    def test_option_b_international_entertainment_news_is_allowed(self):
+        p = self.news_post()
+        p['editorial_scope'] = 'internacional'
+        p['slides'][0]['city'] = 'MUNDO'
+        self.assertTrue(ed.validate(p))
+
+    def test_option_b_requires_journalistic_angle_and_scope(self):
+        p = self.news_post()
+        p.pop('editorial_scope')
+        with self.assertRaisesRegex(ValueError, 'editorial_scope'):
+            ed.validate(p)
+        p = self.news_post()
+        p['editorial_angle'] = 'Música'
+        with self.assertRaisesRegex(ValueError, 'editorial_angle'):
+            ed.validate(p)
+
+    def test_news_without_documented_credible_source_is_blocked(self):
+        p = self.news_post()
+        p['service_items'][0]['verified'] = False
+        with self.assertRaisesRegex(ValueError, 'independently verified'):
+            ed.validate(p)
+        p = self.news_post()
+        p['factual_sources'] = ['https://example.org/outra']
+        with self.assertRaisesRegex(ValueError, 'missing from factual_sources'):
+            ed.validate(p)
+
+    def test_news_missing_source_in_caption_is_blocked(self):
+        p = self.news_post()
+        p['caption'] = p['caption'].replace('https://example.org/noticia-oficial', '')
+        with self.assertRaisesRegex(ValueError, 'Caption omits news'):
+            ed.validate(p)
+
+    def test_news_card_requires_subject_and_deck_not_venue_or_tickets(self):
+        p = self.news_post()
+        del p['slides'][0]['subject_label']
+        with self.assertRaisesRegex(ValueError, 'subject_label'):
+            ed.validate(p)
+        p = self.news_post()
+        del p['slides'][0]['news_deck']
+        with self.assertRaisesRegex(ValueError, 'news_deck'):
+            ed.validate(p)
+
+    def test_news_uses_matching_verified_source_domain_on_art(self):
+        p = self.news_post()
+        p['slides'][0]['link_label'] = 'outra-fonte.com'
+        with self.assertRaisesRegex(ValueError, 'link label does not match'):
+            ed.validate(p)
+
+    def test_news_and_event_mix_requires_explicit_service_reference(self):
+        p = self.news_post()
+        p['service_items'].append(post('CONCERTO')['service_items'][0])
+        with self.assertRaisesRegex(ValueError, 'requires service_index'):
+            ed.validate(p)
+        p['slides'][0]['service_index'] = 0
+        self.assertTrue(ed.validate(p))
+
+    def test_newsfirst_visual_card_renders_without_synthetic_photo(self):
+        p = self.news_post()
+        img = Image.new('RGB', (1080, 1350), (47, 64, 80))
+        card = ed.draw_news_first_card(img, p, p['slides'][0], 1, 1, ed.get_font)
+        self.assertEqual(card.size, (1080, 1350))
+
+    def test_option_b_keeps_existing_event_requirements(self):
+        p = post('NOVO-REGIONAL')
+        self.assertTrue(ed.validate(p))
+        del p['slides'][0]['ticket_label']
+        with self.assertRaisesRegex(ValueError, 'Visible TICKETS'):
+            ed.validate(p)
 
     def test_weekend_regular_post_is_blocked(self):
         p = post('NOVO-FDS', date='2026-11-21')
