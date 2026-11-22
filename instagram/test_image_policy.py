@@ -22,6 +22,8 @@ def slide(filename, tier='mass'):
         'depicts': 'Artista realmente anunciado',
         'specific_to_subject': True,
         'venue_label': 'Teatro Municipal',
+        'ticket_label': 'ENTRADA GRATUITA COM RESERVA',
+        'link_label': 'example.org/official',
         'cta_label': 'Siga @entressala_ para descobrir mais',
     }
 
@@ -196,6 +198,16 @@ class EditorialImagePolicyTest(unittest.TestCase):
         p = post('NOVO')
         del p['slides'][0]['venue_label']
         with self.assertRaisesRegex(ValueError, 'Visible VENUE'):
+            ed.validate(p)
+
+    def test_missing_ticket_or_official_site_in_visual_blocks_new_post(self):
+        p = post('NOVO')
+        del p['slides'][0]['ticket_label']
+        with self.assertRaisesRegex(ValueError, 'Visible TICKETS'):
+            ed.validate(p)
+        p = post('NOVO')
+        p['slides'][0]['link_label'] = 'fake-site.example'
+        with self.assertRaisesRegex(ValueError, 'link label does not match'):
             ed.validate(p)
 
     def test_missing_follow_cta_in_caption_blocks_new_post(self):
