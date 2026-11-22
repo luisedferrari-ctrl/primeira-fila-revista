@@ -21,6 +21,10 @@ from urllib.parse import quote, urlsplit, urlunsplit
 
 import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
+from editorial_option_b import (
+    is_option_b_post, validate_option_b_post, validate_option_b_slide,
+    validate_news_service, slide_service, draw_news_first_card,
+)
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SOURCE = ROOT / 'fila-editorial.json'
@@ -357,8 +361,14 @@ def validate_social_service(post):
     if not isinstance(items, list) or not items:
         raise ValueError('Post must contain verified service_items: ' + post['id'])
     for index, service in enumerate(items, start=1):
-        if not isinstance(service, dict) or service.get('kind') not in ('event', 'radar'):
+        if not isinstance(service, dict) or service.get('kind') not in ('event', 'radar', 'news'):
             raise ValueError('Service item must be kind event or radar: ' + post['id'])
+        if service.get('kind') == 'news':
+            if not is_option_b_post(post):
+                raise ValueError('News editorial category requires option B effective date: ' + post['id'])
+            validate_news_service(service, caption, post['id'],
+                                  post.get('factual_sources', []), safe_https_image_url)
+            continue
         for field in ('when', 'where', 'admission', 'official_url'):
             value = str(service.get(field) or '').strip()
             if len(value) < (14 if field == 'official_url' else 7):
@@ -400,6 +410,8 @@ def validate(post):
         if not post.get('verified_at') or not post.get('valid_through_local_date') or not post.get('factual_sources'):
             raise ValueError('Verified source, expiry and fact-check are required: ' + post['id'])
         validate_social_service(post)
+        if is_option_b_post(post):
+            validate_option_b_post(post)
     secondary_seen = False
     for idx, slide in enumerate(slides, start=1):
         if not slide.get('photographer') or not slide.get('rights_checked_at'):
@@ -424,20 +436,23 @@ def validate(post):
                 raise ValueError('Visible DATE and CITY are mandatory on every NEW slide: ' + post['id'])
             if not re.search(r'\b20\d{2}\b', str(slide['date_label'])):
                 raise ValueError('Each new slide must show a verified year: ' + post['id'])
-            if not str(slide.get('venue_label') or '').strip():
-                raise ValueError('Visible VENUE is mandatory on every NEW slide: ' + post['id'])
-            if not str(slide.get('ticket_label') or '').strip():
-                raise ValueError('Visible TICKETS/ENTRY are mandatory on every NEW slide: ' + post['id'])
-            if len(post['service_items']) == 1 and post['service_items'][0]['kind'] == 'radar':
-                visual_date = unicodedata.normalize('NFKD', str(slide['date_label']).upper()).encode(
-                    'ascii', 'ignore').decode('ascii')
-                visual_tickets = unicodedata.normalize('NFKD', str(slide['ticket_label']).upper()).encode(
-                    'ascii', 'ignore').decode('ascii')
-                if 'DATAS A ANUNCIAR' not in visual_date or 'INGRESSOS AINDA NAO DIVULGADOS' not in visual_tickets:
-                    raise ValueError('Radar image must show unannounced dates and tickets: ' + post['id'])
+            if is_option_b_post(post):
+                validate_option_b_slide(post, slide, idx)
+            else:
+                if not str(slide.get('venue_label') or '').strip():
+                    raise ValueError('Visible VENUE is mandatory on every NEW slide: ' + post['id'])
+                if not str(slide.get('ticket_label') or '').strip():
+                    raise ValueError('Visible TICKETS/ENTRY are mandatory on every NEW slide: ' + post['id'])
+                if len(post['service_items']) == 1 and post['service_items'][0]['kind'] == 'radar':
+                    visual_date = unicodedata.normalize('NFKD', str(slide['date_label']).upper()).encode(
+                        'ascii', 'ignore').decode('ascii')
+                    visual_tickets = unicodedata.normalize('NFKD', str(slide['ticket_label']).upper()).encode(
+                        'ascii', 'ignore').decode('ascii')
+                    if 'DATAS A ANUNCIAR' not in visual_date or 'INGRESSOS AINDA NAO DIVULGADOS' not in visual_tickets:
+                        raise ValueError('Radar image must show unannounced dates and tickets: ' + post['id'])
             if not str(slide.get('link_label') or '').strip():
                 raise ValueError('Visible OFFICIAL SITE domain is mandatory on every NEW slide: ' + post['id'])
-            valid_hosts = {urlsplit(x['official_url']).hostname.casefold() for x in post['service_items']}
+            valid_hosts = {urlsplit(x.get('official_url') or x.get('source_url')).hostname.casefold() for x in post['service_items']}
             if not any(host in str(slide['link_label']).casefold() for host in valid_hosts):
                 raise ValueError('Official link label does not match verified source: ' + post['id'])
             if idx == len(slides) and not re.search(r'\bsiga\s+@entressala_', str(slide.get('cta_label') or ''), flags=re.IGNORECASE):
@@ -532,7 +547,9 @@ def render(manifest_path, test_placeholders=False):
                 img = fetch_photo(slide, test_placeholders, index)
                 if is_new_post(post) and not test_placeholders:
                     register_visual_hash(img, slide, post, index, history)
-                composed = draw_card(img, slide, index, len(post['slides']), fresh=is_new_post(post))
+                composed = (draw_news_first_card(img, post, slide, index, len(post['slides']), get_font)
+                            if is_option_b_post(post) else
+                            draw_card(img, slide, index, len(post['slides']), fresh=is_new_post(post)))
                 composed.save(folder / filename, 'JPEG', quality=89, optimize=True, subsampling=0)
             rawpath = 'instagram/assets/{}/{}'.format(post['id'], filename)
             urls.append('https://raw.githubusercontent.com/{}/{}/{}'.format(OWNER, BRANCH, rawpath))
@@ -552,9 +569,11 @@ def render(manifest_path, test_placeholders=False):
         if is_new_post(post):
             item['date_city_visible'] = True
             item['image_uniqueness_checked'] = not test_placeholders
+            if is_option_b_post(post):
+                item['newsfirst_option_b_checked'] = True
         processed.append(item)
     result = {'brand': manifest['brand'], 'channel': manifest['channel'], 'version':3,
-              'editorial_policy': 'reach-first-unique-images-2026-11-18', 'posts':processed,
+              'editorial_policy': 'entressala-newsfirst-option-b-2026-11-23', 'posts':processed,
               'notice': 'Publishing must verify images, factual validity and idempotency. Auto-publish only after verified assets; no synthesized event photography.'}
     path = ROOT / ('fila-preview-TESTE.json' if test_placeholders else 'fila-publicavel.json')
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
