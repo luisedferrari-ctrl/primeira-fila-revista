@@ -1,0 +1,26 @@
+name: ENTRESSALA - QA de servico e CTA (somente testes)
+on:
+  push:
+    branches: [entressala-piloto-2026-11]
+    paths:
+      - '.github/workflows/entressala-servico-cta-qa.yml'
+      - 'instagram/render_social.py'
+      - 'instagram/test_image_policy.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  editorial-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencias apenas para testes offline
+        run: python -m pip install --disable-pip-version-check --quiet pillow requests
+      - name: Validar codigo e testes editoriais sem publicar nem alterar manifestos
+        run: |
+          python -m py_compile instagram/render_social.py instagram/test_image_policy.py
+          python -m unittest discover -s instagram -p 'test_image_policy.py' -v
