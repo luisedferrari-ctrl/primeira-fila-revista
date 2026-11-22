@@ -141,6 +141,6 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "assets: licensed real artist photography for Primavera Sound extraordinary carousel"
             git fetch origin entressala-piloto-2026-11
-            git rebase origin/entressala-piloto-2026-11
+            git rebase -X theirs origin/entressala-piloto-2026-11
             git push origin HEAD:entressala-piloto-2026-11
           fi
