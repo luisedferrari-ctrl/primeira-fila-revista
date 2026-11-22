@@ -29,8 +29,8 @@ jobs:
           base=Path('instagram/assets/ENTRESSALA-EXTRA-20261122-PRIMAVERA')
           base.mkdir(parents=True,exist_ok=True)
           specs=[
-            {'name':'StrokesLolympia180220-60.jpg','author':'Raph_PH','id':'01','eyebrow':'MUSICA  /  FESTIVAIS','head':['PRIMAVERA SOUND','REVELA HORARIOS','DOS SHOWS'], 'date':'5 E 6 DEZ 2026  /  SAO PAULO','items':['SAB 5/12  •  THE STROKES AS 22H15','DOM 6/12  •  GORILLAZ AS 22H','INTERLAGOS  •  PORTOES 12H30'],'caption':'THE STROKES AO VIVO EM 2020 - FOTO DE ARQUIVO'},
-            {'name':'Gorillaz.jpg','author':'wonker','id':'02','eyebrow':'GUIA  /  SERVICO','head':['GORILLAZ FECHA','O DOMINGO','AS 22H'], 'date':'DOM 6 DEZ 2026  /  SAO PAULO','items':['AUTODROMO DE INTERLAGOS','INGRESSOS DESDE R$ 425,25 + TAXAS','primaverasound.com/pt/tickets-sao-paulo'],'caption':'GORILLAZ AO VIVO EM 2010 - FOTO DE ARQUIVO'}]
+            {'name':'StrokesLolympia180220-60.jpg','author':'Raph_PH','id':'01','eyebrow':'MÚSICA  /  FESTIVAIS','head':['PRIMAVERA SOUND','REVELA HORÁRIOS','DOS SHOWS'], 'date':'5 E 6 DEZ 2026  /  SAO PAULO','items':['SÁB 5/12  •  THE STROKES AS 22H15','DOM 6/12  •  GORILLAZ AS 22H','INTERLAGOS  •  PORTOES 12H30'],'caption':'THE STROKES AO VIVO EM 2020 - FOTO DE ARQUIVO'},
+            {'name':'Gorillaz.jpg','author':'wonker','id':'02','eyebrow':'GUIA  /  SERVIÇO','head':['GORILLAZ FECHA','O DOMINGO','ÀS 22H'], 'date':'DOM 6 DEZ 2026  /  SAO PAULO','items':['AUTODROMO DE INTERLAGOS','INGRESSOS DESDE R$ 425,25 + TAXAS','primaverasound.com/pt/tickets-sao-paulo'],'caption':'GORILLAZ AO VIVO EM 2010 - FOTO DE ARQUIVO'}]
           regular='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
           bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
           def font(size,strong=False):
@@ -90,6 +90,7 @@ jobs:
             d.text((65,47),'E N T R E S S A L A',font=font(27,True),fill=white)
             d.text((946,52),'0'+str(idx+1)+'/02',font=font(22),fill=muted)
             d.line((65,114,1015,114),fill=sand,width=3)
+            d.rounded_rectangle((53,130,464,187),radius=7,fill=(9,16,30,250))
             d.text((65,145),sp['eyebrow'],font=font(25,True),fill=white)
             d.rounded_rectangle((65,706,1015,761),radius=8,fill=(26,35,48,220))
             d.text((82,715),sp['date'],font=fit(d,sp['date'],max_w=900,base_size=30,strong=True),fill=sand)
@@ -100,7 +101,7 @@ jobs:
               y=1062+n*42
               d.text((67,y),item,font=fit(d,item,max_w=940,base_size=27,min_size=20,strong=(n==0)),fill=sand if n==0 else white)
             # Calls-to-action stay clear but discrete; origin credits only one line.
-            cta=('DESLIZE PARA VER O SERVICO  >' if idx==0 else 'SIGA @ENTRESSALA_ PARA DESCOBRIR SHOWS')
+            cta=('DESLIZE PARA VER O SERVIÇO  >' if idx==0 else 'SIGA @ENTRESSALA_ PARA DESCOBRIR SHOWS')
             d.text((68,1222),cta,font=fit(d,cta,max_w=940,base_size=27,min_size=21,strong=True),fill=sand)
             d.line((65,1286,1015,1286),fill=(135,150,163),width=2)
             credit='Foto: '+sp['author']+'  •  arquivo  •  CC BY 2.0'
