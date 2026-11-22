@@ -21,6 +21,8 @@ def slide(filename, tier='mass'):
         'appeal_tier': tier,
         'depicts': 'Artista realmente anunciado',
         'specific_to_subject': True,
+        'venue_label': 'Teatro Municipal',
+        'cta_label': 'Siga @entressala_ para descobrir mais',
     }
 
 
@@ -29,7 +31,18 @@ def post(identifier, date='2026-11-24', slides=None):
         'id': identifier, 'publish_local_date': date,
         'valid_through_local_date': '2026-11-30',
         'approved': True, 'eligibleForScheduling': True,
-        'caption': 'Veja a programação verificada.',
+        'caption': ('Um concerto para descobrir.\n\nQUANDO: 24 NOV 2026 · 19H\n'
+                    'ONDE: Teatro Municipal, Rua Central 100, São Paulo\n'
+                    'INGRESSOS: Entrada gratuita com reserva\n'
+                    'LINK OFICIAL: https://example.org/official\n\n'
+                    'Siga @entressala_ para descobrir os próximos eventos.'),
+        'service_items': [{
+            'kind': 'event',
+            'when': '24 NOV 2026 · 19H',
+            'where': 'Teatro Municipal, Rua Central 100, São Paulo',
+            'admission': 'Entrada gratuita com reserva',
+            'official_url': 'https://example.org/official',
+        }],
         'kind': 'selecao_semana',
         'verified_at': '2026-11-22',
         'factual_sources': ['https://example.org/official'],
@@ -172,6 +185,65 @@ class EditorialImagePolicyTest(unittest.TestCase):
         a, b = post('A'), post('B')
         with self.assertRaisesRegex(ValueError, 'More than one approved automatic post'):
             ed.validate_manifest({'brand': 'ENTRESSALA', 'channel': '@entressala_', 'posts': [a, b]})
+
+    def test_missing_event_service_blocks_new_post(self):
+        p = post('NOVO')
+        p.pop('service_items')
+        with self.assertRaisesRegex(ValueError, 'verified service_items'):
+            ed.validate(p)
+
+    def test_missing_venue_in_image_blocks_new_post(self):
+        p = post('NOVO')
+        del p['slides'][0]['venue_label']
+        with self.assertRaisesRegex(ValueError, 'Visible VENUE'):
+            ed.validate(p)
+
+    def test_missing_follow_cta_in_caption_blocks_new_post(self):
+        p = post('NOVO')
+        p['caption'] = p['caption'].replace('Siga @entressala_', 'Veja nosso perfil')
+        with self.assertRaisesRegex(ValueError, 'Caption must contain'):
+            ed.validate(p)
+
+    def test_missing_follow_cta_in_final_slide_blocks_new_post(self):
+        p = post('NOVO', slides=[slide('Foto A.jpg'), slide('Foto B.jpg')])
+        p['slides'][-1].pop('cta_label')
+        with self.assertRaisesRegex(ValueError, 'Last new slide'):
+            ed.validate(p)
+
+    def test_missing_ticket_or_official_link_in_caption_blocks_new_post(self):
+        p = post('NOVO')
+        p['caption'] = p['caption'].replace('Entrada gratuita com reserva', '')
+        with self.assertRaisesRegex(ValueError, 'Caption omits verified service admission'):
+            ed.validate(p)
+        p = post('NOVO')
+        p['caption'] = p['caption'].replace('https://example.org/official', '')
+        with self.assertRaisesRegex(ValueError, 'Caption omits verified service official_url'):
+            ed.validate(p)
+
+    def test_undated_radar_must_say_dates_and_tickets_unannounced(self):
+        p = post('RADAR')
+        p['service_items'][0]['kind'] = 'radar'
+        p['service_items'][0]['when'] = '2027 · DATAS A ANUNCIAR'
+        p['service_items'][0]['admission'] = 'INGRESSOS AINDA NÃO DIVULGADOS'
+        p['slides'][0]['date_label'] = '2027 · DATAS A ANUNCIAR'
+        p['caption'] = ('Exposição no MASP. QUANDO: 2027 · DATAS A ANUNCIAR\n'
+                        'ONDE: Teatro Municipal, Rua Central 100, São Paulo\n'
+                        'INGRESSOS: INGRESSOS AINDA NÃO DIVULGADOS\n'
+                        'LINK OFICIAL: https://example.org/official\n'
+                        'Siga @entressala_ para acompanhar a programação.')
+        self.assertTrue(ed.validate(p))
+        p['service_items'][0]['when'] = '2027 · Em breve'
+        p['caption'] = p['caption'].replace('2027 · DATAS A ANUNCIAR', '2027 · Em breve')
+        with self.assertRaisesRegex(ValueError, 'Undated radar'):
+            ed.validate(p)
+
+    def test_image_service_fields_do_not_apply_retroactively(self):
+        p = post('HISTORICO', date='2026-11-18')
+        p.pop('service_items')
+        p['caption'] = 'Legenda original histórica.'
+        p['slides'][0].pop('venue_label')
+        p['slides'][0].pop('cta_label')
+        self.assertTrue(ed.validate(p))
 
     def test_weekend_regular_post_is_blocked(self):
         p = post('NOVO-FDS', date='2026-11-21')
