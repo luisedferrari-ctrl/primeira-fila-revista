@@ -367,6 +367,10 @@ class EditorialImagePolicyTest(unittest.TestCase):
     def test_news_and_event_mix_requires_explicit_service_reference(self):
         p = self.news_post()
         p['service_items'].append(post('CONCERTO')['service_items'][0])
+        p['caption'] += ('\nQUANDO: 24 NOV 2026 · 19H'
+                         '\nONDE: Teatro Municipal, Rua Central 100, São Paulo'
+                         '\nINGRESSOS: Entrada gratuita com reserva'
+                         '\nLINK OFICIAL: https://example.org/official')
         with self.assertRaisesRegex(ValueError, 'requires service_index'):
             ed.validate(p)
         p['slides'][0]['service_index'] = 0
