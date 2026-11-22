@@ -428,6 +428,13 @@ def validate(post):
                 raise ValueError('Visible VENUE is mandatory on every NEW slide: ' + post['id'])
             if not str(slide.get('ticket_label') or '').strip():
                 raise ValueError('Visible TICKETS/ENTRY are mandatory on every NEW slide: ' + post['id'])
+            if len(post['service_items']) == 1 and post['service_items'][0]['kind'] == 'radar':
+                visual_date = unicodedata.normalize('NFKD', str(slide['date_label']).upper()).encode(
+                    'ascii', 'ignore').decode('ascii')
+                visual_tickets = unicodedata.normalize('NFKD', str(slide['ticket_label']).upper()).encode(
+                    'ascii', 'ignore').decode('ascii')
+                if 'DATAS A ANUNCIAR' not in visual_date or 'INGRESSOS AINDA NAO DIVULGADOS' not in visual_tickets:
+                    raise ValueError('Radar image must show unannounced dates and tickets: ' + post['id'])
             if not str(slide.get('link_label') or '').strip():
                 raise ValueError('Visible OFFICIAL SITE domain is mandatory on every NEW slide: ' + post['id'])
             valid_hosts = {urlsplit(x['official_url']).hostname.casefold() for x in post['service_items']}
