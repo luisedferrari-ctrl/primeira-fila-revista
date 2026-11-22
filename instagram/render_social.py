@@ -290,9 +290,9 @@ def draw_card(photo, slide, number, total, fresh=False):
     if fresh:
         # Keep practical venue and conversion CTA readable within a 4:5 image.
         venue = 'LOCAL: ' + str(slide['venue_label']).strip()
-        venue_size = 25
+        venue_size = 30
         venue_font = get_font('sans_bold', venue_size)
-        while draw.textbbox((0, 0), venue, font=venue_font)[2] > 945 and venue_size > 17:
+        while draw.textbbox((0, 0), venue, font=venue_font)[2] > 945 and venue_size > 23:
             venue_size -= 1
             venue_font = get_font('sans_bold', venue_size)
         if draw.textbbox((0, 0), venue, font=venue_font)[2] > 945:
@@ -301,9 +301,9 @@ def draw_card(photo, slide, number, total, fresh=False):
         # Service information stays on the image, not only in the caption.
         for y, value in ((1183, str(slide['ticket_label']).strip()),
                          (1218, 'SITE OFICIAL: ' + str(slide['link_label']).strip())):
-            text_size = 22
+            text_size = 29
             text_font = get_font('sans', text_size)
-            while draw.textbbox((0, 0), value, font=text_font)[2] > 945 and text_size > 17:
+            while draw.textbbox((0, 0), value, font=text_font)[2] > 945 and text_size > 23:
                 text_size -= 1
                 text_font = get_font('sans', text_size)
             if draw.textbbox((0, 0), value, font=text_font)[2] > 945:
@@ -311,9 +311,9 @@ def draw_card(photo, slide, number, total, fresh=False):
             draw.text((x, y), value, font=text_font, fill=COLOR_CREAM)
         if number == total:
             cta = str(slide['cta_label']).strip()
-            cta_size = 23
+            cta_size = 30
             cta_font = get_font('sans_bold', cta_size)
-            while draw.textbbox((0, 0), cta, font=cta_font)[2] > 945 and cta_size > 17:
+            while draw.textbbox((0, 0), cta, font=cta_font)[2] > 945 and cta_size > 23:
                 cta_size -= 1
                 cta_font = get_font('sans_bold', cta_size)
             if draw.textbbox((0, 0), cta, font=cta_font)[2] > 945:
