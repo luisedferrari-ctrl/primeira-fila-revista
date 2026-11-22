@@ -11,3 +11,5 @@ Final visual QA refresh 22/11: original photos unchanged, Portuguese accent and 
 QA correction: ticket card shows R$ 425,25 explicitly as meia-entrada. Re-render and commit corrected card. Never publish duplicate.
 
 Strict price correction: R$ 425,25 is the half-price tier (meia-entrada). Re-render images with this label. Final retry, no parallel media writes.
+
+Final QA retry: corrected MEIA-ENTRADA R$ 425,25 card; safe binary conflict strategy; single extraordinary post only.
