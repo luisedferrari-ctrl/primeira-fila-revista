@@ -1,0 +1,124 @@
+name: ENTRESSALA - Extraordinario Primavera Sound fotos reais 20261122
+on:
+  push:
+    branches: [entressala-piloto-2026-11]
+    paths:
+      - 'instagram/extra-primavera-trigger-20261122.txt'
+permissions:
+  contents: write
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: entressala-piloto-2026-11
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check Pillow requests
+      - name: Create two news-first cards from authentic CC BY 2.0 archival artist photos
+        run: |
+          python - <<'PY'
+          from PIL import Image,ImageOps,ImageDraw,ImageFont
+          from pathlib import Path
+          from urllib.parse import quote
+          import requests,hashlib,io,time
+          base=Path('instagram/assets/ENTRESSALA-EXTRA-20261122-PRIMAVERA')
+          base.mkdir(parents=True,exist_ok=True)
+          specs=[
+            {'name':'StrokesLolympia180220-60.jpg','author':'Raph_PH','id':'01','eyebrow':'MUSICA  /  FESTIVAIS','head':['PRIMAVERA SOUND','REVELA HORARIOS','DOS SHOWS'], 'date':'5 E 6 DEZ 2026  /  SAO PAULO','items':['SAB 5/12  •  THE STROKES AS 22H15','DOM 6/12  •  GORILLAZ AS 22H','INTERLAGOS  •  PORTOES 12H30'],'caption':'THE STROKES AO VIVO EM 2020 - FOTO DE ARQUIVO'},
+            {'name':'Gorillaz.jpg','author':'wonker','id':'02','eyebrow':'GUIA  /  SERVICO','head':['GORILLAZ FECHA','O DOMINGO','AS 22H'], 'date':'DOM 6 DEZ 2026  /  SAO PAULO','items':['AUTODROMO DE INTERLAGOS','INGRESSOS DESDE R$ 425,25 + TAXAS','primaverasound.com/pt/tickets-sao-paulo'],'caption':'GORILLAZ AO VIVO EM 2010 - FOTO DE ARQUIVO'}]
+          regular='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+          bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+          def font(size,strong=False):
+            return ImageFont.truetype(bold if strong else regular,size)
+          def fit(draw,text,max_w=950,base_size=34,min_size=19,strong=False):
+            for sz in range(base_size,min_size-1,-1):
+              f=font(sz,strong)
+              b=draw.textbbox((0,0),text,font=f)
+              if b[2]-b[0] <= max_w:
+                return f
+            raise ValueError('TEXT DOES NOT FIT: '+text)
+          session=requests.Session()
+          session.headers['User-Agent']='ENTRESSALA-image-credits/1.0 (github.com/luisedferrari-ctrl/primeira-fila-revista)'
+          for idx,sp in enumerate(specs):
+            name=sp['name']
+            dig=hashlib.md5(name.encode()).hexdigest()
+            url='https://upload.wikimedia.org/wikipedia/commons/'+dig[0]+'/'+dig[:2]+'/'+quote(name)
+            r=session.get(url,timeout=70)
+            if not r.ok or not r.headers.get('content-type','').startswith('image/'):
+              raise ValueError('Source file unavailable; no publication: '+str(r.status_code)+' '+url)
+            img=Image.open(io.BytesIO(r.content)).convert('RGB')
+            assert min(img.size)>=700 and len(r.content)>100000
+            canvas=ImageOps.fit(img,(1080,1350),Image.Resampling.LANCZOS,centering=(0.5,0.42)).convert('RGBA')
+            shade=Image.new('RGBA',(1080,1350),(0,0,0,0))
+            ov=ImageDraw.Draw(shade)
+            for y in range(0,175):
+              a=int(160*(1-y/175))
+              ov.line((0,y,1080,y),fill=(5,14,20,a))
+            for y in range(475,1350):
+              ratio=(y-475)/875
+              a=min(255,int(253*ratio**0.62))
+              ov.line((0,y,1080,y),fill=(6,13,23,a))
+            canvas=Image.alpha_composite(canvas,shade)
+            d=ImageDraw.Draw(canvas)
+            white=(254,254,251);sand=(233,187,106);muted=(218,222,227)
+            d.text((65,47),'E N T R E S S A L A',font=font(27,True),fill=white)
+            d.text((946,52),'0'+str(idx+1)+'/02',font=font(22),fill=muted)
+            d.line((65,114,1015,114),fill=sand,width=3)
+            d.text((65,145),sp['eyebrow'],font=font(25,True),fill=white)
+            d.rounded_rectangle((65,706,1015,761),radius=8,fill=(26,35,48,220))
+            d.text((82,715),sp['date'],font=fit(d,sp['date'],max_w=900,base_size=30,strong=True),fill=sand)
+            for n,line in enumerate(sp['head']):
+              d.text((63,788+n*81),line,font=fit(d,line,base_size=65,min_size=43,strong=True),fill=white,stroke_width=1,stroke_fill=(3,7,12))
+            d.line((66,1038,1015,1038),fill=(173,180,192),width=2)
+            for n,item in enumerate(sp['items']):
+              y=1062+n*42
+              d.text((67,y),item,font=fit(d,item,max_w=940,base_size=27,min_size=20,strong=(n==0)),fill=sand if n==0 else white)
+            # Calls-to-action stay clear but discrete; origin credits only one line.
+            cta=('DESLIZE PARA VER O SERVICO  >' if idx==0 else 'SIGA @ENTRESSALA_ PARA DESCOBRIR SHOWS')
+            d.text((68,1222),cta,font=fit(d,cta,max_w=940,base_size=27,min_size=21,strong=True),fill=sand)
+            d.line((65,1286,1015,1286),fill=(135,150,163),width=2)
+            credit='Foto: '+sp['author']+'  •  arquivo  •  CC BY 2.0'
+            d.text((68,1300),credit,font=font(18),fill=muted)
+            out=base/(sp['id']+'.jpg')
+            canvas.convert('RGB').save(out,'JPEG',quality=92,optimize=True)
+            assert out.stat().st_size>100000
+            print('CREATED',out,img.size,out.stat().st_size,url,flush=True)
+            time.sleep(4)
+          credits='''# ENTRESSALA — Primavera Sound São Paulo 2026 (extraordinário, 22/11/2026)
+          
+          ## Foto 1 — The Strokes
+          Autor: Raph_PH. Foto de arquivo de performance em 18/02/2020 (não da edição 2026).
+          Fonte: https://commons.wikimedia.org/wiki/File:StrokesLolympia180220-60.jpg
+          Licença: CC BY 2.0 — https://creativecommons.org/licenses/by/2.0/
+          Alterações: corte e diagramação gráfica original com manchete, serviço, marca e crédito.
+          
+          ## Foto 2 — Gorillaz
+          Autor: wonker. Foto de arquivo da turnê Plastic Beach em 29/04/2010 (não da edição 2026).
+          Fonte: https://commons.wikimedia.org/wiki/File:Gorillaz.jpg
+          Licença: CC BY 2.0 — https://creativecommons.org/licenses/by/2.0/
+          Alterações: corte e diagramação gráfica original com manchete, serviço, marca e crédito.
+          
+          ## Fatos
+          https://www.primaverasound.com/pt/sao-paulo
+          https://www.primaverasound.com/pt/tickets-sao-paulo
+          https://vejasp.abril.com.br/coluna/tudo-de-som/primavera-sound-2026-horarios-palcos-line-up/
+          Verificado em 22/11/2026. Imagens reais e não geradas por IA.
+          '''
+          (base/'CREDITOS.md').write_text('\n'.join(line.lstrip() for line in credits.splitlines())+'\n',encoding='utf-8')
+          PY
+      - name: Commit static JPEGs and full rights records only to editorial branch
+        run: |
+          git config user.name "entressala-bot"
+          git config user.email "entressala-bot@users.noreply.github.com"
+          git add instagram/assets/ENTRESSALA-EXTRA-20261122-PRIMAVERA
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: licensed real artist photography for Primavera Sound extraordinary carousel"
+            git fetch origin entressala-piloto-2026-11
+            git rebase origin/entressala-piloto-2026-11
+            git push origin HEAD:entressala-piloto-2026-11
+          fi
