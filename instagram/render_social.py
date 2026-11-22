@@ -275,10 +275,10 @@ def draw_card(photo, slide, number, total, fresh=False):
         kicker_font = get_font('sans_bold', 23)
     if draw.textbbox((0, 0), kicker, font=kicker_font)[2] > 935:
         raise ValueError('Date and city label too long: ' + kicker)
-    draw.text((x, 812), kicker, font=kicker_font, fill=COLOR_YELLOW)
+    draw.text((x, 766 if fresh else 812), kicker, font=kicker_font, fill=COLOR_YELLOW)
     font, lines = fit_title(draw, slide['title'])
     line_height = int(font.size * 1.18)
-    top = 863
+    top = 811 if fresh else 863
     for line in lines:
         draw.text((x, top), line, font=font, fill=COLOR_CREAM, stroke_width=1, stroke_fill=(0, 0, 0))
         top += line_height
@@ -286,7 +286,7 @@ def draw_card(photo, slide, number, total, fresh=False):
     font_sub = get_font('sans', 29)
     if draw.textbbox((0, 0), subtitle, font=font_sub)[2] > 920:
         font_sub = get_font('sans', 25)
-    draw.text((x, min(top + 16, 1168)), subtitle, font=font_sub, fill=COLOR_CREAM)
+    draw.text((x, min(top + (9 if fresh else 16), 1100 if fresh else 1168)), subtitle, font=font_sub, fill=COLOR_CREAM)
     if fresh:
         # Keep practical venue and conversion CTA readable within a 4:5 image.
         venue = 'LOCAL: ' + str(slide['venue_label']).strip()
@@ -297,7 +297,18 @@ def draw_card(photo, slide, number, total, fresh=False):
             venue_font = get_font('sans_bold', venue_size)
         if draw.textbbox((0, 0), venue, font=venue_font)[2] > 945:
             raise ValueError('Venue too long to fit visual: ' + venue)
-        draw.text((x, 1207), venue, font=venue_font, fill=COLOR_YELLOW)
+        draw.text((x, 1147), venue, font=venue_font, fill=COLOR_YELLOW)
+        # Service information stays on the image, not only in the caption.
+        for y, value in ((1183, str(slide['ticket_label']).strip()),
+                         (1218, 'SITE OFICIAL: ' + str(slide['link_label']).strip())):
+            text_size = 22
+            text_font = get_font('sans', text_size)
+            while draw.textbbox((0, 0), value, font=text_font)[2] > 945 and text_size > 17:
+                text_size -= 1
+                text_font = get_font('sans', text_size)
+            if draw.textbbox((0, 0), value, font=text_font)[2] > 945:
+                raise ValueError('Service detail too long to fit: ' + value)
+            draw.text((x, y), value, font=text_font, fill=COLOR_CREAM)
         if number == total:
             cta = str(slide['cta_label']).strip()
             cta_size = 23
@@ -307,8 +318,8 @@ def draw_card(photo, slide, number, total, fresh=False):
                 cta_font = get_font('sans_bold', cta_size)
             if draw.textbbox((0, 0), cta, font=cta_font)[2] > 945:
                 raise ValueError('Follow CTA too long to fit visual: ' + cta)
-            draw.text((x, 1244), cta, font=cta_font, fill=COLOR_CREAM)
-        draw.line((x, 1283, 1010, 1283), fill=(192, 182, 160), width=2)
+            draw.text((x, 1253), cta, font=cta_font, fill=COLOR_YELLOW)
+        draw.line((x, 1290, 1010, 1290), fill=(192, 182, 160), width=2)
         credit_kind = 'Arte' if slide.get('asset_type') == 'official_poster' else 'Foto'
         credit = '{}: {}'.format(credit_kind, slide['photographer'])
         if 'ARQUIVO' in str(slide.get('context', '')).upper() or slide.get('is_archival'):
@@ -316,7 +327,7 @@ def draw_card(photo, slide, number, total, fresh=False):
         font_credit = get_font('sans', 19)
         if draw.textbbox((0, 0), credit, font=font_credit)[2] > 945:
             raise ValueError('Image credit too long to fit: ' + credit)
-        draw.text((x, 1300), credit, font=font_credit, fill=COLOR_CREAM)
+        draw.text((x, 1305), credit, font=font_credit, fill=COLOR_CREAM)
     else:
         # Historical cards retain their original layout without retroactive changes.
         draw.line((x, 1248, 1010, 1248), fill=(192, 182, 160), width=2)
@@ -363,7 +374,7 @@ def validate_social_service(post):
             if 'DATAS A ANUNCIAR' not in when or 'INGRESSOS AINDA NAO DIVULGADOS' not in unicodedata.normalize(
                     'NFKD', admission).encode('ascii', 'ignore').decode('ascii'):
                 raise ValueError('Undated radar must clearly announce unknown dates and tickets: ' + post['id'])
-        elif not (re.search(r'\b\d{1,2}\s*[Hh]\b', when) or
+        elif not (re.search(r'\b\d{1,2}\s*[Hh](?:\d{2})?\b', when) or
                   'HORARIO' in unicodedata.normalize('NFKD', when).encode('ascii', 'ignore').decode('ascii')):
             raise ValueError('Dated event must state time or explicitly say time is unknown: ' + post['id'])
     return True
@@ -415,6 +426,13 @@ def validate(post):
                 raise ValueError('Each new slide must show a verified year: ' + post['id'])
             if not str(slide.get('venue_label') or '').strip():
                 raise ValueError('Visible VENUE is mandatory on every NEW slide: ' + post['id'])
+            if not str(slide.get('ticket_label') or '').strip():
+                raise ValueError('Visible TICKETS/ENTRY are mandatory on every NEW slide: ' + post['id'])
+            if not str(slide.get('link_label') or '').strip():
+                raise ValueError('Visible OFFICIAL SITE domain is mandatory on every NEW slide: ' + post['id'])
+            valid_hosts = {urlsplit(x['official_url']).hostname.casefold() for x in post['service_items']}
+            if not any(host in str(slide['link_label']).casefold() for host in valid_hosts):
+                raise ValueError('Official link label does not match verified source: ' + post['id'])
             if idx == len(slides) and not re.search(r'\bsiga\s+@entressala_', str(slide.get('cta_label') or ''), flags=re.IGNORECASE):
                 raise ValueError('Last new slide must include readable follow CTA: ' + post['id'])
             if not slide.get('depicts') or slide.get('specific_to_subject') is not True:
