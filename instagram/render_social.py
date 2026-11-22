@@ -250,7 +250,7 @@ def fit_title(draw, text, max_width=920, max_lines=3):
     raise ValueError('Headline is too long to fit three lines: ' + text)
 
 
-def draw_card(photo, slide, number, total):
+def draw_card(photo, slide, number, total, fresh=False):
     im = ImageOps.fit(photo, (W, H), method=Image.Resampling.LANCZOS, centering=(0.5, 0.42)).convert('RGBA')
     overlay = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     grad = ImageDraw.Draw(overlay)
@@ -287,18 +287,86 @@ def draw_card(photo, slide, number, total):
     if draw.textbbox((0, 0), subtitle, font=font_sub)[2] > 920:
         font_sub = get_font('sans', 25)
     draw.text((x, min(top + 16, 1168)), subtitle, font=font_sub, fill=COLOR_CREAM)
-    draw.line((x, 1248, 1010, 1248), fill=(192, 182, 160), width=2)
-    credit_kind = 'Arte' if slide.get('asset_type') == 'official_poster' else 'Foto'
-    line = '{}  ·  {}: {} ({})  ·  {}  ·  diagramação'.format(
-        slide.get('context', ''), credit_kind, slide['photographer'],
-        slide.get('year', 's.d.'), slide['license'])
-    size = 19
-    font_credit = get_font('sans', size)
-    while draw.textbbox((0,0), line, font=font_credit)[2] > 945 and size > 14:
-        size -= 1
+    if fresh:
+        # Keep practical venue and conversion CTA readable within a 4:5 image.
+        venue = 'LOCAL: ' + str(slide['venue_label']).strip()
+        venue_size = 25
+        venue_font = get_font('sans_bold', venue_size)
+        while draw.textbbox((0, 0), venue, font=venue_font)[2] > 945 and venue_size > 17:
+            venue_size -= 1
+            venue_font = get_font('sans_bold', venue_size)
+        if draw.textbbox((0, 0), venue, font=venue_font)[2] > 945:
+            raise ValueError('Venue too long to fit visual: ' + venue)
+        draw.text((x, 1207), venue, font=venue_font, fill=COLOR_YELLOW)
+        if number == total:
+            cta = str(slide['cta_label']).strip()
+            cta_size = 23
+            cta_font = get_font('sans_bold', cta_size)
+            while draw.textbbox((0, 0), cta, font=cta_font)[2] > 945 and cta_size > 17:
+                cta_size -= 1
+                cta_font = get_font('sans_bold', cta_size)
+            if draw.textbbox((0, 0), cta, font=cta_font)[2] > 945:
+                raise ValueError('Follow CTA too long to fit visual: ' + cta)
+            draw.text((x, 1244), cta, font=cta_font, fill=COLOR_CREAM)
+        draw.line((x, 1283, 1010, 1283), fill=(192, 182, 160), width=2)
+        credit_kind = 'Arte' if slide.get('asset_type') == 'official_poster' else 'Foto'
+        credit = '{}: {}'.format(credit_kind, slide['photographer'])
+        if 'ARQUIVO' in str(slide.get('context', '')).upper() or slide.get('is_archival'):
+            credit += ' · arquivo'
+        font_credit = get_font('sans', 19)
+        if draw.textbbox((0, 0), credit, font=font_credit)[2] > 945:
+            raise ValueError('Image credit too long to fit: ' + credit)
+        draw.text((x, 1300), credit, font=font_credit, fill=COLOR_CREAM)
+    else:
+        # Historical cards retain their original layout without retroactive changes.
+        draw.line((x, 1248, 1010, 1248), fill=(192, 182, 160), width=2)
+        credit_kind = 'Arte' if slide.get('asset_type') == 'official_poster' else 'Foto'
+        line = '{}  ·  {}: {} ({})  ·  {}  ·  diagramação'.format(
+            slide.get('context', ''), credit_kind, slide['photographer'],
+            slide.get('year', 's.d.'), slide['license'])
+        size = 19
         font_credit = get_font('sans', size)
-    draw.text((x, 1270), line, font=font_credit, fill=COLOR_CREAM)
+        while draw.textbbox((0,0), line, font=font_credit)[2] > 945 and size > 14:
+            size -= 1
+            font_credit = get_font('sans', size)
+        draw.text((x, 1270), line, font=font_credit, fill=COLOR_CREAM)
     return im.convert('RGB')
+
+
+def validate_social_service(post):
+    """Mandatory, factual reader-service and growth CTA for all new Instagram posts.
+
+    Multiple service_items support mixed-event carousels. A radar announcement
+    is explicitly distinguished from a dated, visitable event.
+    """
+    caption = str(post.get('caption') or '')
+    if not re.search(r'\bsiga\s+@entressala_', caption, flags=re.IGNORECASE):
+        raise ValueError('Caption must contain a concrete CTA to follow @entressala_: ' + post['id'])
+    items = post.get('service_items')
+    if not isinstance(items, list) or not items:
+        raise ValueError('Post must contain verified service_items: ' + post['id'])
+    for index, service in enumerate(items, start=1):
+        if not isinstance(service, dict) or service.get('kind') not in ('event', 'radar'):
+            raise ValueError('Service item must be kind event or radar: ' + post['id'])
+        for field in ('when', 'where', 'admission', 'official_url'):
+            value = str(service.get(field) or '').strip()
+            if len(value) < (14 if field == 'official_url' else 7):
+                raise ValueError('Missing service {} in item {}: {}'.format(field, index, post['id']))
+            if unicodedata.normalize('NFKC', value).casefold() not in unicodedata.normalize('NFKC', caption).casefold():
+                raise ValueError('Caption omits verified service {} in item {}: {}'.format(field, index, post['id']))
+        safe_https_image_url(service['official_url'])
+        when = unicodedata.normalize('NFKC', str(service['when'])).upper()
+        admission = unicodedata.normalize('NFKC', str(service['admission'])).upper()
+        if not re.search(r'\b20\d{2}\b', when):
+            raise ValueError('Service must include the event/reference YEAR: ' + post['id'])
+        if service['kind'] == 'radar':
+            if 'DATAS A ANUNCIAR' not in when or 'INGRESSOS AINDA NAO DIVULGADOS' not in unicodedata.normalize(
+                    'NFKD', admission).encode('ascii', 'ignore').decode('ascii'):
+                raise ValueError('Undated radar must clearly announce unknown dates and tickets: ' + post['id'])
+        elif not (re.search(r'\b\d{1,2}\s*[Hh]\b', when) or
+                  'HORARIO' in unicodedata.normalize('NFKD', when).encode('ascii', 'ignore').decode('ascii')):
+            raise ValueError('Dated event must state time or explicitly say time is unknown: ' + post['id'])
+    return True
 
 
 def validate(post):
@@ -320,6 +388,7 @@ def validate(post):
             raise ValueError('Source edition article URL missing or mismatched: ' + post['id'])
         if not post.get('verified_at') or not post.get('valid_through_local_date') or not post.get('factual_sources'):
             raise ValueError('Verified source, expiry and fact-check are required: ' + post['id'])
+        validate_social_service(post)
     secondary_seen = False
     for idx, slide in enumerate(slides, start=1):
         if not slide.get('photographer') or not slide.get('rights_checked_at'):
@@ -342,6 +411,12 @@ def validate(post):
         if fresh:
             if not slide.get('date_label') or not slide.get('city'):
                 raise ValueError('Visible DATE and CITY are mandatory on every NEW slide: ' + post['id'])
+            if not re.search(r'\b20\d{2}\b', str(slide['date_label'])):
+                raise ValueError('Each new slide must show a verified year: ' + post['id'])
+            if not str(slide.get('venue_label') or '').strip():
+                raise ValueError('Visible VENUE is mandatory on every NEW slide: ' + post['id'])
+            if idx == len(slides) and not re.search(r'\bsiga\s+@entressala_', str(slide.get('cta_label') or ''), flags=re.IGNORECASE):
+                raise ValueError('Last new slide must include readable follow CTA: ' + post['id'])
             if not slide.get('depicts') or slide.get('specific_to_subject') is not True:
                 raise ValueError('Generic or unverified visual subject: ' + post['id'])
             if 'FOTO DO LOCAL' in str(slide.get('context', '')).upper() and not slide.get('venue_is_subject'):
@@ -416,7 +491,9 @@ def render(manifest_path, test_placeholders=False):
         folder = ASSET_DIR / post['id']
         folder.mkdir(parents=True, exist_ok=True)
         urls = []
-        firstcomment = ['Créditos das fotografias (todas de arquivo, com cortes e sobreposição editorial):']
+        credits_url = 'https://github.com/{}/blob/{}/instagram/assets/{}/CREDITOS.md'.format(OWNER, BRANCH, post['id'])
+        firstcomment = (['Fontes e direitos das imagens: ' + credits_url] if is_new_post(post)
+                        else ['Créditos das fotografias (todas de arquivo, com cortes e sobreposição editorial):'])
         signature = hashlib.sha256(json.dumps(post, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
         sigfile = folder / '_source_hash.txt'
         expected_files = [folder / '{:02d}.jpg'.format(index) for index in range(1, len(post['slides']) + 1)]
@@ -430,20 +507,21 @@ def render(manifest_path, test_placeholders=False):
                 img = fetch_photo(slide, test_placeholders, index)
                 if is_new_post(post) and not test_placeholders:
                     register_visual_hash(img, slide, post, index, history)
-                composed = draw_card(img, slide, index, len(post['slides']))
+                composed = draw_card(img, slide, index, len(post['slides']), fresh=is_new_post(post))
                 composed.save(folder / filename, 'JPEG', quality=89, optimize=True, subsampling=0)
             rawpath = 'instagram/assets/{}/{}'.format(post['id'], filename)
             urls.append('https://raw.githubusercontent.com/{}/{}/{}'.format(OWNER, BRANCH, rawpath))
-            firstcomment.append('{}: {} ({}) · {}. Fonte: {} · licença/permissão {}'.format(
-                index, slide['photographer'], slide.get('year', 's.d.'), slide['license'],
-                image_credit_source(slide), image_license_evidence(slide)))
+            if not is_new_post(post):
+                firstcomment.append('{}: {} ({}) · {}. Fonte: {} · licença/permissão {}'.format(
+                    index, slide['photographer'], slide.get('year', 's.d.'), slide['license'],
+                    image_credit_source(slide), image_license_evidence(slide)))
         if not test_placeholders:
             sigfile.write_text(signature + '\n', encoding='utf-8')
         if is_new_post(post) or not (folder / 'CREDITOS.md').exists():
             (folder / 'CREDITOS.md').write_text(create_credits(post), encoding='utf-8')
         item = {k:v for k,v in post.items() if k != 'slides'}
         item['images'] = urls
-        item['credits_document'] = 'https://github.com/{}/blob/{}/instagram/assets/{}/CREDITOS.md'.format(OWNER, BRANCH, post['id'])
+        item['credits_document'] = credits_url
         item['first_comment'] = '\n'.join(firstcomment)[:2100]
         item['assetsReady'] = not test_placeholders
         if is_new_post(post):
