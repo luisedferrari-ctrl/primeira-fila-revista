@@ -238,6 +238,7 @@ class EditorialImagePolicyTest(unittest.TestCase):
         p['service_items'][0]['when'] = '2027 · DATAS A ANUNCIAR'
         p['service_items'][0]['admission'] = 'INGRESSOS AINDA NÃO DIVULGADOS'
         p['slides'][0]['date_label'] = '2027 · DATAS A ANUNCIAR'
+        p['slides'][0]['ticket_label'] = 'INGRESSOS AINDA NÃO DIVULGADOS'
         p['caption'] = ('Exposição no MASP. QUANDO: 2027 · DATAS A ANUNCIAR\n'
                         'ONDE: Teatro Municipal, Rua Central 100, São Paulo\n'
                         'INGRESSOS: INGRESSOS AINDA NÃO DIVULGADOS\n'
@@ -248,6 +249,26 @@ class EditorialImagePolicyTest(unittest.TestCase):
         p['caption'] = p['caption'].replace('2027 · DATAS A ANUNCIAR', '2027 · Em breve')
         with self.assertRaisesRegex(ValueError, 'Undated radar'):
             ed.validate(p)
+
+    def test_radar_image_cannot_omit_unknown_ticket_status(self):
+        p = post('RADAR')
+        p['service_items'][0]['kind'] = 'radar'
+        p['service_items'][0]['when'] = '2027 · DATAS A ANUNCIAR'
+        p['service_items'][0]['admission'] = 'INGRESSOS AINDA NÃO DIVULGADOS'
+        p['slides'][0]['date_label'] = '2027 · DATAS A ANUNCIAR'
+        p['caption'] = ('QUANDO: 2027 · DATAS A ANUNCIAR\n'
+                        'ONDE: Teatro Municipal, Rua Central 100, São Paulo\n'
+                        'INGRESSOS: INGRESSOS AINDA NÃO DIVULGADOS\n'
+                        'LINK OFICIAL: https://example.org/official\n'
+                        'Siga @entressala_ para acompanhar as datas.')
+        with self.assertRaisesRegex(ValueError, 'Radar image must show'):
+            ed.validate(p)
+
+    def test_new_card_renders_real_service_and_cta_overlay(self):
+        p = post('NOVO')
+        img = Image.new('RGB', (1080, 1350), (30, 45, 65))
+        card = ed.draw_card(img, p['slides'][0], 1, 1, fresh=True)
+        self.assertEqual(card.size, (1080, 1350))
 
     def test_image_service_fields_do_not_apply_retroactively(self):
         p = post('HISTORICO', date='2026-11-18')
