@@ -1,0 +1,30 @@
+name: ENTRESSALA - QA editorial noticias e agenda (opcao B)
+on:
+  push:
+    branches: [entressala-piloto-2026-11]
+    paths:
+      - 'instagram/render_social.py'
+      - 'instagram/editorial_option_b.py'
+      - 'instagram/test_image_policy.py'
+      - 'docs/entressala-diretriz-fotografia-instagram.md'
+      - 'instagram/metricool-extraordinarios.md'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check Pillow requests
+      - name: Validate Python and unchanged historic queue
+        run: |
+          python -m py_compile instagram/render_social.py instagram/editorial_option_b.py instagram/test_image_policy.py
+          python -m json.tool instagram/fila-editorial.json > /dev/null
+          python -m json.tool instagram/image-history.json > /dev/null
+      - name: Offline tests - do not create or publish any social posts
+        run: python -m unittest discover -s instagram -p 'test_image_policy.py' -v
