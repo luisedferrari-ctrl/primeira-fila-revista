@@ -29,8 +29,8 @@ jobs:
           base=Path('instagram/assets/ENTRESSALA-EXTRA-20261122-PRIMAVERA')
           base.mkdir(parents=True,exist_ok=True)
           specs=[
-            {'name':'StrokesLolympia180220-60.jpg','author':'Raph_PH','id':'01','eyebrow':'MÚSICA  /  FESTIVAIS','head':['PRIMAVERA SOUND','REVELA HORÁRIOS','DOS SHOWS'], 'date':'5 E 6 DEZ 2026  /  SAO PAULO','items':['SÁB 5/12  •  THE STROKES AS 22H15','DOM 6/12  •  GORILLAZ AS 22H','INTERLAGOS  •  PORTOES 12H30'],'caption':'THE STROKES AO VIVO EM 2020 - FOTO DE ARQUIVO'},
-            {'name':'Gorillaz.jpg','author':'wonker','id':'02','eyebrow':'GUIA  /  SERVIÇO','head':['GORILLAZ FECHA','O DOMINGO','ÀS 22H'], 'date':'DOM 6 DEZ 2026  /  SAO PAULO','items':['AUTODROMO DE INTERLAGOS','INGRESSOS DESDE R$ 425,25 + TAXAS','primaverasound.com/pt/tickets-sao-paulo'],'caption':'GORILLAZ AO VIVO EM 2010 - FOTO DE ARQUIVO'}]
+            {'name':'StrokesLolympia180220-60.jpg','author':'Raph_PH','id':'01','eyebrow':'MÚSICA  /  FESTIVAIS','head':['PRIMAVERA SOUND','REVELA HORÁRIOS','DOS SHOWS'], 'date':'5 E 6 DEZ 2026  /  SÃO PAULO','items':['SÁB 5/12  •  THE STROKES ÀS 22H15','DOM 6/12  •  GORILLAZ ÀS 22H','INTERLAGOS  •  PORTÕES 12H30'],'caption':'THE STROKES AO VIVO EM 2020 - FOTO DE ARQUIVO'},
+            {'name':'Gorillaz.jpg','author':'wonker','id':'02','eyebrow':'GUIA  /  SERVIÇO','head':['GORILLAZ FECHA','O DOMINGO','ÀS 22H'], 'date':'DOM 6 DEZ 2026  /  SÃO PAULO','items':['AUTÓDROMO DE INTERLAGOS','INGRESSOS DESDE R$ 425,25 + TAXAS','primaverasound.com/pt/tickets-sao-paulo'],'caption':'GORILLAZ AO VIVO EM 2010 - FOTO DE ARQUIVO'}]
           regular='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
           bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
           def font(size,strong=False):
