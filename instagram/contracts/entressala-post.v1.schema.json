@@ -1,0 +1,594 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:entressala:instagram:post:1.0.0-rc1",
+  "title": "ENTRESSALA post editorial canonico - contrato candidato",
+  "description": "Especificacao normativa para NOVAS pautas em ambos os canais. Nao conectada aos publicadores ate homologacao; validacoes cruzadas e de direitos exigem QA externo.",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "id",
+    "publication_channel",
+    "story_id",
+    "angle_id",
+    "origin_id",
+    "publication_dedupe_key",
+    "publish_local_date",
+    "valid_through_local_date",
+    "verified_at",
+    "editorial_scope",
+    "editorial_angle",
+    "caption",
+    "factual_sources",
+    "service_items",
+    "slides",
+    "approved",
+    "eligibleForScheduling"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0-rc1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^ENTRESSALA-(IG|EXTRA)-20[0-9]{6}-[A-Z0-9-]+$"
+    },
+    "publication_channel": {
+      "enum": [
+        "regular",
+        "extraordinary"
+      ]
+    },
+    "story_id": {
+      "type": "string",
+      "pattern": "^STORY-[a-f0-9]{16}$"
+    },
+    "angle_id": {
+      "type": "string",
+      "pattern": "^ANGLE-[a-f0-9]{16}$"
+    },
+    "origin_id": {
+      "type": "string",
+      "minLength": 12
+    },
+    "publication_dedupe_key": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "publish_local_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "valid_through_local_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "editorial_scope": {
+      "enum": [
+        "regional",
+        "brasil",
+        "internacional"
+      ]
+    },
+    "editorial_angle": {
+      "type": "string",
+      "minLength": 18
+    },
+    "source_edition_id": {
+      "type": "string",
+      "pattern": "^EC-20[0-9]{2}-[0-9]{2}-[0-9]{2}$"
+    },
+    "source_article_url": {
+      "$ref": "#/$defs/httpsUrl"
+    },
+    "caption": {
+      "type": "string",
+      "minLength": 70,
+      "maxLength": 2100
+    },
+    "factual_sources": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/httpsUrl"
+      }
+    },
+    "service_items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/event"
+          },
+          {
+            "$ref": "#/$defs/radar"
+          },
+          {
+            "$ref": "#/$defs/news"
+          }
+        ]
+      }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/slide"
+      }
+    },
+    "approved": {
+      "type": "boolean"
+    },
+    "eligibleForScheduling": {
+      "type": "boolean"
+    },
+    "qa": {
+      "type": "object",
+      "required": [
+        "factual",
+        "rights",
+        "visual",
+        "dedupe",
+        "checked_at"
+      ],
+      "properties": {
+        "factual": {
+          "const": true
+        },
+        "rights": {
+          "const": true
+        },
+        "visual": {
+          "const": true
+        },
+        "dedupe": {
+          "const": true
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "evidence_url": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "publisher_receipt": {
+      "type": "object",
+      "required": [
+        "provider",
+        "external_id",
+        "status"
+      ],
+      "properties": {
+        "provider": {
+          "enum": [
+            "Buffer",
+            "Metricool"
+          ]
+        },
+        "external_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_uuid": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "public_url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "publication_channel": {
+            "const": "regular"
+          }
+        },
+        "required": [
+          "publication_channel"
+        ]
+      },
+      "then": {
+        "required": [
+          "source_edition_id",
+          "source_article_url"
+        ],
+        "properties": {
+          "origin_id": {
+            "pattern": "^edition:EC-20[0-9]{2}-[0-9]{2}-[0-9]{2}:article:.+"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "publication_channel": {
+            "const": "extraordinary"
+          }
+        },
+        "required": [
+          "publication_channel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "origin_id": {
+            "pattern": "^external:.+"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "eligibleForScheduling": {
+            "const": true
+          }
+        },
+        "required": [
+          "eligibleForScheduling"
+        ]
+      },
+      "then": {
+        "properties": {
+          "approved": {
+            "const": true
+          }
+        },
+        "required": [
+          "qa"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "httpsUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s/]+/.+"
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "kind",
+        "verified",
+        "when",
+        "where",
+        "admission",
+        "official_url"
+      ],
+      "properties": {
+        "kind": {
+          "const": "event"
+        },
+        "verified": {
+          "const": true
+        },
+        "when": {
+          "type": "string",
+          "minLength": 7
+        },
+        "where": {
+          "type": "string",
+          "minLength": 7
+        },
+        "admission": {
+          "type": "string",
+          "minLength": 7
+        },
+        "official_url": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "radar": {
+      "type": "object",
+      "required": [
+        "kind",
+        "verified",
+        "when",
+        "where",
+        "admission",
+        "official_url"
+      ],
+      "properties": {
+        "kind": {
+          "const": "radar"
+        },
+        "verified": {
+          "const": true
+        },
+        "when": {
+          "type": "string",
+          "pattern": "DATAS A ANUNCIAR"
+        },
+        "where": {
+          "type": "string",
+          "minLength": 7
+        },
+        "admission": {
+          "type": "string",
+          "pattern": "INGRESSOS AINDA N[ÃA]O DIVULGADOS"
+        },
+        "official_url": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "news": {
+      "type": "object",
+      "required": [
+        "kind",
+        "verified",
+        "when",
+        "topic",
+        "source_name",
+        "source_url"
+      ],
+      "properties": {
+        "kind": {
+          "const": "news"
+        },
+        "verified": {
+          "const": true
+        },
+        "when": {
+          "type": "string",
+          "minLength": 8
+        },
+        "topic": {
+          "type": "string",
+          "minLength": 15
+        },
+        "source_name": {
+          "type": "string",
+          "minLength": 4
+        },
+        "source_url": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "slide": {
+      "type": "object",
+      "required": [
+        "title",
+        "eyebrow",
+        "subtitle",
+        "date_label",
+        "city",
+        "link_label",
+        "service_index",
+        "appeal_tier",
+        "asset_type",
+        "image_source_id",
+        "image_id",
+        "image_sha256",
+        "image_phash256",
+        "content_kind",
+        "photographer",
+        "source_page_url",
+        "license",
+        "rights_checked_at",
+        "instagram_use_allowed",
+        "depicts",
+        "specific_to_subject"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 14
+        },
+        "eyebrow": {
+          "type": "string",
+          "minLength": 2
+        },
+        "subtitle": {
+          "type": "string",
+          "minLength": 5
+        },
+        "date_label": {
+          "type": "string",
+          "minLength": 4
+        },
+        "city": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Cidade para EVENTO/RADAR quando conhecida; abrangencia BRASIL/MUNDO para NEWS no adaptador atual."
+        },
+        "link_label": {
+          "type": "string",
+          "minLength": 4
+        },
+        "service_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "appeal_tier": {
+          "enum": [
+            "cover",
+            "mass",
+            "secondary"
+          ]
+        },
+        "asset_type": {
+          "enum": [
+            "photo",
+            "authorized_photo",
+            "official_poster"
+          ]
+        },
+        "content_kind": {
+          "enum": [
+            "photograph",
+            "artwork_reproduction",
+            "official_poster"
+          ]
+        },
+        "image_source_id": {
+          "type": "string",
+          "minLength": 6
+        },
+        "image_id": {
+          "type": "string",
+          "pattern": "^IMG-[a-f0-9]{64}$"
+        },
+        "image_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "image_phash256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "file": {
+          "type": "string"
+        },
+        "image_url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "photographer": {
+          "type": "string",
+          "minLength": 2
+        },
+        "copyright_holder": {
+          "type": "string"
+        },
+        "source_page_url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 4
+        },
+        "license_url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "permission_evidence_url": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "instagram_use_allowed": {
+          "const": true
+        },
+        "credit_line": {
+          "type": "string"
+        },
+        "depicts": {
+          "type": "string",
+          "minLength": 6
+        },
+        "specific_to_subject": {
+          "const": true
+        },
+        "venue_is_subject": {
+          "type": "boolean"
+        },
+        "is_archival": {
+          "type": "boolean"
+        },
+        "shot_date": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "modifications": {
+          "type": "string"
+        },
+        "rights_checked_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "venue_label": {
+          "type": "string"
+        },
+        "ticket_label": {
+          "type": "string"
+        },
+        "subject_label": {
+          "type": "string"
+        },
+        "news_deck": {
+          "type": "string"
+        },
+        "cta_label": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "asset_type": {
+                "const": "photo"
+              }
+            },
+            "required": [
+              "asset_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "file",
+              "license_url"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "asset_type": {
+                "enum": [
+                  "authorized_photo",
+                  "official_poster"
+                ]
+              }
+            },
+            "required": [
+              "asset_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "image_url",
+              "permission_evidence_url"
+            ],
+            "properties": {
+              "license": {
+                "const": "PERMISSAO EDITORIAL"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "x-entressala-external-gates": [
+    "Verificar que fonte regular corresponde a ULTIMA edicao publicada (HTTP 200 + origem artigo); JSON Schema isolado nao comprova isso.",
+    "Exigir verificacao de foto original, licenca, titular, obra retratada, termo de uso Instagram, atribucao legal e URL em tempo real.",
+    "Conferir cadeia original SHA-256 + pHash e reserva atomica de imagem/story/angle entre Buffer e Metricool; bloquear corrida e resposta indeterminada.",
+    "Caption deve conter os campos literais de service_items e CTA 'Siga @entressala_' contextual; noticias nao recebem servico de ingressos ficticio.",
+    "Conferir service_index, titulo, data, rótulos de local/ticket (event/radar) ou assunto/fonte (news), CTA no ultimo slide e contraste/legibilidade mobile.",
+    "Verificar minimo 80% fotografias reais em carrossel novo; reproducoes de obras nao contam automaticamente como foto. Ausencia de permissao bloqueia.",
+    "Validar dia util para REGULAR, horario local, 1 post/dia, prazo e revalidacao de ate 48h; extraordinario nao consome cota regular.",
+    "Publisher deve aceitar apenas comprovante QA validado, sem inferir autorizacao a partir de flags fornecidas pelo produtor."
+  ]
+}
