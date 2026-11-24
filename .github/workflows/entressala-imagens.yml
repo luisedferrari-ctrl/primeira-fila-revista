@@ -2,13 +2,21 @@ name: ENTRESSALA - Imagens reais do Instagram
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, entressala-piloto-2026-11]
     paths:
       - '.github/workflows/entressala-imagens.yml'
+      - 'instagram/fila-editorial.json'
+      - 'instagram/render_social.py'
+      - 'instagram/editorial_option_b.py'
+      - 'instagram/pipeline_preflight.py'
+      - 'instagram/test_pipeline_preflight.py'
   schedule:
-    - cron: '27 15 * * *' # diario 12:27 BRT, inclusive depois da primeira semana
+    - cron: '27 15 * * *' # fallback existente, 12:27 BRT
 permissions:
   contents: write
+concurrency:
+  group: entressala-instagram-render
+  cancel-in-progress: false
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -19,30 +27,58 @@ jobs:
         with:
           ref: entressala-piloto-2026-11
           persist-credentials: true
+      - name: Ler fonte canonica publicada em main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: canonical-source
+          persist-credentials: false
+          sparse-checkout: edicoes
       - name: Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Dependencias de imagem
-        run: pip install --disable-pip-version-check pillow requests
+      - name: Dependencias de imagem com recuperacao limitada de rede
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            if python -m pip install --disable-pip-version-check --progress-bar off --retries 5 --timeout 60 pillow requests; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
       - name: Validar sintaxe e manifests editoriais
         run: |
-          python -m py_compile instagram/render_social.py
+          python -m py_compile instagram/render_social.py instagram/pipeline_preflight.py
           python -m json.tool instagram/fila-editorial.json > /dev/null
           python -m json.tool instagram/image-history.json > /dev/null
-      - name: Testes de politica editorial e fotos ineditas (sem rede)
-        run: python -m unittest discover -s instagram -p 'test_image_policy.py' -v
-      - name: Renderizar fotografias e cartazes autorizados com protecao antirreuso
+      - name: Testes de politica e origem sem rede
+        run: python -m unittest discover -s instagram -p 'test_*.py' -v
+      - name: Exigir pauta do dia e materia da ultima edicao publicada
+        run: python instagram/pipeline_preflight.py --source-root canonical-source --manifest instagram/fila-editorial.json
+      - name: Renderizar fotografias autorizadas com protecao antirreuso
         run: python instagram/render_social.py
-      - name: Publicar apenas novos arquivos na branch editorial
+      - name: Gravar resultado somente se a pauta continua na mesma versao
+        shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          source_sha=$(git rev-parse HEAD)
           git add instagram/assets instagram/fila-publicavel.json instagram/image-history.json
           if ! git diff --cached --quiet; then
-            git commit -m 'build(entressala): render instagram photos licensed and credited'
-            # A pauta pode ter sido atualizada enquanto o renderizador buscava fotos.
             git fetch origin entressala-piloto-2026-11
-            git rebase origin/entressala-piloto-2026-11
+            if [ "$(git rev-parse origin/entressala-piloto-2026-11)" != "$source_sha" ]; then
+              echo '::error::A pauta mudou durante a renderizacao. Saida nao gravada; nova execucao deve usar o estado atual.'
+              exit 1
+            fi
+            git commit -m 'build(entressala): render verified editorial candidate'
             git push origin HEAD:entressala-piloto-2026-11
           fi
+      - name: Registrar resultado auditavel
+        if: always()
+        env:
+          RESULT: ${{ job.status }}
+        run: |
+          echo "## ENTRESSALA render: $RESULT" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Sucesso de renderizacao nao comprova publicacao no Instagram. Consulte a etapa que falhou; ausencia de pauta e bloqueio editorial.' >> "$GITHUB_STEP_SUMMARY"
