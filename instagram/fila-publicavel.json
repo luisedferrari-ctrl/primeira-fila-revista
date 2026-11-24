@@ -2,34 +2,43 @@
   "brand": "ENTRESSALA",
   "channel": "@entressala_",
   "version": 3,
-  "editorial_policy": "reach-first-unique-images-2026-11-18",
+  "editorial_policy": "entressala-newsfirst-option-b-2026-11-23",
   "posts": [
     {
-      "id": "ENTRESSALA-IG-20261117-LANCAMENTO",
-      "publish_local_date": "2026-11-17",
-      "valid_through_local_date": "2026-11-21",
-      "kind": "lancamento",
-      "verified_at": "2026-11-17",
+      "id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "publish_local_date": "2026-11-24",
+      "valid_through_local_date": "2026-12-06",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A nova montagem de Os Pescadores de Pérolas abre temporada no Theatro Municipal com oito sessões confirmadas.",
+      "verified_at": "2026-11-24",
       "approved": true,
       "eligibleForScheduling": true,
-      "caption": "Um show pode justificar a ida a São Paulo. Uma exposição pode mudar o roteiro de um sábado em Campinas. E um bom programa pode estar a poucos minutos de casa.\n\nA ENTRESSALA acompanha a cultura entre Indaiatuba, Campinas e São Paulo, com boas histórias, curadoria e informações para escolher o que ver e fazer.\n\nMúsica, teatro, cinema, artes, esporte e descobertas pela região. A revista digital está a caminho.\n\nFotos: Danilo Bertelli, Edison Marcon, Henrique Boney, enioprado e Nani carneiro.",
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/opera/",
       "factual_sources": [
-        "https://commons.wikimedia.org/wiki/File:Parque_Ecol%C3%B3gico_-_Indaiatuba_-_panoramio.jpg",
-        "https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_Cultura_Campinas.jpg",
-        "https://commons.wikimedia.org/wiki/File:Concerto_na_Sala_S%C3%A3o_Paulo.jpg",
-        "https://commons.wikimedia.org/wiki/File:Teatro_Municipal_Castro_Mendes.jpg",
-        "https://commons.wikimedia.org/wiki/File:Pinacoteca_de_S%C3%A3o_Paulo.jpg"
+        "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/",
+        "https://commons.wikimedia.org/wiki/File:The_Pearl_Fishers_Final_Dress_Rehearsal_(16466931637).jpg"
       ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H",
+          "where": "Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP",
+          "admission": "R$ 47 a R$ 290 (inteira)",
+          "official_url": "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/"
+        }
+      ],
+      "caption": "Uma amizade levada ao limite, um amor impossível e uma das partituras mais luminosas de Bizet: Os Pescadores de Pérolas volta ao Theatro Municipal em nova montagem, com Roberto Minczuk à frente da Orquestra Sinfônica Municipal.\n\nQUANDO: 27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H\nONDE: Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP\nINGRESSOS: R$ 47 a R$ 290 (inteira)\nLINK OFICIAL: https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/\n\nSiga @entressala_ para escolher a próxima noite que vale sair de casa — e compartilhe com quem iria ao Municipal.\n\nFoto de arquivo: Florida Grand Opera (2015) · CC BY 2.0.",
       "images": [
-        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/01.jpg",
-        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/02.jpg",
-        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/03.jpg",
-        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/04.jpg",
-        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/05.jpg"
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/01.jpg"
       ],
-      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261117-LANCAMENTO/CREDITOS.md",
-      "first_comment": "Créditos das fotografias (todas de arquivo, com cortes e sobreposição editorial):\n1: Danilo Bertelli (2012) · CC BY 3.0. Fonte: https://commons.wikimedia.org/wiki/File:Parque_Ecol%C3%B3gico_-_Indaiatuba_-_panoramio.jpg · licença/permissão https://creativecommons.org/licenses/by/3.0/\n2: Edison Marcon (2018) · CC BY-SA 4.0. Fonte: https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_Cultura_Campinas.jpg · licença/permissão https://creativecommons.org/licenses/by-sa/4.0/\n3: Henrique Boney (2014) · CC BY-SA 4.0. Fonte: https://commons.wikimedia.org/wiki/File:Concerto_na_Sala_S%C3%A3o_Paulo.jpg · licença/permissão https://creativecommons.org/licenses/by-sa/4.0/\n4: enioprado (2013) · CC BY-SA 3.0. Fonte: https://commons.wikimedia.org/wiki/File:Teatro_Municipal_Castro_Mendes.jpg · licença/permissão https://creativecommons.org/licenses/by-sa/3.0/\n5: Nani carneiro (2016) · CC BY-SA 4.0. Fonte: https://commons.wikimedia.org/wiki/File:Pinacoteca_de_S%C3%A3o_Paulo.jpg · licença/permissão https://creativecommons.org/licenses/by-sa/4.0/",
-      "assetsReady": true
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
     }
   ],
   "notice": "Publishing must verify images, factual validity and idempotency. Auto-publish only after verified assets; no synthesized event photography."

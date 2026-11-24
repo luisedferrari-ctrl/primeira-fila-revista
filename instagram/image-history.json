@@ -51,7 +51,18 @@
       "channel": "Metricool",
       "metricool_uuid": "-2847568129183104735",
       "origin": "CC BY 2.0 Commons"
+    },
+    "commons:the pearl fishers final dress rehearsal (16466931637).jpg": {
+      "post_id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "publish_local_date": "2026-11-24"
     }
   },
-  "visual_hashes": {}
+  "visual_hashes": {
+    "03af93ad507592b5737762577a497a791b4e5ac62ace099c4adc8ad61bd6e4a9": {
+      "post_id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "slide_number": 1,
+      "image_key": "commons:the pearl fishers final dress rehearsal (16466931637).jpg",
+      "publish_local_date": "2026-11-24"
+    }
+  }
 }
