@@ -224,6 +224,58 @@
           "rights_checked_at": "2026-11-17"
         }
       ]
+    },
+    {
+      "id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "publish_local_date": "2026-11-24",
+      "valid_through_local_date": "2026-12-06",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A nova montagem de Os Pescadores de Pérolas abre temporada no Theatro Municipal com oito sessões confirmadas.",
+      "verified_at": "2026-11-24",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/opera/",
+      "factual_sources": [
+        "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/",
+        "https://commons.wikimedia.org/wiki/File:The_Pearl_Fishers_Final_Dress_Rehearsal_(16466931637).jpg"
+      ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H",
+          "where": "Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP",
+          "admission": "R$ 47 a R$ 290 (inteira)",
+          "official_url": "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/"
+        }
+      ],
+      "caption": "Uma amizade levada ao limite, um amor impossível e uma das partituras mais luminosas de Bizet: Os Pescadores de Pérolas volta ao Theatro Municipal em nova montagem, com Roberto Minczuk à frente da Orquestra Sinfônica Municipal.\n\nQUANDO: 27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H\nONDE: Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP\nINGRESSOS: R$ 47 a R$ 290 (inteira)\nLINK OFICIAL: https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/\n\nSiga @entressala_ para escolher a próxima noite que vale sair de casa — e compartilhe com quem iria ao Municipal.\n\nFoto de arquivo: Florida Grand Opera (2015) · CC BY 2.0.",
+      "slides": [
+        {
+          "title": "BIZET VOLTA AO MUNICIPAL",
+          "eyebrow": "ÓPERA · SÃO PAULO",
+          "subtitle": "Os Pescadores de Pérolas abre em 27 de novembro",
+          "asset_type": "photo",
+          "file": "The Pearl Fishers Final Dress Rehearsal (16466931637).jpg",
+          "photographer": "Florida Grand Opera",
+          "license": "CC BY 2.0",
+          "license_url": "https://creativecommons.org/licenses/by/2.0/",
+          "year": "2015",
+          "context": "FOTO DE ARQUIVO · PRODUÇÃO DE 2015",
+          "rights_checked_at": "2026-11-24",
+          "depicts": "Cena de ensaio geral de The Pearl Fishers, produção da Florida Grand Opera (2015)",
+          "specific_to_subject": true,
+          "venue_is_subject": false,
+          "date_label": "27 NOV–06 DEZ 2026",
+          "city": "SÃO PAULO",
+          "appeal_tier": "mass",
+          "venue_label": "THEATRO MUNICIPAL",
+          "ticket_label": "R$ 47–290 · INTEIRA",
+          "link_label": "theatromunicipal.org.br",
+          "cta_label": "Siga @entressala_ para escolher a próxima noite no palco."
+        }
+      ]
     }
   ]
 }
