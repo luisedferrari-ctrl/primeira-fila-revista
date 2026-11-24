@@ -112,7 +112,19 @@ function eV3Buffer_(q) {
   if (!action?.post?.id) throw new Error('Buffer recusou post: '+(action?.message||raw.slice(0,380)));
   return action.post;
 }
+function eV3LegendaComCreditos_(post) {
+  let caption = String(post.caption || '');
+  if (post.publish_local_date >= '2026-11-24') {
+    const url = String(post.credits_document || '');
+    const expected = 'https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/' + post.id + '/CREDITOS.md';
+    if (url !== expected) throw new Error('Documento de créditos ausente ou fora do post.');
+    if (!caption.includes(url)) caption += '\n\nCréditos e licença: ' + url;
+  }
+  if (!caption || caption.length > 2200) throw new Error('Legenda final excede o limite ou está vazia.');
+  return caption;
+}
 function eV3CriarPost_(post, mode, dueAt, automaticLocalDate) {
+  const caption = eV3LegendaComCreditos_(post);
   eV3VerificarMidias_(post);
   post.images.forEach(eV3ConferirImagem_);
   const lock=LockService.getScriptLock();
@@ -138,7 +150,7 @@ function eV3CriarPost_(post, mode, dueAt, automaticLocalDate) {
     const validMode=(mode==='shareNow'||mode==='customScheduled') ? mode : 'addToQueue';
     const due=dueAt ? ', dueAt: '+JSON.stringify(dueAt) : '';
     const query='mutation EntressalaCreate { createPost(input: {'+
-      'text: '+JSON.stringify(post.caption)+','+
+      'text: '+JSON.stringify(caption)+','+
       'channelId: '+JSON.stringify(E_V3.CHANNEL)+','+
       'schedulingType: automatic, mode: '+validMode+due+','+
       'assets: '+assets+','+
