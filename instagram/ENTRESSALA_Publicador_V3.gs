@@ -48,9 +48,13 @@ function eV3VerificarMidias_(post) {
   if (post.publish_local_date >= '2026-11-19') {
     const edition=String(post.source_edition_id || '');
     const article=String(post.source_article_url || '');
-    const prefix='https://primeira-fila-revista.pages.dev/edicoes/'+edition.slice(3)+'/';
+    const prefix='https://primeira-fila-revista.pages.dev/edicoes/'+edition.slice(3)+'/materias/';
     if (!/^EC-\d{4}-\d{2}-\d{2}$/.test(edition) || !article.startsWith(prefix) || article===prefix) {
       throw new Error('Post sem vínculo verificável com a matéria da edição regular: ' + post.id);
+    }
+    if (post.date_city_visible !== true || post.image_uniqueness_checked !== true ||
+        (post.publish_local_date >= '2026-11-23' && post.newsfirst_option_b_checked !== true)) {
+      throw new Error('Gates do renderizador ausentes: ' + post.id);
     }
   }
   const nowLocal = eV3Hoje_();
@@ -185,6 +189,26 @@ function entressalaV3PausarRotina() {
 function eV3Aviso_(date,message) {
   const key='ENTRESSALA_V3_AVISO_'+date;
   if (eV3Props_().getProperty(key)) return;
-  eV3Props_().setProperty(key,'true');
-  MailApp.sendEmail(E_V3.ALERT_EMAIL,'ENTRESSALA — Instagram: intervenção necessária ('+date+')',message+'\n\nO publicador não tentou substituir um evento ou foto sem verificação.');
+  Logger.log('BLOQUEIO EDITORIAL/OPERACIONAL: '+message);
+  try {
+    MailApp.sendEmail(E_V3.ALERT_EMAIL,'ENTRESSALA — Instagram: intervenção necessária ('+date+')',message+'\n\nO publicador não tentou substituir um evento ou foto sem verificação.');
+    eV3Props_().setProperty(key,'true');
+  } catch(error) {
+    Logger.log('AVISO_EMAIL_FALHOU: '+error.message+'; causa original: '+message);
+    eV3Props_().setProperty('ENTRESSALA_V3_AVISO_ERRO_'+date,String(error.message).slice(0,300));
+  }
+}
+
+function entressalaV3AuditoriaSomenteLeitura() {
+  const props=eV3Props_(), hoje=eV3Hoje_();
+  const r={versao:'3.2-2026-11-23',dataLocal:hoje,
+    rotinaHabilitada:props.getProperty(E_V3.ENABLED)==='true',
+    tokenBufferPresente:Boolean(props.getProperty('BUFFER_API_KEY')),
+    quantidadeGatilhos:ScriptApp.getProjectTriggers().filter(t=>t.getHandlerFunction()===E_V3.HANDLER).length,
+    filaAcessivel:false,candidatosHoje:[]};
+  try {
+    const fila=eV3Feed_(); r.filaAcessivel=true;
+    r.candidatosHoje=fila.posts.filter(p=>p.publish_local_date===hoje).map(p=>({id:p.id,aprovado:p.approved===true,imagensProntas:p.assetsReady===true}));
+  } catch(e) {r.erroFila=String(e.message);}
+  Logger.log(JSON.stringify(r,null,2)); return r;
 }
