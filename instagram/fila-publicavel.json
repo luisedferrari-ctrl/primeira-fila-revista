@@ -39,6 +39,43 @@
       "date_city_visible": true,
       "image_uniqueness_checked": true,
       "newsfirst_option_b_checked": true
+    },
+    {
+      "id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "publish_local_date": "2026-11-25",
+      "valid_through_local_date": "2026-12-13",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "Nathália Timberg sustenta Fôlego em uma temporada que segue no Sesc Santo Amaro até 13 de dezembro.",
+      "verified_at": "2026-11-25",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/folego/",
+      "factual_sources": [
+        "https://www.sescsp.org.br/programacao/folego/",
+        "https://www.sescsp.org.br/editorial/a-partir-do-dia-23-de-outubro-natalia-timberg-protagoniza-folego/",
+        "https://commons.wikimedia.org/wiki/File:Nat%C3%A1lia_Timberg.jpg"
+      ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H",
+          "where": "Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP",
+          "admission": "R$ 21 a R$ 70",
+          "official_url": "https://www.sescsp.org.br/programacao/folego/"
+        }
+      ],
+      "caption": "Nathália Timberg está em cena em Fôlego, peça escrita para ela e atravessada por uma pergunta que o teatro conhece bem: como continuar quando tudo parece pedir recolhimento? Com Carla Marins e Rita Elmôr, a temporada segue no Sesc Santo Amaro até dezembro.\n\nQUANDO: 27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H\nONDE: Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP\nINGRESSOS: R$ 21 a R$ 70\nLINK OFICIAL: https://www.sescsp.org.br/programacao/folego/\n\nSiga @entressala_ para descobrir histórias e programas que merecem uma noite fora de casa.\n\nFoto de arquivo: Lindomar Cruz / Agência Brasil (2003) · CC BY 3.0 BR.",
+      "images": [
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/01.jpg"
+      ],
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
     }
   ],
   "notice": "Publishing must verify images, factual validity and idempotency. Auto-publish only after verified assets; no synthesized event photography."

@@ -55,6 +55,10 @@
     "commons:the pearl fishers final dress rehearsal (16466931637).jpg": {
       "post_id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
       "publish_local_date": "2026-11-24"
+    },
+    "commons:natália timberg.jpg": {
+      "post_id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "publish_local_date": "2026-11-25"
     }
   },
   "visual_hashes": {
@@ -63,6 +67,12 @@
       "slide_number": 1,
       "image_key": "commons:the pearl fishers final dress rehearsal (16466931637).jpg",
       "publish_local_date": "2026-11-24"
+    },
+    "1db23e8f9cc739f2b1f2b37131f13b895b2149a128b019f729e341e97fdce396": {
+      "post_id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "slide_number": 1,
+      "image_key": "commons:natália timberg.jpg",
+      "publish_local_date": "2026-11-25"
     }
   }
 }
