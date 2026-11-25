@@ -276,6 +276,59 @@
           "cta_label": "Siga @entressala_ para escolher a próxima noite no palco."
         }
       ]
+    },
+    {
+      "id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "publish_local_date": "2026-11-25",
+      "valid_through_local_date": "2026-12-13",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "Nathália Timberg sustenta Fôlego em uma temporada que segue no Sesc Santo Amaro até 13 de dezembro.",
+      "verified_at": "2026-11-25",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/folego/",
+      "factual_sources": [
+        "https://www.sescsp.org.br/programacao/folego/",
+        "https://www.sescsp.org.br/editorial/a-partir-do-dia-23-de-outubro-natalia-timberg-protagoniza-folego/",
+        "https://commons.wikimedia.org/wiki/File:Nat%C3%A1lia_Timberg.jpg"
+      ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H",
+          "where": "Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP",
+          "admission": "R$ 21 a R$ 70",
+          "official_url": "https://www.sescsp.org.br/programacao/folego/"
+        }
+      ],
+      "caption": "Nathália Timberg está em cena em Fôlego, peça escrita para ela e atravessada por uma pergunta que o teatro conhece bem: como continuar quando tudo parece pedir recolhimento? Com Carla Marins e Rita Elmôr, a temporada segue no Sesc Santo Amaro até dezembro.\n\nQUANDO: 27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H\nONDE: Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP\nINGRESSOS: R$ 21 a R$ 70\nLINK OFICIAL: https://www.sescsp.org.br/programacao/folego/\n\nSiga @entressala_ para descobrir histórias e programas que merecem uma noite fora de casa.\n\nFoto de arquivo: Lindomar Cruz / Agência Brasil (2003) · CC BY 3.0 BR.",
+      "slides": [
+        {
+          "title": "NATHÁLIA TIMBERG SEGUE EM CENA",
+          "eyebrow": "TEATRO · SÃO PAULO",
+          "subtitle": "Fôlego fica no Sesc Santo Amaro até 13 de dezembro",
+          "asset_type": "photo",
+          "file": "Natália Timberg.jpg",
+          "photographer": "Lindomar Cruz / Agência Brasil",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0/br/",
+          "year": "2003",
+          "context": "FOTO DE ARQUIVO · ATRIZ",
+          "rights_checked_at": "2026-11-25",
+          "depicts": "Retrato de Nathália Timberg, protagonista de Fôlego",
+          "specific_to_subject": true,
+          "venue_is_subject": false,
+          "date_label": "27 NOV–13 DEZ 2026",
+          "city": "SÃO PAULO",
+          "appeal_tier": "mass",
+          "venue_label": "SESC SANTO AMARO",
+          "ticket_label": "R$ 21–70",
+          "link_label": "sescsp.org.br",
+          "cta_label": "Siga @entressala_ para encontrar a próxima história em cena."
+        }
+      ]
     }
   ]
 }
