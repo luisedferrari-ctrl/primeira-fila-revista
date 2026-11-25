@@ -5,7 +5,8 @@ structured decision. It deliberately DOES NOT call Metricool or publish.
 
 Limit: the checker verifies the existence of recorded evidence and media
 integrity, not the truth of third-party content or image-license claims.
-Those require a genuinely independent editorial review.
+Those require an actual second editorial review pass by ChatGPT, documented
+against the exact final media and caption. This is not human independence.
 """
 from __future__ import annotations
 
@@ -24,12 +25,13 @@ try:
 except ImportError:  # environment error becomes a blocking finding
     Image = None
 
-POLICY_VERSION = "entressala-metricool-extra-2026-11-25-v1"
+POLICY_VERSION = "entressala-metricool-extra-2026-11-25-v2"
 BRAND_ID = "8230360"
 TZ = ZoneInfo("America/Sao_Paulo")
 REQUIRED_REVIEW = (
     "facts_checked", "rights_evidence_checked", "subject_match_checked",
     "visual_mobile_checked", "caption_checked", "dedupe_checked",
+    "editorial_appeal_checked", "authenticity_checked",
 )
 ALLOWED_LICENSES = {"CC BY", "CC BY-SA", "CC0", "PUBLIC DOMAIN", "WRITTEN PERMISSION"}
 PHOTO_TYPES = {"authentic_photo"}
@@ -64,7 +66,8 @@ ISSUE_FIXES = {
     "PHOTO_RATIO": "Usar fotografias reais em pelo menos 80% das laminas.",
     "ARTWORK_EXCEPTION_INVALID": "Documentar que a obra original e o proprio assunto e comprovar direitos.",
     "VISUAL_TEXT_MISSING": "Mostrar manchete, data/contexto, cidade quando aplicavel e CTA visivel.",
-    "REVIEW_MISSING": "Completar revisao humana independente com prova e responsavel identificados.",
+    "REVIEW_MISSING": "Completar segunda passagem editorial pelo ChatGPT, com decisao, observacoes e evidencias reais.",
+    "REVIEW_CONTENT_MISMATCH": "Revisar a arte e legenda finais; registrar os SHA-256 exatos antes de aprovar.",
     "REVIEW_STALE": "Renovar revisao editorial e inspeção mobile antes de publicar.",
     "REMOTE_CHECK_MISSING": "Conferir conexao, duplicatas no Metricool e publicar apenas apos validacao.",
     "REMOTE_CHECK_STALE": "Revalidar o estado remoto antes de enviar ao Metricool.",
@@ -243,17 +246,29 @@ def preflight(post, assets_root, history, now=None):
         ratio=sum(1 for s in slides if isinstance(s, dict) and (s.get("media_kind") in PHOTO_TYPES or (s.get("media_kind") == "venue_photo" and s.get("venue_is_subject") is True)))/len(slides)
         if ratio < .8:
             fail("PHOTO_RATIO", "slides", "Proporcao fotografica de "+str(round(ratio*100))+"%, abaixo de 80%.")
-    human=post.get("human_review") if isinstance(post.get("human_review"),dict) else {}
-    if (not nonblank(human.get("reviewer"),4) or
-        not valid_url(human.get("evidence_url")) or
-        any(human.get(f) is not True for f in REQUIRED_REVIEW)):
-        fail("REVIEW_MISSING","human_review", "Revisao editorial humana completa e evidencia documental sao obrigatorias.")
+    review=post.get("editorial_review") if isinstance(post.get("editorial_review"),dict) else {}
+    findings=review.get("findings") if isinstance(review.get("findings"),dict) else {}
+    if (review.get("reviewer_type") != "assistant" or
+        not nonblank(review.get("reviewer"),4) or
+        "chatgpt" not in normalize(review.get("reviewer")) or
+        review.get("decision") != "APPROVED" or
+        not valid_url(review.get("evidence_url")) or
+        any(review.get(f) is not True for f in REQUIRED_REVIEW) or
+        any(not nonblank(findings.get(f),15) for f in REQUIRED_REVIEW)):
+        fail("REVIEW_MISSING","editorial_review", "Segunda passagem editorial aprovada pelo ChatGPT, com observacoes e evidencias, e obrigatoria.")
     try:
-        reviewed=parse_aware(human.get("checked_at"))
+        reviewed=parse_aware(review.get("checked_at"))
         if not timedelta() <= now-reviewed <= timedelta(hours=48):
-            fail("REVIEW_STALE", "human_review.checked_at", "Revisao editorial fora da janela de 48 horas.")
+            fail("REVIEW_STALE", "editorial_review.checked_at", "Revisao editorial fora da janela de 48 horas.")
     except (ValueError,TypeError):
-        fail("REVIEW_STALE", "human_review.checked_at", "Revisao sem timestamp valido.")
+        fail("REVIEW_STALE", "editorial_review.checked_at", "Revisao sem timestamp valido.")
+    expected_review_hashes=[s.get("final_sha256") for s in slides if isinstance(s,dict)]
+    expected_caption_hash=hashlib.sha256(caption.encode("utf-8")).hexdigest() if isinstance(caption,str) else None
+    if (not expected_review_hashes or
+        review.get("reviewed_media_sha256") != expected_review_hashes or
+        not expected_caption_hash or
+        review.get("reviewed_caption_sha256") != expected_caption_hash):
+        fail("REVIEW_CONTENT_MISMATCH","editorial_review", "Revisao nao corresponde a todas as imagens e a legenda finais.")
     remote=post.get("remote_checks") if isinstance(post.get("remote_checks"),dict) else {}
     if not (remote.get("brand_connected") is True and
             remote.get("duplicate_absent") is True and
@@ -278,7 +293,7 @@ def preflight(post, assets_root, history, now=None):
         "manifest_sha256": digest,
         "media_hashes": images,
         "approval_digest": (digest if not issues else None),
-        "caveat": "External facts, copyright ownership, actual subject match and platform/API status require independent verification. Direct Metricool API is not technically bound to this gate."
+        "caveat": "External facts, copyright, subject match and platform status require actual evidence and a second editorial review pass by ChatGPT. This does not prove independent human review or evidence truth. Direct Metricool API is not technically bound to this gate."
     }
 
 

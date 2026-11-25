@@ -8,7 +8,7 @@ import unittest
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from PIL import Image
-from metricool_gate import POLICY_VERSION, preflight
+from metricool_gate import POLICY_VERSION, REQUIRED_REVIEW, preflight
 
 NOW = datetime(2026, 11, 25, 14, 0, tzinfo=ZoneInfo("America/Sao_Paulo"))
 
@@ -45,9 +45,14 @@ class GateTests(unittest.TestCase):
             "rights": {"license": "CC BY", "holder": "Foto Exemplo", "credit": "Foto: Exemplo", "evidence_url": "https://example.org/license"},
             "visible_text": {"headline": "EVENTO EXEMPLO EM CAMPINAS", "when": "27/11/2026", "where": "Centro Cultural, Campinas", "source": "Organizador Exemplo", "cta": "Siga @entressala_ para descobrir mais"}
           }],
-          "human_review": {"reviewer": "Editor QA de teste", "checked_at": "2026-11-25T13:45:00-03:00", "evidence_url": "https://example.org/revisao", "facts_checked": True, "rights_evidence_checked": True, "subject_match_checked": True, "visual_mobile_checked": True, "caption_checked": True, "dedupe_checked": True},
+          "editorial_review": {"reviewer_type": "assistant", "reviewer": "ChatGPT - fixture sintetica", "decision": "APPROVED", "checked_at": "2026-11-25T13:45:00-03:00", "evidence_url": "https://example.org/revisao", "facts_checked": True, "rights_evidence_checked": True, "subject_match_checked": True, "visual_mobile_checked": True, "caption_checked": True, "dedupe_checked": True, "editorial_appeal_checked": True, "authenticity_checked": True},
           "remote_checks": {"brand_connected": True, "duplicate_absent": True, "checked_at": "2026-11-25T13:50:00-03:00", "evidence_url": "https://example.org/metricool-check"}
         }
+
+        review=self.base["editorial_review"]
+        review["findings"]={f: "Evidencia sintetica de teste para "+f for f in REQUIRED_REVIEW}
+        review["reviewed_media_sha256"]=[media_hash]
+        review["reviewed_caption_sha256"]=hashlib.sha256(self.base["caption"].encode("utf-8")).hexdigest()
 
     def test_synthetic_baseline_approved(self):
         a = preflight(self.base, self.root, self.history, NOW)
@@ -101,7 +106,7 @@ class GateTests(unittest.TestCase):
 
     def test_stale_editorial_review_blocked(self):
         x=copy.deepcopy(self.base)
-        x["human_review"]["checked_at"]="2026-11-21T14:00:00-03:00"
+        x["editorial_review"]["checked_at"]="2026-11-21T14:00:00-03:00"
         self.assertBlocked(x,"REVIEW_STALE")
 
     def test_unknown_brand_blocked(self):
@@ -124,6 +129,45 @@ class GateTests(unittest.TestCase):
         x["editorial_subject_kind"]="authentic_artwork_itself"
         x["slides"][0]["media_kind"]="authentic_artwork"
         self.assertBlocked(x,"ARTWORK_EXCEPTION_INVALID")
+
+    def test_no_user_approval_required(self):
+        self.assertNotIn("human_review", self.base)
+        self.assertTrue(preflight(self.base,self.root,self.history,NOW)["publish_permitted"])
+
+    def test_legacy_human_only_blocked(self):
+        x=copy.deepcopy(self.base)
+        x["human_review"]=x.pop("editorial_review")
+        self.assertBlocked(x,"REVIEW_MISSING")
+
+    def test_legacy_policy_blocked_for_new_submission(self):
+        x=copy.deepcopy(self.base)
+        x["policy_version"]="entressala-metricool-extra-2026-11-25-v1"
+        self.assertBlocked(x,"POLICY_UNKNOWN")
+
+    def test_negative_assistant_decision_blocked(self):
+        x=copy.deepcopy(self.base)
+        x["editorial_review"]["decision"]="REJECTED"
+        self.assertBlocked(x,"REVIEW_MISSING")
+
+    def test_missing_editorial_evidence_blocked(self):
+        x=copy.deepcopy(self.base)
+        del x["editorial_review"]["findings"]["rights_evidence_checked"]
+        self.assertBlocked(x,"REVIEW_MISSING")
+
+    def test_review_caption_hash_mismatch_blocked(self):
+        x=copy.deepcopy(self.base)
+        x["caption"] += " Texto alterado depois da revisao."
+        self.assertBlocked(x,"REVIEW_CONTENT_MISMATCH")
+
+    def test_review_media_hash_mismatch_blocked(self):
+        x=copy.deepcopy(self.base)
+        x["editorial_review"]["reviewed_media_sha256"]=["0"*64]
+        self.assertBlocked(x,"REVIEW_CONTENT_MISMATCH")
+
+    def test_unidentified_reviewer_blocked(self):
+        x=copy.deepcopy(self.base)
+        x["editorial_review"]["reviewer"]="Editor sem identificacao"
+        self.assertBlocked(x,"REVIEW_MISSING")
 
 if __name__ == "__main__":
     unittest.main()
