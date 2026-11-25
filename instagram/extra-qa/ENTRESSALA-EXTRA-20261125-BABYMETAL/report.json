@@ -1,0 +1,31 @@
+{
+  "policy_version": "entressala-metricool-extra-2026-11-25-v1",
+  "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
+  "checked_at": "2026-11-25T16:23:50.558164-03:00",
+  "verdict": "BLOCKED",
+  "publish_permitted": false,
+  "issues": [
+    {
+      "code": "REVIEW_MISSING",
+      "field": "human_review",
+      "finding": "Revisao editorial humana completa e evidencia documental sao obrigatorias.",
+      "resolution": "Completar revisao humana independente com prova e responsavel identificados."
+    },
+    {
+      "code": "REVIEW_STALE",
+      "field": "human_review.checked_at",
+      "finding": "Revisao sem timestamp valido.",
+      "resolution": "Renovar revisao editorial e inspeção mobile antes de publicar."
+    }
+  ],
+  "issue_count": 2,
+  "manifest_sha256": "3be641cfa1a2595675333e4f25b1935308ceebc3440d0de664a0b3a5ade664b1",
+  "media_hashes": [
+    {
+      "file": "01.jpg",
+      "sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217"
+    }
+  ],
+  "approval_digest": null,
+  "caveat": "External facts, copyright ownership, actual subject match and platform/API status require independent verification. Direct Metricool API is not technically bound to this gate."
+}
