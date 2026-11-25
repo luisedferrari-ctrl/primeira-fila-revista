@@ -3,7 +3,7 @@
   "publication_channel": "metricool_extra",
   "brand_id": "8230360",
   "id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
-  "publish_at": "2026-11-25T20:30:00-03:00",
+  "publish_at": "2026-11-25T16:35:00-03:00",
   "content_kind": "event",
   "subject": "BABYMETAL — show único em São Paulo",
   "headline": "BABYMETAL VOLTA A SÃO PAULO",
@@ -46,11 +46,21 @@
       }
     }
   ],
-  "human_review": {},
+  "human_review": {
+    "reviewer": "Usuário responsável pela ENTRESSALA — aprovação da arte e legenda; QA complementar pelo assistente",
+    "checked_at": "2026-11-25T16:24:45-03:00",
+    "evidence_url": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-qa-babymetal-20261125/instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/APROVACAO.md",
+    "facts_checked": true,
+    "rights_evidence_checked": true,
+    "subject_match_checked": true,
+    "visual_mobile_checked": true,
+    "caption_checked": true,
+    "dedupe_checked": true
+  },
   "remote_checks": {
     "brand_connected": true,
     "duplicate_absent": true,
-    "checked_at": "2026-11-25T16:23:00-03:00",
-    "evidence_url": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-qa-babymetal-20261125/instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/EVIDENCIAS.md"
+    "checked_at": "2026-11-25T16:24:45-03:00",
+    "evidence_url": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-qa-babymetal-20261125/instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/APROVACAO.md"
   }
 }
