@@ -1,0 +1,26 @@
+name: ENTRESSALA - candidato BABYMETAL sem publicacao
+on:
+  push:
+    branches: [entressala-qa-babymetal-20261125]
+    paths: ['instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/prepare.py']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: entressala-qa-babymetal-20261125
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check Pillow requests
+      - run: python instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/prepare.py
+      - name: Record image for actual review only
+        run: |
+          git config user.name entressala-bot
+          git config user.email entressala-bot@users.noreply.github.com
+          git add "instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/original.jpg" "instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/01.jpg" "instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/preview.jpg" "instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/hashes.json"
+          git diff --cached --quiet || (git commit -m "Archive authentic candidate pending review, do not publish" && git push origin HEAD:entressala-qa-babymetal-20261125)
