@@ -42,3 +42,13 @@ Para cada extraordinário, arquivar: data, tipo de pauta, notoriedade/gancho, fo
 Benchmark de concorrentes: comparar temas e formatos, mas **normalizar por alcance ou seguidores, homogeneizar períodos e excluir mídia paga quando possível**. Não copiar medianas de contas com milhões de seguidores como metas diretas de uma conta nova. Testar uma série comparável de conteúdos reais antes de proclamar um formato vencedor.
 
 **Gate de aprovação:** foto/obra autêntica adequada + licença comprovada + novidade verificada + manchete específica + serviço aplicável + CTA claro. Falhou um item obrigatório: **não agendar**. Não editar ou republicar posts antigos para simular resultado e não interferir nas rotinas regulares.
+
+## Procedimento obrigatório antes do Metricool — QA v1 (25/11/2026)
+
+**Regra de segurança para TODAS AS NOVAS PUBLICAÇÕES EXTRAORDINÁRIAS, não retroativa:** o checklist textual acima NÃO é autorização suficiente para chamar o conector Metricool. Antes de criar/atualizar o post, preparar manifesto verificável da pauta, serviço e imagens; aplicar [o gate extraordinário](./metricool-gate-v1.md) por meio de [\`metricool_gate.py\`](./metricool_gate.py), com foto-fonte, hash final dos arquivos, provas de direitos, inspeção visual e verificação de duplicidade real na marca 8230360. Registrar relatório \`APPROVED_FOR_METRICOOL_SUBMISSION\` com hash do manifesto. **Se falta dado, licença ou evidência, a regra é \`BLOCKED\` e não chamar o publicador.** Nunca preencher campos de revisão sem tê-los efetivamente conferido.
+
+Depois do envio, guardar ID/UUID, consultar o status e somente declarar publicado após \`PUBLISHED\` e URL pública. Quando uma falha for encontrada, indicar obrigatoriamente **regra violada, evidência disponível, causa, proposta de correção, estado remoto (enviado/não enviado/publicado) e grau de confiança**, com registro de incidente. Não silenciar, não contornar com imagem gerada por IA e não reenviar na incerteza.
+
+**Importante:** o gate é um preflight testado, mas **não intercepta tecnicamente chamadas diretas ao Metricool**. Sua execução antes do envio é exigência processual nesta fase, não garantia absoluta que usuários/agentes fora do fluxo não a contornem. A garantia técnica universal só virá ao restringir publicação ao gateway que valide e consuma o recibo de QA, com credenciais e permissões administradas. Auditoria posterior não substitui veto prévio.
+
+A CI de testes está em [\`.github/workflows/entressala-metricool-gate-qa.yml\`](../.github/workflows/entressala-metricool-gate-qa.yml). **Não tocar na publicação regular/Buffer/Apps Script/Cloudflare ou revista por força desta seção.**
