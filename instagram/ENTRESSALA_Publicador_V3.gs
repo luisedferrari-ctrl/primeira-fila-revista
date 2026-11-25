@@ -158,6 +158,7 @@ function eV3CriarPost_(post, mode, dueAt, automaticLocalDate) {
       '}) { ... on PostActionSuccess { post { id status dueAt } } ... on MutationError { message } } }';
     const result=eV3Buffer_(query);
     eV3Props_().setProperty(key,'ID '+result.id+' STATUS '+(result.status||'indefinido')+' DUE '+(result.dueAt||'sem-horario'));
+    if (result.status === 'error') throw new Error('Buffer criou o registro, mas rejeitou a publicação. ID '+result.id+'. Verificar conexão do canal e recuperar o MESMO post no Buffer; não criar duplicata.');
     Logger.log('BUFFER CONFIRMOU CRIACAO: '+JSON.stringify(result)+'; PUBLICACAO NO INSTAGRAM AINDA PRECISA SER VERIFICADA.');
     return result;
   } catch(e) {
