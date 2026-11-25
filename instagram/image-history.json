@@ -64,10 +64,13 @@
       "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
       "publish_local_date": "2026-11-25",
       "channel": "Metricool",
-      "status": "QA_APPROVED_RESERVED",
+      "status": "METRICOOL_SCHEDULED",
       "source_image_sha256": "de36bdd9394cbc5451963e910fc7045c1759457dda3fa1f6a1ae0f487ed38bb5",
       "final_sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217",
-      "approval_digest": "999778880d3fc54818301c57394a883ea0f08f965a2d32b8987c05a6246f7315"
+      "approval_digest": "ffd2c53b0c036641ece32126c2412df79c87fe6742879992aa8c6868ed78d540",
+      "metricool_uuid": "-6251270579229799178",
+      "metricool_id": 442245542,
+      "public_url": null
     }
   },
   "visual_hashes": {
