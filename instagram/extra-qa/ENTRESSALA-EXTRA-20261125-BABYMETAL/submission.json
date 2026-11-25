@@ -1,0 +1,15 @@
+{
+  "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
+  "status": "QA_APPROVED_RESERVED",
+  "policy_version": "entressala-metricool-extra-2026-11-25-v1",
+  "approval_digest": "999778880d3fc54818301c57394a883ea0f08f965a2d32b8987c05a6246f7315",
+  "manifest_blob": "d887f85deb242687d5017bcc2692823f27b25871",
+  "report_blob": "2c1db889ff725d1b6dfa2fca412773b97329d364",
+  "approved_candidate_commit": "ad28742543754f6f334f4a934bb5539603706548",
+  "scheduled_at": "2026-11-25T16:35:00-03:00",
+  "brand_id": "8230360",
+  "source_image_id": "commons:babymetal, o2 arena, london (31365068001).jpg",
+  "media_url": "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/581e6e83f9384199a626dd357f035d3736f97316/instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/01.jpg",
+  "final_sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217",
+  "notes": "Reserva antes de chamar o Metricool; não representa publicação. Revisão humana aprovada pelo usuário."
+}

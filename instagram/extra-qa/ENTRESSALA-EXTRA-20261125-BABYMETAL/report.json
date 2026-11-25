@@ -1,0 +1,18 @@
+{
+  "policy_version": "entressala-metricool-extra-2026-11-25-v1",
+  "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
+  "checked_at": "2026-11-25T16:25:24.900436-03:00",
+  "verdict": "APPROVED_FOR_METRICOOL_SUBMISSION",
+  "publish_permitted": true,
+  "issues": [],
+  "issue_count": 0,
+  "manifest_sha256": "999778880d3fc54818301c57394a883ea0f08f965a2d32b8987c05a6246f7315",
+  "media_hashes": [
+    {
+      "file": "01.jpg",
+      "sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217"
+    }
+  ],
+  "approval_digest": "999778880d3fc54818301c57394a883ea0f08f965a2d32b8987c05a6246f7315",
+  "caveat": "External facts, copyright ownership, actual subject match and platform/API status require independent verification. Direct Metricool API is not technically bound to this gate."
+}
