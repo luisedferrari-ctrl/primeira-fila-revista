@@ -2,15 +2,15 @@
   "id": "EC-2026-11-26",
   "edition": "2026-11-26",
   "status": "RESEARCH_PARTIAL",
-  "nextStep": "Completar pesquisa e revisão de fatos/direitos antes dos dados editoriais",
+  "nextStep": "Fechar curadoria editorial e gerar dados estruturados e páginas em branch",
   "recordedAt": "2026-11-26T08:00:57-03:00",
   "timeType": "início do ciclo",
   "evidence": {
     "research": {
       "path": "controle/pesquisa/EC-2026-11-26.json",
-      "blobSha": "681f427a634ef147b388e6d49c04eba202e590ea",
-      "commit": "025f78777a799fd0942a621fa34767ead3a8375e",
-      "items": 36
+      "blobSha": "e48dddb70c1a6a900b195fcae6c41f799835730e",
+      "commit": "faf7999a35fcbdcd66fc82ff3bdadbb134883e0d",
+      "items": 59
     },
     "priorCheck": {
       "mainEdition": "404",
@@ -23,12 +23,11 @@
     "claude": "max_tokens; incompleto"
   },
   "pending": [
-    "Pesquisa ampla de teatro em todas as salas prioritárias; elenco e serviço de atrações adicionais",
-    "Direitos de imagens; nenhum material de imprensa presumido autorizado",
-    "Caderno cinema mais amplo com fichas e sessões por data; grade de Campinas incompleta",
-    "Esporte: confirmar confrontos excepcionais de Série A, vôlei/NBB",
-    "Notícias culturais independentes adicionais e radar; revalidar serviço Seal e ingressos Sandy",
-    "Montagem, QA responsivo e validação externa ainda não executados"
+    "Completar revisão editorial, ficha/sinopse do cinema, fontes de teatros e ingressos ainda inconclusivos; excluir itens sem verificação suficiente",
+    "Testar imagens e direitos, composição editorial",
+    "Produção HTML e QA responsivo em 390px e desktop",
+    "Publicação main e GitHub Actions success da edição/commit",
+    "Manifesto e entrega"
   ],
   "distribution": "NOT_ENQUEUED"
 }
