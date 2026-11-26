@@ -712,33 +712,104 @@
       "source": "https://www.topaziocinemas.com.br/programacao",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared"
+    },
+    {
+      "id": "cliff-booth",
+      "type": "noticia",
+      "title": "Campinas ganha uma das duas salas brasileiras de Cliff Booth",
+      "date": "19/11/2026",
+      "time": null,
+      "city": "Campinas",
+      "venue": "Kinoplex Dom Pedro (exibição anunciada)",
+      "service": "Fincher dirige, Tarantino assina o roteiro e Brad Pitt retoma o personagem. Janela curta até o streaming motiva recusa de redes. Horários locais em fonte secundária; bilheteria oficial ainda não confirmada.",
+      "source": "https://f5.folha.uol.com.br/cinema-e-series/2026/11/novo-filme-de-brad-pitt-tera-apenas-duas-salas-no-brasil-apos-boicote-de-redes-de-cinema.shtml",
+      "checkedAt": "2026-11-26",
+      "imageRights": "not cleared"
+    },
+    {
+      "id": "uniplex-hexe",
+      "type": "cinema",
+      "title": "Enfeitiçadas: Bem-vindos a Hexe",
+      "date": "26–27/11/2026",
+      "time": "15h, 17h30, 19h45",
+      "city": "Campinas",
+      "venue": "Cine Uniplex",
+      "service": "6 anos; 103 min; animação Disney; sessões dubladas, exceto Farofeiros (nacional), 2D. Grade oficial datada.",
+      "source": "https://www.cineuniplex.com.br/campinas/programacao",
+      "checkedAt": "2026-11-26",
+      "imageRights": "not cleared"
+    },
+    {
+      "id": "uniplex-fria",
+      "type": "cinema",
+      "title": "Entrando Numa Grande Fria",
+      "date": "26–27/11/2026",
+      "time": "15h45, 18h, 20h15",
+      "city": "Campinas",
+      "venue": "Cine Uniplex",
+      "service": "12 anos; 105 min; comédia Paramount, sala VIP; sessões dubladas, exceto Farofeiros (nacional), 2D. Grade oficial datada.",
+      "source": "https://www.cineuniplex.com.br/campinas/programacao",
+      "checkedAt": "2026-11-26",
+      "imageRights": "not cleared"
+    },
+    {
+      "id": "uniplex-farofeiros",
+      "type": "cinema",
+      "title": "Os Farofeiros 3",
+      "date": "26–27/11/2026",
+      "time": "15h30, 17h45, 20h",
+      "city": "Campinas",
+      "venue": "Cine Uniplex",
+      "service": "12 anos; 103 min; comédia brasileira; sessões dubladas, exceto Farofeiros (nacional), 2D. Grade oficial datada.",
+      "source": "https://www.cineuniplex.com.br/campinas/programacao",
+      "checkedAt": "2026-11-26",
+      "imageRights": "not cleared"
+    },
+    {
+      "id": "uniplex-vorazes",
+      "type": "cinema",
+      "title": "Jogos Vorazes: Amanhecer na Colheita",
+      "date": "26–27/11/2026",
+      "time": "17h, 20h30",
+      "city": "Campinas",
+      "venue": "Cine Uniplex",
+      "service": "16 anos; 158 min; aventura; sessões dubladas, exceto Farofeiros (nacional), 2D. Grade oficial datada.",
+      "source": "https://www.cineuniplex.com.br/campinas/programacao",
+      "checkedAt": "2026-11-26",
+      "imageRights": "not cleared"
     }
   ],
   "pending": [
-    "Reconfirmar fontes de itens com serviço incompleto, ampliar teatro e cinema Campinas e checar ficha/classificação; excluir lacunas da edição final",
-    "Validar URLs dos arquivos licenciados e créditos; ausência de direito exige tipografia",
-    "Montar matérias individuais e HTML; testar em 390px e desktop",
-    "Promover main e obter GitHub Actions success relativo ao commit e à edição",
-    "Manifesto e confirmação de entrega"
+    "Completar revisão editorial, ficha/sinopse do cinema, fontes de teatros e ingressos ainda inconclusivos; excluir itens sem verificação suficiente",
+    "Testar imagens e direitos, composição editorial",
+    "Produção HTML e QA responsivo em 390px e desktop",
+    "Publicação main e GitHub Actions success da edição/commit",
+    "Manifesto e entrega"
   ],
   "rightsResearch": [
     {
       "id": "sandy-junior",
       "source": "https://commons.wikimedia.org/wiki/File:Sandy_e_Junior_2019_3.jpg",
       "credit": "Cartão ELO / Wikimedia Commons, CC BY 3.0",
-      "note": "Arquivo de 2019, não residência de 2027."
+      "note": "Arquivo de 2019; licença confirmada, teste direto do arquivo retornou cache miss. Não publicar imagem sem teste.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/12/Sandy_e_Junior_2019_3.jpg",
+      "verifiedImage": false
     },
     {
       "id": "quebra-nozes",
       "source": "https://commons.wikimedia.org/wiki/File:Nutcracker_-1890.JPG",
       "credit": "Autor desconhecido / domínio público",
-      "note": "Registro histórico da produção original, não espetáculo de Campinas."
+      "note": "Registro histórico da produção original, não espetáculo de Campinas.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Nutcracker_-1890.JPG",
+      "verifiedImage": true
     },
     {
       "id": "matsuri",
       "source": "https://commons.wikimedia.org/wiki/File:Fachada_de_la_Esta%C3%A7%C3%A3o_Cultura_de_Campinas.jpg",
       "credit": "MadeleineMoon / CC BY-SA 4.0",
-      "note": "Fachada em 2019, não evento."
+      "note": "Fachada em 2019, não evento.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Fachada_de_la_Esta%C3%A7%C3%A3o_Cultura_de_Campinas.jpg",
+      "verifiedThumbnail": true
     },
     {
       "id": "apc",
