@@ -1,8 +1,8 @@
 {
   "id": "EC-2026-11-26",
   "edition": "2026-11-26",
-  "status": "EDITORIAL_DRAFT",
-  "nextStep": "Produzir HTML/CSS/JS e matérias individuais; revisar evidências de pesquisa antes de aprovar",
+  "status": "HTML_DRAFT_QA_PENDING",
+  "nextStep": "Revisar fatos e links externos pendentes, confirmar direitos e testar a prévia em navegador 390px e desktop; somente após QA promover arquivos da edição e atualizar home, sem mesclar controle",
   "recordedAt": "2026-11-26T08:00:57-03:00",
   "timeType": "início do ciclo",
   "evidence": {
@@ -26,14 +26,76 @@
       "blobSha": "fc0406317fb13afb3d32ba643ba08bde449ab1b6",
       "commit": "52796541a0feb0dccfb5ac13c0ca748bb622b99e",
       "status": "DRAFT_QA_PENDING"
+    },
+    "html": {
+      "status": "PREVIEW_ONLY",
+      "files": [
+        {
+          "path": "edicoes/2026-11-26/index.html",
+          "blobSha": "29fc2bca5e97fd5478c90a02d49578d0b87fe56a"
+        },
+        {
+          "path": "edicoes/2026-11-26/estilo.css",
+          "blobSha": "996d0b201d5f0010f646d5dbe4828694e2f4f4f6"
+        },
+        {
+          "path": "edicoes/2026-11-26/agenda.js",
+          "blobSha": "8030b04462e2210fedb0fbc9bd79df1668cd8f15"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/sandy-junior/index.html",
+          "blobSha": "30dd40f612ba1048dc365a9e044060db39f3bdd3"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/quebra-nozes/index.html",
+          "blobSha": "b8bc1ec34189e1f8282982ced91d1165fe288a37"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/matsuri/index.html",
+          "blobSha": "c130244ef2b532e13c278ce5eec56d0a2442414a"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/gil/index.html",
+          "blobSha": "cde84a402e7551d7e6e37970b3faaf789fbfb177"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/cliff-booth/index.html",
+          "blobSha": "1558813ac5b59c9c08e93840cc4f2a6d5f23020a"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/convivencia/index.html",
+          "blobSha": "1eb36d59af45774e1d8833db58c03c0b348ab0a4"
+        },
+        {
+          "path": "edicoes/2026-11-26/materias/sesc80/index.html",
+          "blobSha": "8f722256086045a6e9a060fc2da776f9914e7883"
+        }
+      ],
+      "lastContentCommit": "89be8aa19b2d09e3fe4247bdde0cabe52fe09b23",
+      "staticChecks": {
+        "allArticleLinksResolve": true,
+        "individualArticles": 7,
+        "agendaRows": 25,
+        "uniqueEditorialIds": true,
+        "allHTMLDraftNoindex": true,
+        "hasResponsiveCSS": true,
+        "hasAgendaFilters": true,
+        "noPdfLink": true,
+        "visualQA": "NOT_RUN",
+        "publicPreview": "web access error and container DNS failure",
+        "published": false
+      }
+    },
+    "publicQA": {
+      "status": "NOT_RUN",
+      "reason": "A prévia Cloudflare e o domínio principal não abriram no acesso web; DNS no ambiente de teste falhou. Workflow de produção não executado para edição 26/11, que não foi promovida."
     }
   },
   "pending": [
-    "Completar revisão editorial, ficha/sinopse do cinema, fontes de teatros e ingressos ainda inconclusivos; excluir itens sem verificação suficiente",
-    "Testar imagens e direitos, composição editorial",
-    "Produção HTML e QA responsivo em 390px e desktop",
-    "Publicação main e GitHub Actions success da edição/commit",
-    "Manifesto e entrega"
+    "Revisar serviço e links dos eventos que têm informação incompleta, em especial horários e fichas de algumas salas; não publicar informação sem confirmação",
+    "Validar renderização real 390px e desktop, imagens licenciadas, filtros e navegação",
+    "Publicar somente após aprovação QA; confirmar main e workflow externo de sucesso ligado a EC-2026-11-26 e commit",
+    "Rever deduplicação e enfileirar manifesto uma única vez; comprovar 02 - Enviadas e Gmail"
   ],
   "distribution": "NOT_ENQUEUED"
 }
