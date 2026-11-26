@@ -329,6 +329,58 @@
           "cta_label": "Siga @entressala_ para encontrar a próxima história em cena."
         }
       ]
+    },
+    {
+      "id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "publish_local_date": "2026-11-26",
+      "valid_through_local_date": "2027-04-18",
+      "verified_at": "2026-11-26",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A retrospectiva aproxima videoarte, música e comunicação de massa em São Paulo.",
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/pina/",
+      "factual_sources": [
+        "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/",
+        "https://commons.wikimedia.org/wiki/File:The_More,_the_Better_(%EB%8B%A4%EB%8B%A4%EC%9D%B5%EC%84%A0(%E5%A4%9A%E5%A4%9A%E7%9B%8A%EC%84%A0))_%EB%B0%B1%EB%82%A8%EC%A4%80_PAIK_Namjune(1932~2006).jpg"
+      ],
+      "caption": "A televisão deixa de ser aparelho e vira matéria, música e pergunta. Via Satélite reúne Nam June Paik, Charlotte Moorman e Vivian Caccuri na Pina Contemporânea — uma visita para quem quer ver a videoarte antes de ela parecer apenas “conteúdo”.\n\nQUANDO: 17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)\nONDE: Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP\nINGRESSOS: SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS\nLINK OFICIAL: https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/\n\nSiga @entressala_ para encontrar exposições que merecem tempo de verdade — e compartilhe com quem gosta de arte, som e tecnologia.\n\nFoto de arquivo: Republic of Korea / Lee Jeong Woo · CC BY-SA 4.0.",
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)",
+          "where": "Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP",
+          "admission": "SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS",
+          "official_url": "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/"
+        }
+      ],
+      "slides": [
+        {
+          "title": "NAM JUNE PAIK OCUPA A PINA",
+          "eyebrow": "VIDEOARTE · SÃO PAULO",
+          "subtitle": "Via Satélite põe arte, som e tecnologia na mesma frequência",
+          "asset_type": "photo",
+          "file": "The More, the Better (다다익선(多多益善)) 백남준 PAIK Namjune(1932~2006).jpg",
+          "photographer": "Republic of Korea / Lee Jeong Woo",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "year": "2026",
+          "context": "FOTO DE ARQUIVO · OBRA DE NAM JUNE PAIK EM OUTRO MUSEU",
+          "rights_checked_at": "2026-11-26",
+          "depicts": "The More, the Better (1988), instalação de Nam June Paik fotografada no National Museum of Modern and Contemporary Art, Coreia, em 2026",
+          "specific_to_subject": true,
+          "venue_is_subject": false,
+          "date_label": "17 OUT 2026–18 ABR 2027",
+          "city": "SÃO PAULO",
+          "appeal_tier": "mass",
+          "venue_label": "PINA CONTEMPORÂNEA",
+          "ticket_label": "GRÁTIS SÁB. E 2º DOM.; OUTROS DIAS: CONSULTE",
+          "link_label": "pinacoteca.org.br",
+          "cta_label": "Siga @entressala_ para achar a próxima exposição que vale tempo."
+        }
+      ]
     }
   ]
 }
