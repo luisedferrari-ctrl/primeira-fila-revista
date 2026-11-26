@@ -1,8 +1,8 @@
 {
   "id": "EC-2026-11-26",
   "edition": "2026-11-26",
-  "status": "RESEARCH_PARTIAL",
-  "nextStep": "Fechar curadoria editorial e gerar dados estruturados e páginas em branch",
+  "status": "EDITORIAL_DRAFT",
+  "nextStep": "Produzir HTML/CSS/JS e matérias individuais; revisar evidências de pesquisa antes de aprovar",
   "recordedAt": "2026-11-26T08:00:57-03:00",
   "timeType": "início do ciclo",
   "evidence": {
@@ -20,7 +20,13 @@
       "gmailMatches": 0,
       "dispatcherMarker": true
     },
-    "claude": "max_tokens; incompleto"
+    "claude": "max_tokens; incompleto",
+    "editorial": {
+      "path": "edicoes/2026-11-26/dados/edicao-2026-11-26.json",
+      "blobSha": "fc0406317fb13afb3d32ba643ba08bde449ab1b6",
+      "commit": "52796541a0feb0dccfb5ac13c0ca748bb622b99e",
+      "status": "DRAFT_QA_PENDING"
+    }
   },
   "pending": [
     "Completar revisão editorial, ficha/sinopse do cinema, fontes de teatros e ingressos ainda inconclusivos; excluir itens sem verificação suficiente",
