@@ -1,0 +1,79 @@
+name: ENTRESSALA - QA visual de preparacao
+on:
+  push:
+    branches: ['entressala-edicao-*']
+    paths: ['edicoes/**', '.github/workflows/entressala-preview-qa.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Browser QA
+        shell: bash
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/entressala-http.log 2>&1 &
+          python - <<'PY'
+          import os, pathlib, re, json
+          from urllib.parse import urljoin, urlsplit
+          from playwright.sync_api import sync_playwright
+          branch=os.environ['GITHUB_REF_NAME']
+          edition=branch.removeprefix('entressala-edicao-')
+          assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', edition), branch
+          root=pathlib.Path('edicoes')/edition
+          assert (root/'index.html').is_file()
+          paths=[root/'index.html',*sorted((root/'materias').glob('*/index.html'))]
+          assert len(paths)>1
+          out=pathlib.Path('qa-screenshots');out.mkdir()
+          errors=[]
+          with sync_playwright() as pw:
+              browser=pw.chromium.launch()
+              for width in (390,1440):
+                  page=browser.new_page(viewport={'width':width,'height':900})
+                  page.on('pageerror', lambda error: errors.append(str(error)))
+                  for path in paths:
+                      url='http://127.0.0.1:8765/'+path.as_posix()
+                      response=page.goto(url,wait_until='domcontentloaded')
+                      assert response and response.ok, url
+                      assert 'ENTRESSALA' in page.title()
+                      page.locator('h1').first.wait_for()
+                      page.evaluate("document.querySelectorAll('img').forEach(i=>i.loading='eager')")
+                      page.wait_for_function("Array.from(document.images).every(i=>i.complete)",timeout=25000)
+                      assert page.evaluate("Array.from(document.images).every(i=>i.naturalWidth>0)"), f'Image load {path}'
+                      assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+1"), f'Overflow {width} {path}'
+                      assert page.locator('h1').first.is_visible()
+                      for href in page.locator('a[href]').evaluate_all("(els)=>els.map(a=>a.getAttribute('href'))"):
+                          resolved=urljoin(url,href)
+                          parts=urlsplit(resolved)
+                          if parts.netloc=='127.0.0.1:8765':
+                              r=page.request.get(resolved.split('#')[0]);assert r.ok, resolved
+                      if path==root/'index.html':
+                          q=page.locator('#agenda-search')
+                          count=page.locator('.agenda-row:visible').count()
+                          assert count>=20,count
+                          q.fill('zzzzzz-no-result'); assert page.locator('.agenda-row:visible').count()==0
+                          assert page.locator('#agenda-empty').is_visible()
+                          q.fill('');assert page.locator('.agenda-row:visible').count()==count
+                          page.locator('#agenda-city').select_option('Campinas')
+                          assert 0<page.locator('.agenda-row:visible').count()<count
+                          page.locator('#agenda-city').select_option('')
+                      page.screenshot(path=str(out/f'{width}-{"edition" if path==root/"index.html" else path.parent.name}.png'),full_page=True)
+                      print(f'PASS width={width} {path} image_load=ok overflow=none links=ok',flush=True)
+                  page.close()
+              browser.close()
+          assert not errors, errors
+          print('BROWSER QA PASSED',os.environ['GITHUB_SHA'],flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: entressala-preview-qa-screenshots
+          path: qa-screenshots/

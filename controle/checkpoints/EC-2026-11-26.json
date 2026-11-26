@@ -2,7 +2,7 @@
   "id": "EC-2026-11-26",
   "edition": "2026-11-26",
   "status": "HTML_DRAFT_QA_PENDING",
-  "nextStep": "Revisar fatos e links externos pendentes, confirmar direitos e testar a prévia em navegador 390px e desktop; somente após QA promover arquivos da edição e atualizar home, sem mesclar controle",
+  "nextStep": "Concluir validação visual em navegador externo (workflow QA na branch), conferir fontes e serviços restantes, promover somente após aprovação; validar HTTP e distribuir uma vez.",
   "recordedAt": "2026-11-26T08:00:57-03:00",
   "timeType": "início do ciclo",
   "evidence": {
@@ -97,5 +97,33 @@
     "Publicar somente após aprovação QA; confirmar main e workflow externo de sucesso ligado a EC-2026-11-26 e commit",
     "Rever deduplicação e enfileirar manifesto uma única vez; comprovar 02 - Enviadas e Gmail"
   ],
-  "distribution": "NOT_ENQUEUED"
+  "distribution": "NOT_ENQUEUED",
+  "recovery": {
+    "type": "assisted",
+    "date": "2026-11-26",
+    "editorialUpdates": {
+      "date": "2026-11-26",
+      "type": "assisted",
+      "factsUpdated": [
+        "Quebra-Nozes: esgotado, Prefeitura de Campinas",
+        "Sandy & Junior: horário e valores, Nubank Parque e Ticketmaster",
+        "CBF: link específico do confronto",
+        "Pinacoteca: página oficial válida",
+        "Cultura Artística e Teatro B32: programação oficial conferida",
+        "Fôlego: horários oficiais Sesc"
+      ],
+      "rightsVerified": [
+        "Nutcracker_-1890.JPG (domínio público)",
+        "Fachada_de_la_Estação_Cultura_de_Campinas.jpg (CC BY-SA 4.0)"
+      ]
+    },
+    "driveBefore": {
+      "publicar": 0,
+      "editionInEnviadas": false,
+      "erros": 0,
+      "gmailEditionSent": false
+    },
+    "visualStatus": "PENDING_BROWSER_QA",
+    "noDistribution": true
+  }
 }

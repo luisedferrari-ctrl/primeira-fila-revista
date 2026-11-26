@@ -11,10 +11,10 @@
       "type": "noticia/anuncio",
       "title": "Sandy & Junior anunciam residência em São Paulo",
       "date": "24/11/2026 (anúncio)",
-      "time": "Horário a confirmar na bilheteria",
+      "time": "Show 19h30; portões 16h",
       "city": "São Paulo",
       "venue": "Nubank Parque",
-      "service": "Pré-venda Elo em 1 e 2/12; venda geral 3/12, às 10h. Valores e taxas: consultar bilheteria oficial.",
+      "service": "Pré-venda Elo em 1 e 2/12; venda geral 3/12. Ingressos regulares: R$175–690, conforme setor e meia/inteira; taxas e condições no canal oficial.",
       "source": "https://www.sandyejunior.com.br/",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared",
@@ -23,7 +23,7 @@
       "headline": "Sandy & Junior: seis noites para uma geração inteira",
       "deck": "Uma residência de julho em São Paulo coloca a música pop brasileira no centro do calendário de 2027.",
       "body": [
-        "Anunciado em 24 de novembro, Nada É Por Acaso reúne novamente Sandy e Junior, duas décadas depois do encerramento da dupla. O projeto prevê seis apresentações em julho de 2027 no Nubank Parque. A escolha de uma residência, com todas as datas concentradas em um estádio, distingue o formato de uma turnê convencional.",
+        "Anunciado em 24 de novembro, Nada É Por Acaso reúne novamente Sandy e Junior, duas décadas depois do encerramento da dupla e após a turnê de reencontro de 2019. O projeto prevê seis apresentações em julho de 2027 no Nubank Parque. A escolha de uma residência, com todas as datas concentradas em um estádio, distingue o formato de uma turnê convencional.",
         "A memória compartilhada por diferentes gerações é parte central da proposta. O repertório da dupla atravessou o fim dos anos 1990 e os primeiros anos do século seguinte, quando a música pop brasileira dialogava intensamente com televisão, rádio e grandes espetáculos. A oportunidade de voltar a ouvir essas canções ao vivo explica por que o anúncio mobiliza o público muito antes da estreia.",
         "Há, entretanto, uma diferença entre a notícia do reencontro e a possibilidade de comprar ingresso. As vendas ainda não começaram nesta quinta-feira. Clientes Elo têm pré-venda prevista para 1º e 2 de dezembro; a abertura geral é no dia 3. A recomendação é conferir exclusivamente o canal oficial, inclusive os valores e regras de compra, que podem variar conforme setor e categoria."
       ],
@@ -35,7 +35,8 @@
       "references": [
         "https://www.sandyejunior.com.br/",
         "https://www.ticketmaster.com.br/event/sandy-e-junior",
-        "https://sbtnews.sbt.com.br/noticia/brasil/sandy-e-junior-anunciam-residencia-de-shows-em-sp"
+        "https://sbtnews.sbt.com.br/noticia/brasil/sandy-e-junior-anunciam-residencia-de-shows-em-sp",
+        "https://www.nubankparque.com/sandy-e-junior/"
       ],
       "image": null,
       "visualNote": "Composição tipográfica; fotografia de divulgação não licenciada/validada para esta edição."
@@ -48,18 +49,18 @@
       "time": "16h e 18h30",
       "city": "Campinas",
       "venue": "Centro de Convivência Cultural Carlos Gomes",
-      "service": "Gratuito; retirada 26/11 às 12h, dois ingressos por CPF, sujeito à lotação; 50 min, participação de alunos do Núcleo de Dança Cisne Negro CPFL.",
-      "source": "https://campinas.sp.gov.br/noticias/ingressos-gratuitos-para-o-quebra-nozes-em-campinas-estarao-disponiveis-nesta-quinta-feira-dia-26-155568",
+      "service": "Gratuito, mas ingressos esgotados para as duas sessões; acesso exclusivo com ingresso já emitido. Duração: 50 min; participação de alunos do Núcleo de Dança Cisne Negro CPFL.",
+      "source": "https://campinas.sp.gov.br/noticias/ingressos-para-as-duas-sessoes-de-o-quebra-nozes-em-campinas-esgotam-em-uma-hora-155638",
       "checkedAt": "2026-11-26",
-      "imageRights": "not cleared",
+      "imageRights": "public domain; source checked 2026-11-26",
       "editionId": "EC-2026-11-26",
       "category": "Dança • Campinas",
       "headline": "O balé que anuncia dezembro",
-      "deck": "Cisne Negro apresenta o segundo ato de O Quebra-Nozes; retirada de convites gratuitos começa nesta quinta.",
+      "deck": "Cisne Negro apresenta o segundo ato de O Quebra-Nozes; ingressos esgotados para as duas sessões de domingo.",
       "body": [
         "Poucas obras transformaram tão intensamente a relação entre dança, música e imaginário de fim de ano como O Quebra-Nozes. Com partitura de Tchaikovsky, o balé tem origem no fim do século XIX e permanece uma das portas de entrada mais acessíveis para quem deseja conhecer o repertório clássico.",
         "No domingo, a Cisne Negro Cia. de Dança apresenta o segundo ato no Centro de Convivência Cultural Carlos Gomes, com participação de alunos do Núcleo de Dança Cisne Negro CPFL. A montagem de aproximadamente cinquenta minutos concentra a atmosfera festiva e as danças do reino imaginário, favorecendo uma primeira experiência de palco também para crianças.",
-        "As duas sessões são gratuitas, mas dependem de retirada antecipada de ingresso. A Prefeitura anuncia que a distribuição começa ao meio-dia desta quinta-feira, 26 de novembro, com limite de dois por CPF. O acesso é condicionado à lotação: não basta comparecer ao teatro contando com ingresso disponível."
+        "Os convites para as duas sessões gratuitas foram esgotados em uma hora, segundo a atualização da Prefeitura de 26 de novembro. A entrada no teatro é exclusiva para quem já garantiu ingresso. Não há retirada presencial anunciada."
       ],
       "relativeUrl": "materias/quebra-nozes/",
       "publicUrl": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-26/materias/quebra-nozes/",
@@ -68,8 +69,13 @@
         "src": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Nutcracker_-1890.JPG",
         "credit": "Autor desconhecido / Teatro Imperial Mariinsky / Wikimedia Commons — domínio público",
         "caption": "Produção original do balé, c. 1892. Foto histórica, não da apresentação em Campinas.",
-        "source": "https://commons.wikimedia.org/wiki/File:Nutcracker_-1890.JPG"
-      }
+        "source": "https://commons.wikimedia.org/wiki/File:Nutcracker_-1890.JPG",
+        "license": "https://creativecommons.org/publicdomain/mark/1.0/"
+      },
+      "references": [
+        "https://campinas.sp.gov.br/noticias/ingressos-para-as-duas-sessoes-de-o-quebra-nozes-em-campinas-esgotam-em-uma-hora-155638",
+        "https://campinas.sp.gov.br/noticias/ingressos-gratuitos-para-o-quebra-nozes-em-campinas-estarao-disponiveis-nesta-quinta-feira-dia-26-155568"
+      ]
     },
     {
       "id": "matsuri",
@@ -82,7 +88,7 @@
       "service": "Entrada gratuita, doação voluntária; taiko, Bon Odori, cosplay, oficinas, bonsais; Project Dragons, Susana Sano, Serginho Tanigawa.",
       "source": "https://campinasmatsuri.com.br/o-evento/",
       "checkedAt": "2026-11-26",
-      "imageRights": "not cleared",
+      "imageRights": "CC BY-SA 4.0; verified 2026-11-26; archive of venue, no crop",
       "editionId": "EC-2026-11-26",
       "category": "Cultura • Campinas",
       "headline": "O Japão encontra a antiga estação",
@@ -343,7 +349,7 @@
       "type": "evento",
       "title": "Fôlego – Nathália Timberg",
       "date": "Até 13/12/2026",
-      "time": "sex/sáb 20h; dom 18h (rever sessão)",
+      "time": "sex/sáb 20h; dom 18h; 4/12 às 15h; confirme exceções na grade",
       "city": "São Paulo",
       "venue": "Sesc Santo Amaro",
       "service": "Nathália Timberg, Carla Marins e Rita Elmôr; 12 anos.",
@@ -562,7 +568,7 @@
       "city": "São Paulo",
       "venue": "Pina Estação, 4º andar",
       "service": "Gratuito aos sábados e segundo domingo; demais condições no site.",
-      "source": "https://pinacoteca.org.br/programacao/",
+      "source": "https://pinacoteca.org.br/programacao/tipo/exposicoes/",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared",
       "editionId": "EC-2026-11-26"
@@ -576,7 +582,7 @@
       "city": "São Paulo",
       "venue": "Pina Contemporânea",
       "service": "Consultar visitação e ingressos no site.",
-      "source": "https://pinacoteca.org.br/programacao/",
+      "source": "https://pinacoteca.org.br/programacao/tipo/exposicoes/",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared",
       "editionId": "EC-2026-11-26"
@@ -590,7 +596,7 @@
       "city": "São Paulo",
       "venue": "Pina Luz",
       "service": "Consultar visitação e ingressos no site.",
-      "source": "https://pinacoteca.org.br/programacao/",
+      "source": "https://pinacoteca.org.br/programacao/tipo/exposicoes/",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared",
       "editionId": "EC-2026-11-26"
@@ -917,7 +923,7 @@
       "city": "São Paulo",
       "venue": "Neo Química Arena",
       "service": "Penúltima rodada da Série A; consultar ingresso oficial do clube.",
-      "source": "https://www.cbf.com.br/",
+      "source": "https://www.cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-a/2026/corinthians-x-gremio/832254",
       "checkedAt": "2026-11-26",
       "imageRights": "not cleared"
     }
@@ -1004,9 +1010,25 @@
     }
   ],
   "qaPending": [
-    "Checar novamente fontes e disponibilidade, em especial serviços incompletos; revisar sinopses e fichas dos filmes",
-    "Validar imagens e direitos, responsividade, links e todos os horários antes de publicar",
-    "Confirmar workflow externo específico da edição e commit; distribuir somente depois"
+    "Revalidar fontes/serviços remanescentes e revisão editorial final sem inventar dados",
+    "Validação visual em Chromium 390px e desktop, navegação e filtros",
+    "Publicar na main e confirmar smoke HTTP; distribuição somente após aprovação"
   ],
-  "researchSha": "e48dddb70c1a6a900b195fcae6c41f799835730e"
+  "researchSha": "e48dddb70c1a6a900b195fcae6c41f799835730e",
+  "qaRecovery": {
+    "date": "2026-11-26",
+    "type": "assisted",
+    "factsUpdated": [
+      "Quebra-Nozes: esgotado, Prefeitura de Campinas",
+      "Sandy & Junior: horário e valores, Nubank Parque e Ticketmaster",
+      "CBF: link específico do confronto",
+      "Pinacoteca: página oficial válida",
+      "Cultura Artística e Teatro B32: programação oficial conferida",
+      "Fôlego: horários oficiais Sesc"
+    ],
+    "rightsVerified": [
+      "Nutcracker_-1890.JPG (domínio público)",
+      "Fachada_de_la_Estação_Cultura_de_Campinas.jpg (CC BY-SA 4.0)"
+    ]
+  }
 }
