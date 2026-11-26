@@ -76,6 +76,42 @@
       "date_city_visible": true,
       "image_uniqueness_checked": true,
       "newsfirst_option_b_checked": true
+    },
+    {
+      "id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "publish_local_date": "2026-11-26",
+      "valid_through_local_date": "2027-04-18",
+      "verified_at": "2026-11-26",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A retrospectiva aproxima videoarte, música e comunicação de massa em São Paulo.",
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/pina/",
+      "factual_sources": [
+        "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/",
+        "https://commons.wikimedia.org/wiki/File:The_More,_the_Better_(%EB%8B%A4%EB%8B%A4%EC%9D%B5%EC%84%A0(%E5%A4%9A%E5%A4%9A%E7%9B%8A%EC%84%A0))_%EB%B0%B1%EB%82%A8%EC%A4%80_PAIK_Namjune(1932~2006).jpg"
+      ],
+      "caption": "A televisão deixa de ser aparelho e vira matéria, música e pergunta. Via Satélite reúne Nam June Paik, Charlotte Moorman e Vivian Caccuri na Pina Contemporânea — uma visita para quem quer ver a videoarte antes de ela parecer apenas “conteúdo”.\n\nQUANDO: 17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)\nONDE: Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP\nINGRESSOS: SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS\nLINK OFICIAL: https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/\n\nSiga @entressala_ para encontrar exposições que merecem tempo de verdade — e compartilhe com quem gosta de arte, som e tecnologia.\n\nFoto de arquivo: Republic of Korea / Lee Jeong Woo · CC BY-SA 4.0.",
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)",
+          "where": "Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP",
+          "admission": "SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS",
+          "official_url": "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/"
+        }
+      ],
+      "images": [
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/01.jpg"
+      ],
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
     }
   ],
   "notice": "Publishing must verify images, factual validity and idempotency. Auto-publish only after verified assets; no synthesized event photography."

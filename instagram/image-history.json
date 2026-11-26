@@ -71,6 +71,10 @@
       "metricool_uuid": "-6251270579229799178",
       "metricool_id": 442245542,
       "public_url": null
+    },
+    "commons:the more, the better (다다익선(多多益善)) 백남준 paik namjune(1932~2006).jpg": {
+      "post_id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "publish_local_date": "2026-11-26"
     }
   },
   "visual_hashes": {
@@ -85,6 +89,12 @@
       "slide_number": 1,
       "image_key": "commons:natália timberg.jpg",
       "publish_local_date": "2026-11-25"
+    },
+    "05af05bf058f07231d837982db3397b1ed99dba8db249614b5b494f4dd29da49": {
+      "post_id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "slide_number": 1,
+      "image_key": "commons:the more, the better (다다익선(多多益善)) 백남준 paik namjune(1932~2006).jpg",
+      "publish_local_date": "2026-11-26"
     }
   }
 }
