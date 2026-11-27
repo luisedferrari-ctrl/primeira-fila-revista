@@ -1,0 +1,123 @@
+name: ENTRESSALA - A01 visual QA
+on:
+  push:
+    branches:
+      - entressala-a01-visual-qa
+      - 'entressala-edicao-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          pip install playwright==1.51.0
+          python -m playwright install --with-deps chromium
+      - name: Render and verify
+        run: |
+          mkdir -p qa-results
+          python -m http.server 8765 --bind 127.0.0.1 >qa-results/server.log 2>&1 &
+          python - <<'PY'
+          import os,json,re,time
+          from pathlib import Path
+          from urllib.request import urlopen
+          from urllib.parse import urlparse
+          from playwright.sync_api import sync_playwright
+          out=Path('qa-results')
+          base='http://127.0.0.1:8765'
+          for _ in range(30):
+              try:
+                  urlopen(base,timeout=1).close()
+                  break
+              except OSError:
+                  time.sleep(1)
+          branch=os.environ['GITHUB_REF_NAME']
+          m=re.fullmatch(r'entressala-edicao-(20\d{2}-\d{2}-\d{2})',branch)
+          dates=sorted(p.parent.name for p in Path('edicoes').glob('*/index.html') if re.fullmatch(r'20\d{2}-\d{2}-\d{2}',p.parent.name))
+          edition=m.group(1) if m else dates[-1]
+          root=Path('edicoes')/edition
+          routes=[root/'index.html',*sorted(root.glob('materias/*/index.html'))]
+          report={'commit':os.environ['GITHUB_SHA'],'edition':edition,'checks':[],'failures':[]}
+          def check(name,ok,detail=''):
+              report['checks'].append({'name':name,'ok':bool(ok),'detail':detail})
+              if not ok: report['failures'].append(name)
+          def inspect(page,label):
+              page.evaluate("async () => { for(const i of document.images){i.loading='eager';} await Promise.race([Promise.allSettled([...document.images].map(i=>i.decode())),new Promise(r=>setTimeout(r,12000))]); }")
+              check(label+' overflow',page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'))
+              for i in page.locator('img').all():
+                  data=i.evaluate("(i)=>({src:i.currentSrc||i.src,ok:i.complete&&i.naturalWidth>0&&!i.hidden&&i.getBoundingClientRect().width>0})")
+                  check(label+' image '+data['src'],data['ok'])
+              page.screenshot(path=str(out/(label+'.png')),full_page=True,timeout=30000)
+          try:
+              with sync_playwright() as p:
+                  browser=p.chromium.launch()
+                  # Positive and negative controls exercise the same image/overflow predicates.
+                  fixture=browser.new_page(viewport={'width':390,'height':844})
+                  fixture.set_content('<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22/%3E">')
+                  fixture.locator('img').evaluate('(i)=>i.decode()')
+                  check('positive image control',fixture.locator('img').evaluate('(i)=>i.complete&&i.naturalWidth>0&&!i.hidden&&i.getBoundingClientRect().width>0'))
+                  fixture.set_content('<img src="data:image/png;base64,broken"><div style="width:900px">overflow</div>')
+                  fixture.locator('img').evaluate('(i)=>i.decode().catch(()=>{})')
+                  check('negative image control',not fixture.locator('img').evaluate('(i)=>i.complete&&i.naturalWidth>0&&!i.hidden&&i.getBoundingClientRect().width>0'))
+                  check('negative overflow control',fixture.evaluate('document.documentElement.scrollWidth > innerWidth + 1'))
+                  fixture.close()
+                  check('article count',len(routes)>=4)
+                  for width,height in [(390,844),(1440,900)]:
+                      page=browser.new_page(viewport={'width':width,'height':height})
+                      errors=[]
+                      page.on('pageerror',lambda e:errors.append(str(e)))
+                      for idx,route in enumerate(routes):
+                          label=f'{width}-{idx}'
+                          response=page.goto(base+'/'+route.parent.as_posix()+'/',wait_until='domcontentloaded',timeout=30000)
+                          check(label+' HTTP',response is not None and response.status==200)
+                          check(label+' brand','ENTRESSALA' in page.title().upper())
+                          inspect(page,label)
+                          if idx==0:
+                              links=page.locator('a[href]').evaluate_all("(a)=>a.map(x=>x.href)")
+                              expected={base+'/'+r.parent.as_posix()+'/' for r in routes[1:]}
+                              check(label+' article links',expected.issubset(set(links)))
+                              for anchor in page.locator('nav a[href]').all():
+                                  href=anchor.get_attribute('href')
+                                  if '#' in href:
+                                      fragment=href.split('#',1)[1]
+                                      check(label+' nav '+fragment,page.locator('[id='+json.dumps(fragment)+']').count()==1)
+                              rows=page.locator('.agenda-row')
+                              check(label+' agenda rows',rows.count()>0)
+                              for selector in ['#agenda-search','#agenda-city','#agenda-period']:
+                                  check(label+' filter '+selector,page.locator(selector).count()==1)
+                              if rows.count() and page.locator('#agenda-search').count():
+                                  page.locator('#agenda-search').fill('zzzz-no-match-a01')
+                                  check(label+' search excludes',page.locator('.agenda-row:visible').count()==0)
+                                  page.locator('#agenda-search').fill('')
+                                  check(label+' search reset',page.locator('.agenda-row:visible').count()==rows.count())
+                              for selector,attr in [('#agenda-city','data-city'),('#agenda-period','data-period')]:
+                                  if page.locator(selector).count() and rows.count():
+                                      value=rows.first.get_attribute(attr)
+                                      if value:
+                                          page.locator(selector).select_option(value)
+                                          visible=page.locator('.agenda-row:visible')
+                                          check(label+' '+attr,visible.count()>0 and all(r.get_attribute(attr)==value for r in visible.all()))
+                                          page.locator(selector).select_option('')
+                      check(str(width)+' JS errors',not errors,str(errors))
+                      page.close()
+                  browser.close()
+          except Exception as e:
+              check('runtime exception',False,repr(e))
+          finally:
+              report['verdict']='BLOCKED' if report['failures'] else 'PASS'
+              (out/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
+              print(json.dumps(report,ensure_ascii=False))
+          raise SystemExit(1 if report['failures'] else 0)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-qa-${{ github.sha }}
+          path: qa-results/
+          retention-days: 30
