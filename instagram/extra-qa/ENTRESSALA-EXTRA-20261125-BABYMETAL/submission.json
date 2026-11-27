@@ -1,0 +1,33 @@
+{
+  "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
+  "status": "METRICOOL_SCHEDULED",
+  "policy_version": "entressala-metricool-extra-2026-11-25-v1",
+  "approval_digest": "ffd2c53b0c036641ece32126c2412df79c87fe6742879992aa8c6868ed78d540",
+  "manifest_blob": "dd62a952e53476e171b3b90491f73d5db89c9f20",
+  "report_blob": "4b1f38972424bf250c6ef8dfe0cf2a20a0b83d9f",
+  "approved_candidate_commit": "653831988752d8a5d27c45d07cb507ac2e44c624",
+  "scheduled_at": "2026-11-25T17:05:00-03:00",
+  "brand_id": "8230360",
+  "source_image_id": "commons:babymetal, o2 arena, london (31365068001).jpg",
+  "media_url": "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/581e6e83f9384199a626dd357f035d3736f97316/instagram/extra-qa/ENTRESSALA-EXTRA-20261125-BABYMETAL/01.jpg",
+  "final_sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217",
+  "notes": "Reserva antes de chamar o Metricool; não representa publicação. Revisão humana aprovada pelo usuário.",
+  "receipt": {
+    "id": 442245542,
+    "uuid": "-6251270579229799178",
+    "status": "PENDING",
+    "detail": "Pending",
+    "public_url": null,
+    "planner_url": "https://app.metricool.com/planner/calendar?blogId=8230360&openWithPostUuid=-6251270579229799178",
+    "publicationDate": {
+      "dateTime": "2026-11-25T17:05:00",
+      "timezone": "America/Sao_Paulo"
+    },
+    "autoPublish": true,
+    "caption_matched": true,
+    "media_count": 1,
+    "media": [
+      "https://static.metricool.com/planner/202611/8230360-file-8108226369469535145.jpeg"
+    ]
+  }
+}

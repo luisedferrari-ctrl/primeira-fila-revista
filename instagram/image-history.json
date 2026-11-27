@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "effective_from": "2026-11-19",
+  "used_sources": {
+    "commons:parque ecológico - indaiatuba - panoramio.jpg": {
+      "post_id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17"
+    },
+    "commons:estação cultura campinas.jpg": {
+      "post_id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17"
+    },
+    "commons:concerto na sala são paulo.jpg": {
+      "post_id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17"
+    },
+    "commons:teatro municipal castro mendes.jpg": {
+      "post_id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17"
+    },
+    "commons:pinacoteca de são paulo.jpg": {
+      "post_id": "ENTRESSALA-IG-20261117-LANCAMENTO",
+      "publish_local_date": "2026-11-17"
+    },
+    "commons:eddie vedder 2018.jpg": {
+      "post_id": "ENTRESSALA-IG-20261118-FIMDESEMANA",
+      "publish_local_date": "2026-11-18"
+    },
+    "commons:roger daltrey (2008).jpg": {
+      "post_id": "ENTRESSALA-IG-20261118-FIMDESEMANA",
+      "publish_local_date": "2026-11-18"
+    },
+    "commons:racionais mc's (12197895433).jpg": {
+      "post_id": "ENTRESSALA-IG-20261118-FIMDESEMANA",
+      "publish_local_date": "2026-11-18"
+    },
+    "commons:estação pinacoteca - largo general osório, 66 – luz - são paulo - sp - panoramio (1).jpg": {
+      "post_id": "ENTRESSALA-IG-20261118-FIMDESEMANA",
+      "publish_local_date": "2026-11-18"
+    },
+    "commons:strokeslolympia180220-60.jpg": {
+      "post_id": "ENTRESSALA-EXTRA-20261122-PRIMAVERA",
+      "publish_local_date": "2026-11-22",
+      "channel": "Metricool",
+      "metricool_uuid": "-2847568129183104735",
+      "origin": "CC BY 2.0 Commons"
+    },
+    "commons:gorillaz.jpg": {
+      "post_id": "ENTRESSALA-EXTRA-20261122-PRIMAVERA",
+      "publish_local_date": "2026-11-22",
+      "channel": "Metricool",
+      "metricool_uuid": "-2847568129183104735",
+      "origin": "CC BY 2.0 Commons"
+    },
+    "commons:the pearl fishers final dress rehearsal (16466931637).jpg": {
+      "post_id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "publish_local_date": "2026-11-24"
+    },
+    "commons:natália timberg.jpg": {
+      "post_id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "publish_local_date": "2026-11-25"
+    },
+    "commons:babymetal, o2 arena, london (31365068001).jpg": {
+      "post_id": "ENTRESSALA-EXTRA-20261125-BABYMETAL",
+      "publish_local_date": "2026-11-25",
+      "channel": "Metricool",
+      "status": "METRICOOL_SCHEDULED",
+      "source_image_sha256": "de36bdd9394cbc5451963e910fc7045c1759457dda3fa1f6a1ae0f487ed38bb5",
+      "final_sha256": "98b3e998aaf30d465201f40123a84ac3359e144f289e15244483c56394501217",
+      "approval_digest": "ffd2c53b0c036641ece32126c2412df79c87fe6742879992aa8c6868ed78d540",
+      "metricool_uuid": "-6251270579229799178",
+      "metricool_id": 442245542,
+      "public_url": null
+    },
+    "commons:the more, the better (다다익선(多多益善)) 백남준 paik namjune(1932~2006).jpg": {
+      "post_id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "publish_local_date": "2026-11-26"
+    }
+  },
+  "visual_hashes": {
+    "03af93ad507592b5737762577a497a791b4e5ac62ace099c4adc8ad61bd6e4a9": {
+      "post_id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "slide_number": 1,
+      "image_key": "commons:the pearl fishers final dress rehearsal (16466931637).jpg",
+      "publish_local_date": "2026-11-24"
+    },
+    "1db23e8f9cc739f2b1f2b37131f13b895b2149a128b019f729e341e97fdce396": {
+      "post_id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "slide_number": 1,
+      "image_key": "commons:natália timberg.jpg",
+      "publish_local_date": "2026-11-25"
+    },
+    "05af05bf058f07231d837982db3397b1ed99dba8db249614b5b494f4dd29da49": {
+      "post_id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "slide_number": 1,
+      "image_key": "commons:the more, the better (다다익선(多多益善)) 백남준 paik namjune(1932~2006).jpg",
+      "publish_local_date": "2026-11-26"
+    }
+  }
+}

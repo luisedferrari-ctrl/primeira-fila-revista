@@ -1,0 +1,15 @@
+ENTRESSALA extraordinaria - 22/11/2026 - Primavera Sound SP confirma horarios.
+Publicar pelo Metricool uma vez APENAS apos QA visual e licenciamento.
+Fotos reais verificadas: Commons StrokesLolympia180220-60.jpg (Raph_PH, CC BY 2.0); Gorillaz.jpg (wonker, CC BY 2.0).
+Programacao 5/12 22h15 The Strokes, 6/12 22h Gorillaz, Autodromo Interlagos, portoes 12h30.
+Proibido editar posts automaticos regulares ou reprocessar o workflow diario.
+
+Retry 2: official 1600px thumbnail and verified CDN fallback, after HTTP 429; preserve no-publish-on-error.
+
+Final visual QA refresh 22/11: original photos unchanged, Portuguese accent and contrast corrections.
+
+QA correction: ticket card shows R$ 425,25 explicitly as meia-entrada. Re-render and commit corrected card. Never publish duplicate.
+
+Strict price correction: R$ 425,25 is the half-price tier (meia-entrada). Re-render images with this label. Final retry, no parallel media writes.
+
+Final QA retry: corrected MEIA-ENTRADA R$ 425,25 card; safe binary conflict strategy; single extraordinary post only.

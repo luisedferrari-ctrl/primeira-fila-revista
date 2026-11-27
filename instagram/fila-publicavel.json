@@ -1,0 +1,118 @@
+{
+  "brand": "ENTRESSALA",
+  "channel": "@entressala_",
+  "version": 3,
+  "editorial_policy": "entressala-newsfirst-option-b-2026-11-23",
+  "posts": [
+    {
+      "id": "ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS",
+      "publish_local_date": "2026-11-24",
+      "valid_through_local_date": "2026-12-06",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A nova montagem de Os Pescadores de Pérolas abre temporada no Theatro Municipal com oito sessões confirmadas.",
+      "verified_at": "2026-11-24",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/opera/",
+      "factual_sources": [
+        "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/",
+        "https://commons.wikimedia.org/wiki/File:The_Pearl_Fishers_Final_Dress_Rehearsal_(16466931637).jpg"
+      ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H",
+          "where": "Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP",
+          "admission": "R$ 47 a R$ 290 (inteira)",
+          "official_url": "https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/"
+        }
+      ],
+      "caption": "Uma amizade levada ao limite, um amor impossível e uma das partituras mais luminosas de Bizet: Os Pescadores de Pérolas volta ao Theatro Municipal em nova montagem, com Roberto Minczuk à frente da Orquestra Sinfônica Municipal.\n\nQUANDO: 27 NOV 2026 · 20H; 28–29 NOV · 17H; 1–2 DEZ · 20H; 4 DEZ · 20H; 5–6 DEZ 2026 · 17H\nONDE: Theatro Municipal de São Paulo, Praça Ramos de Azevedo, s/nº — Sé, São Paulo, SP\nINGRESSOS: R$ 47 a R$ 290 (inteira)\nLINK OFICIAL: https://theatromunicipal.org.br/eventos/opera-os-pescadores-de-perolas-de-georges-bizet/\n\nSiga @entressala_ para escolher a próxima noite que vale sair de casa — e compartilhe com quem iria ao Municipal.\n\nFoto de arquivo: Florida Grand Opera (2015) · CC BY 2.0.",
+      "images": [
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/01.jpg"
+      ],
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261124-PESCADORES-DE-PEROLAS/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
+    },
+    {
+      "id": "ENTRESSALA-IG-20261125-FOLEGO",
+      "publish_local_date": "2026-11-25",
+      "valid_through_local_date": "2026-12-13",
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "Nathália Timberg sustenta Fôlego em uma temporada que segue no Sesc Santo Amaro até 13 de dezembro.",
+      "verified_at": "2026-11-25",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/folego/",
+      "factual_sources": [
+        "https://www.sescsp.org.br/programacao/folego/",
+        "https://www.sescsp.org.br/editorial/a-partir-do-dia-23-de-outubro-natalia-timberg-protagoniza-folego/",
+        "https://commons.wikimedia.org/wiki/File:Nat%C3%A1lia_Timberg.jpg"
+      ],
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H",
+          "where": "Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP",
+          "admission": "R$ 21 a R$ 70",
+          "official_url": "https://www.sescsp.org.br/programacao/folego/"
+        }
+      ],
+      "caption": "Nathália Timberg está em cena em Fôlego, peça escrita para ela e atravessada por uma pergunta que o teatro conhece bem: como continuar quando tudo parece pedir recolhimento? Com Carla Marins e Rita Elmôr, a temporada segue no Sesc Santo Amaro até dezembro.\n\nQUANDO: 27–29 NOV e 5–6, 11–13 DEZ 2026 · SEX/SÁB 20H · DOM 18H; 4 DEZ · 15H\nONDE: Sesc Santo Amaro, Rua Amador Bueno, 505 — Santo Amaro, São Paulo, SP\nINGRESSOS: R$ 21 a R$ 70\nLINK OFICIAL: https://www.sescsp.org.br/programacao/folego/\n\nSiga @entressala_ para descobrir histórias e programas que merecem uma noite fora de casa.\n\nFoto de arquivo: Lindomar Cruz / Agência Brasil (2003) · CC BY 3.0 BR.",
+      "images": [
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/01.jpg"
+      ],
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261125-FOLEGO/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
+    },
+    {
+      "id": "ENTRESSALA-IG-20261126-VIA-SATELITE",
+      "publish_local_date": "2026-11-26",
+      "valid_through_local_date": "2027-04-18",
+      "verified_at": "2026-11-26",
+      "approved": true,
+      "eligibleForScheduling": true,
+      "kind": "event",
+      "editorial_scope": "regional",
+      "editorial_angle": "A retrospectiva aproxima videoarte, música e comunicação de massa em São Paulo.",
+      "source_edition_id": "EC-2026-11-19",
+      "source_article_url": "https://primeira-fila-revista.pages.dev/edicoes/2026-11-19/materias/pina/",
+      "factual_sources": [
+        "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/",
+        "https://commons.wikimedia.org/wiki/File:The_More,_the_Better_(%EB%8B%A4%EB%8B%A4%EC%9D%B5%EC%84%A0(%E5%A4%9A%E5%A4%9A%E7%9B%8A%EC%84%A0))_%EB%B0%B1%EB%82%A8%EC%A4%80_PAIK_Namjune(1932~2006).jpg"
+      ],
+      "caption": "A televisão deixa de ser aparelho e vira matéria, música e pergunta. Via Satélite reúne Nam June Paik, Charlotte Moorman e Vivian Caccuri na Pina Contemporânea — uma visita para quem quer ver a videoarte antes de ela parecer apenas “conteúdo”.\n\nQUANDO: 17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)\nONDE: Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP\nINGRESSOS: SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS\nLINK OFICIAL: https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/\n\nSiga @entressala_ para encontrar exposições que merecem tempo de verdade — e compartilhe com quem gosta de arte, som e tecnologia.\n\nFoto de arquivo: Republic of Korea / Lee Jeong Woo · CC BY-SA 4.0.",
+      "service_items": [
+        {
+          "kind": "event",
+          "when": "17 OUT 2026–18 ABR 2027 · QUA–SEG 10H–18H (ENTRADA ATÉ 17H)",
+          "where": "Pina Contemporânea, Avenida Tiradentes, 273 — Luz, São Paulo, SP",
+          "admission": "SÁBADOS E SEGUNDOS DOMINGOS DO MÊS GRATUITOS; DEMAIS DIAS: CONSULTE INGRESSOS",
+          "official_url": "https://pinacoteca.org.br/programacao/exposicoes/via-satelite-dialogos-com-nam-june-paik-charlotte-moorman-vivian-caccuri/"
+        }
+      ],
+      "images": [
+        "https://raw.githubusercontent.com/luisedferrari-ctrl/primeira-fila-revista/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/01.jpg"
+      ],
+      "credits_document": "https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/CREDITOS.md",
+      "first_comment": "Fontes e direitos das imagens: https://github.com/luisedferrari-ctrl/primeira-fila-revista/blob/entressala-piloto-2026-11/instagram/assets/ENTRESSALA-IG-20261126-VIA-SATELITE/CREDITOS.md",
+      "assetsReady": true,
+      "date_city_visible": true,
+      "image_uniqueness_checked": true,
+      "newsfirst_option_b_checked": true
+    }
+  ],
+  "notice": "Publishing must verify images, factual validity and idempotency. Auto-publish only after verified assets; no synthesized event photography."
+}
